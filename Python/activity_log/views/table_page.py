@@ -96,5 +96,20 @@ m_button3.pack(
 #     text = 'Username',
 # )
 
+data_frame = ctk.CTkFrame(
+    window,
+    border_width = 1,
+    border_color = 'black',
+    corner_radius = 0,
+)
+
+data_frame.grid(
+    row = 2,
+    column = 1,
+    rowspan = 5,
+    columnspan = 1,
+    sticky = 'ws',
+)
+
 
 window.mainloop()

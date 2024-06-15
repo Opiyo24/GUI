@@ -7,6 +7,10 @@ CREATE TABLE IF NOT EXISTS users (
                       password TEXT NOT NULL);
 """)
 
+QUERRY_USER = ("""
+SELECT * FROM users WHERE username = ?;
+""")
+
 CREATE_ENTRY_TABLE = ("""
                       CREATE TABLE IF NOT EXISTS log
                       (
@@ -67,6 +71,17 @@ cursor = conn.cursor()
 def create_entry_table(connection):
     with connection:
         return connection.execute(CREATE_ENTRY_TABLE)
+    
+def pull_user(connection, username):
+    try:
+        with connection:
+            user =  connection.execute(QUERRY_USER, (username,)).fetchone()
+            if user:
+                return user
+            else:
+                return None
+    except:
+        return f'User {username} not found'
     
 def create_dev_type_table(connection):
     with connection:
