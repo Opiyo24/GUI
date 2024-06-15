@@ -1,5 +1,12 @@
 import sqlite3
 
+CREATE_USERS_TABLE = ("""
+CREATE TABLE IF NOT EXISTS users (
+                      id INTEGER PRIMARY KEY,
+                      username TEXT NOT NULL,
+                      password TEXT NOT NULL,);
+""")
+
 CREATE_ENTRY_TABLE = ("""
                       CREATE TABLE IF NOT EXISTS log
                       (
