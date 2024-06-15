@@ -1,0 +1,30 @@
+sudo apt-get install sqlite3
+
+- Column names
+- Rows
+- 
+
+CREATE TABLE IF NOT EXISTS beans (id INTEGER PRIMARY KEY, name TEXT, method TEXT, rating INTEGER);
+
+INSERT INTO beans VAKUES (1, 'Exclusive Blend', 'Percolator', 65);
+
+- When inserting data into specific columns
+INSERT INTO beans (name, method, rating) VALUES ('Exclusive Blend', 'Percolator', 65);
+
+
+- Select data from database
+
+SELECT * FROM beans; - select everything from table beand
+
+SELECT name, method, rating FROM beans;
+
+SELECT name, method, rating FROM beans ORDER BY rating DESC;
+
+SELECT method, rating FROM beans ORDER BY rating DESC LIMIT 1;
+
+- Using where to filter
+
+SELECT * FROM beans WHERE name = 'Exclusive Blend' ORDER BY rating DESC LIMIT 1;
+
+- Accessing data
+SELECT method, AVG(rating) FROM beans GROUP BY method;
