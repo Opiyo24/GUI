@@ -1,5 +1,7 @@
 import customtkinter as ctk
 
+from utils.functions import create_table
+
 ctk.set_appearance_mode('light')
 ctk.set_default_color_theme('green')
 
@@ -12,6 +14,20 @@ window.minsize(1600, 800)
 
 window.columnconfigure((0,1,2,3,4,5,6,7,8), weight = 1, uniform = 'a')
 window.rowconfigure((0,1,2,3,4,5,6), weight = 1, uniform = 'a')
+
+cols = [
+    "Entry Date",
+    "Upload Date",
+    "Owner",
+    "Sub-County",
+    "Description",
+    "Floors",
+    "Assigned",
+    "Date Moved",
+    "Days Left",
+    "Last Follow-Up",
+    "Status",
+]
 
 menu_frame = ctk.CTkFrame(
     window,
@@ -96,7 +112,52 @@ m_button3.pack(
 #     text = 'Username',
 # )
 
-data_frame = ctk.CTkFrame(
+
+date = ctk.CTkLabel(
+    window,
+    text = 'DD/MM/YYYY',
+    font = ('Helvetica', 20, 'bold'),
+)
+
+date.grid(
+    row = 0,
+    column = 1,
+)
+
+back_button = ctk.CTkButton(
+    window,
+    text = 'Back',
+    font = ('Helvetica', 20, 'bold'),
+    height = 40,
+    bg_color = 'transparent',
+    fg_color = 'black',
+    corner_radius = 10,
+    border_width = 3,
+)
+back_button.grid(
+    row = 0,
+    column = 8,
+)
+
+entry_button = ctk.CTkButton(
+    window,
+    text = 'New Entry',
+    height = 35,
+    width = 50,
+    bg_color = 'blue',
+    fg_color = 'black',
+    corner_radius = 10,
+    border_width = 3,
+)
+
+entry_button.grid(
+    row = 1,
+    column = 1,
+    # columnspan = 2,
+    # sticky = 'news',
+)
+
+data_frame = ctk.CTkScrollableFrame(
     window,
     border_width = 1,
     border_color = 'black',
@@ -107,9 +168,11 @@ data_frame.grid(
     row = 2,
     column = 1,
     rowspan = 5,
-    columnspan = 1,
-    sticky = 'ws',
+    columnspan = 8,
+    sticky = 'news',
 )
 
+table = create_table(data_frame, cols)
+table.pack(fill = 'both', expand = True)
 
 window.mainloop()
