@@ -174,6 +174,70 @@ data_frame.grid(
     sticky = 'news',
 )
 
+sort_frame = ctk.CTkFrame(
+    window,
+    border_width = 0,
+    bg_color = 'transparent',
+    fg_color = 'transparent',
+)
+sort_frame.grid(
+    row = 1,
+    column = 6,
+    sticky = 'news',
+)
+
+sort_label = ctk.CTkLabel(
+    sort_frame,
+    text = 'Sort by:',
+    font = ('Helvetica', 11),
+)
+
+sort_label.pack(
+    anchor = 'w',
+    padx = 10
+)
+
+sort = ctk.CTkComboBox(
+    sort_frame,
+    values = cols,
+)
+sort.pack()
+
+filter_label_frame = tk.LabelFrame(
+    window,
+    text = 'Filter',
+    font = ('Helvetica', 10),
+    height = 60,
+    # background = 'blue',
+)
+filter_label_frame.grid(
+    row = 1,
+    column = 7,
+    columnspan = 2,
+    sticky = 'news',
+    pady = 10,
+)
+
+filter_label_frame.columnconfigure(0, weight = 1)
+
+filter_1  = ctk.CTkComboBox(
+    filter_label_frame,
+    values = cols,
+)
+filter_1.grid(
+    row = 0,
+    column = 0,
+)
+
+filter_2 = ctk.CTkComboBox(
+    filter_label_frame,
+    values = cols,
+)
+filter_2.grid(
+    row = 0,
+    column = 1,
+)
+
 table = ttk.Treeview(
     data_frame,
     columns = cols,
