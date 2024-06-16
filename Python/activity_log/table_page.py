@@ -1,3 +1,5 @@
+import tkinter as tk
+from tkinter import ttk
 import customtkinter as ctk
 
 from utils.functions import create_table
@@ -172,7 +174,29 @@ data_frame.grid(
     sticky = 'news',
 )
 
-table = create_table(data_frame, cols)
-table.pack(fill = 'both', expand = True)
+table = ttk.Treeview(
+    data_frame,
+    columns = cols,
+    show = 'headings',
+)
+table.heading("Entry Date", text = "Entry Date")
+table.heading("Upload Date", text = "Upload Date")
+table.heading("Owner", text = "Owner")
+table.heading("Sub-County", text = "Sub-County")
+table.heading("Description", text = "Description")
+table.heading("Floors", text = "Floors")    
+table.heading("Assigned", text = "Assigned")
+table.heading("Date Moved", text = "Date Moved")
+table.heading("Days Left", text = "Days Left")
+table.heading("Last Follow-Up", text = "Last Follow-Up")
+table.heading("Status", text = "Status")
+table.pack(
+    fill = 'both',
+    expand = True,
+)
+
+#Insert values - Data from ENTRIES - loop trough the list and insert values
+ENTRIES = ("1/1/2020", "5/1/2020", "John Doe", "Nairobi", "Lorem Ipsum", "5", "Jane Doe", "3/1/2020", "5", "4/1/2020", "Pending")
+table.insert("", "end", values = ENTRIES)
 
 window.mainloop()

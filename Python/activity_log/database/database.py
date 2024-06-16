@@ -30,6 +30,10 @@ CREATE_ENTRY_TABLE = ("""
                       remarks TEXT);
                       """)
 
+ENTRIES = ("""
+    SELECT * FROM log;
+""")
+
 CREATE_DEV_TYPE_TABLE = ("""
 CREATE TABLE IF NOT EXISTS others_dev_type (
                         id INTEGER PRIMARY KEY,
