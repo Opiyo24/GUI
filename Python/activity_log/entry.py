@@ -13,7 +13,7 @@ entry.title('Activity Log | Entry')
 entry.iconbitmap('')
 entry.geometry('500x900')
 
-ENTRY = {}
+ENTRY = ()
 
 entry_date = ctk.StringVar()
 upload_date = ctk.StringVar()
@@ -242,27 +242,27 @@ status_combo.pack(pady=5)
 
 
 def submit():
+    global ENTRY
 
     if (entry_date.get() == '' or upload_date.get() == '' or owner_entry.get() == '' or
             sub_county_entry.get() == '' or date_moved.get() == '' or follow_up.get() == '' or
             description_combo.get() == '' or floors_combo.get() == '' or assigned_combo.get() == '' or status_combo.get() == ''):
         alert_label.configure(text='All fields are required', text_color='red')
     else:
-        ENTRY = {}
-        values = {
-            'entry_date': entry_date,
-            'upload_date': upload_date,
-            'owner_entry': owner_entry,
-            'sub_county_entry': sub_county_entry,
-            'date_moved': date_moved,
-            'follow_up': follow_up,
-            'description': description_combo.get(),
-            'floors': floors_combo.get(),
-            'assigned': assigned_combo.get(),
-            'status': status_combo.get(),
-        }
-        for key, value in values.items():
-            ENTRY[key] = value.get()
+        new_list = list(ENTRY)
+        new_list.append(entry_date.get())
+        new_list.append(upload_date.get())
+        new_list.append(owner_entry.get())
+        new_list.append(sub_county_entry.get())
+        new_list.append(description_combo.get())
+        new_list.append(floors_combo.get())
+        new_list.append(assigned_combo.get())
+        new_list.append(date_moved.get())
+        new_list.append(lambda: days_count(entry_date, date_moved))
+        new_list.append(follow_up.get())
+        new_list.append(status_combo.get())
+        ENTRY = tuple(new_list)
+        print(ENTRY)
 
 
 submit_button = ctk.CTkButton(
@@ -283,3 +283,6 @@ alert_label.pack()
 
 
 entry.mainloop()
+
+
+
