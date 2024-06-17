@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import customtkinter as ctk
 
-from utils.functions import create_table
+from entry import ENTRY
 
 ctk.set_appearance_mode('light')
 ctk.set_default_color_theme('green')
@@ -260,7 +260,7 @@ table.pack(
 )
 
 #Insert values - Data from ENTRIES - loop trough the list and insert values
-ENTRIES = ("1/1/2020", "5/1/2020", "John Doe", "Nairobi", "Lorem Ipsum", "5", "Jane Doe", "3/1/2020", "5", "4/1/2020", "Pending")
-table.insert("", "end", values = ENTRIES)
+# ENTRIES = ("1/1/2020", "5/1/2020", "John Doe", "Nairobi", "Lorem Ipsum", "5", "Jane Doe", "3/1/2020", "5", "4/1/2020", "Pending")
+table.insert("", "end", values = ENTRY)
 
 window.mainloop()

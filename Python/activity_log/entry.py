@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import ttk
 import customtkinter as ctk
 
+from utils.functions import check, date_picker, days_count
+
 ctk.set_appearance_mode('system')
 ctk.set_default_color_theme('green')
 
@@ -11,6 +13,21 @@ entry.title('Activity Log | Entry')
 entry.iconbitmap('')
 entry.geometry('500x900')
 
+ENTRY = {}
+
+entry_date = ctk.StringVar()
+upload_date = ctk.StringVar()
+owner_entry = ctk.StringVar()
+sub_county_entry = ctk.StringVar()
+date_moved = ctk.StringVar()
+# days_left = ctk.StringVar()
+follow_up = ctk.StringVar()
+description = ctk.StringVar()
+floors = ctk.StringVar()
+assigned = ctk.StringVar()
+status = ctk.StringVar()
+
+
 #Entry DAte
 e_date = ctk.CTkLabel(
     entry,
@@ -18,18 +35,20 @@ e_date = ctk.CTkLabel(
 )
 e_date.pack()
 
-entry_date = ctk.CTkEntry(
+entry_date_entry = ctk.CTkEntry(
     entry,
     width = 100,
     height = 18,
+    textvariable=entry_date,
 )
-entry_date.pack()
+entry_date_entry.pack()
 
 e_d = ctk.CTkButton(
     entry,
     text = 'Select Date',
     height = 18,
     width = 20,
+    command = date_picker,
 )
 
 e_d.pack(pady = 5)
@@ -41,18 +60,20 @@ u_date = ctk.CTkLabel(
 )
 u_date.pack()
 
-upload_date = ctk.CTkEntry(
+upload_date_entry = ctk.CTkEntry(
     entry,
     width = 100,
     height = 18,
+    textvariable=upload_date,
 )
-upload_date.pack()
+upload_date_entry.pack()
 
 u_d = ctk.CTkButton(
     entry,
     text = 'Select Date',
     height = 18,
     width = 20,
+    command = date_picker,
 )
 
 u_d.pack(pady = 5)
@@ -64,12 +85,13 @@ owner_label = ctk.CTkLabel(
 )
 owner_label.pack()
 
-owner_entry = ctk.CTkEntry(
+owner_entry_entry = ctk.CTkEntry(
     entry,
     width = 100,
     height = 18,
+    textvariable=owner_entry,
 )
-owner_entry.pack(pady=5)
+owner_entry_entry.pack(pady=5)
 
 #Sub County
 sub_county_label = ctk.CTkLabel(
@@ -78,12 +100,13 @@ sub_county_label = ctk.CTkLabel(
 )
 sub_county_label.pack()
 
-sub_county_entry = ctk.CTkEntry(
+sub_county_entry_entry = ctk.CTkEntry(
     entry,
     width = 100,
     height = 18,
+    textvariable=sub_county_entry,
 )
-sub_county_entry.pack(pady=5)
+sub_county_entry_entry.pack(pady=5)
 
 #Description
 description_label = ctk.CTkLabel(
@@ -92,13 +115,14 @@ description_label = ctk.CTkLabel(
 )
 description_label.pack()
 
-description = ctk.CTkComboBox(
+description_combo = ctk.CTkComboBox(
     entry,
     width = 150,
     height = 18,
     values = ['COMMERCIAL', 'RESIDENTIAL', 'MIXED USE', 'INDUSTRIAL', 'INSTITUTIONAL'],
+
 )
-description.pack(pady=5)
+description_combo.pack(pady=5)
 
 #Floors
 floors_label = ctk.CTkLabel(
@@ -107,13 +131,14 @@ floors_label = ctk.CTkLabel(
 )
 floors_label.pack()
 
-floors = ctk.CTkComboBox(
+floors_combo = ctk.CTkComboBox(
     entry,
     width = 150,
     height = 18,
     values = ['G', 'G+1', 'G+2', 'G+3', 'MEZZANINE'],
+
 )
-floors.pack(pady=5)
+floors_combo.pack(pady=5)
 
 #Assigned
 
@@ -123,13 +148,14 @@ assigned_label = ctk.CTkLabel(
 )
 assigned_label.pack()
 
-assigned = ctk.CTkComboBox(
+assigned_combo = ctk.CTkComboBox(
     entry,
     width = 150,
     height = 18,
     values = ['Brian', 'Quincy', 'Sugoi', 'Gabriel', 'Opoyo'],
+
 )
-assigned.pack(pady=5)
+assigned_combo.pack(pady=5)
 
 #Date moved
 m_date = ctk.CTkLabel(
@@ -138,37 +164,40 @@ m_date = ctk.CTkLabel(
 )
 m_date.pack()
 
-date_moved = ctk.CTkEntry(
+date_moved_entry = ctk.CTkEntry(
     entry,
     width = 100,
     height = 18,
+    textvariable=date_moved,
 )
-date_moved.pack()
+date_moved_entry.pack()
 
 m_d = ctk.CTkButton(
     entry,
     text = 'Select Date',
     height = 18,
     width = 20,
+    command = date_picker,
 )
 
 m_d.pack(pady = 5)
 
 #Days left
-days = ctk.CTkLabel(
-    entry,
-    text = 'Days Left',
-)
+# days = ctk.CTkLabel(
+#     entry,
+#     text = 'Days Left',
+#     command = days_count(entry_date, date_moved),
+# )
 
-days.pack()
+# days.pack()
 
-days_left = ctk.CTkEntry(
-    entry,
-    width = 100,
-    height = 18,
-)
+# days_left = ctk.CTkEntry(
+#     entry,
+#     width = 100,
+#     height = 18,
+# )
 
-days_left.pack()
+# days_left.pack()
 
 #Last follow-up
 follow_up_date = ctk.CTkLabel(
@@ -177,12 +206,13 @@ follow_up_date = ctk.CTkLabel(
 )
 follow_up_date.pack()
 
-follow_up = ctk.CTkEntry(
+follow_up_entry = ctk.CTkEntry(
     entry,
     width = 100,
     height = 18,
+    textvariable=follow_up,
 )
-follow_up.pack()
+follow_up_entry.pack()
 
 f_d = ctk.CTkButton(
     entry,
@@ -200,14 +230,56 @@ status_label = ctk.CTkLabel(
 )
 status_label.pack()
 
-status = ctk.CTkComboBox(
+status_combo = ctk.CTkComboBox(
     entry,
     width = 150,
     height = 18,
     values = ['PENDING', 'APPROVED', 'REJECTED', 'REVIEW'],
+
 )
 
-status.pack(pady=5)
+status_combo.pack(pady=5)
+
+
+def submit():
+
+    if (entry_date.get() == '' or upload_date.get() == '' or owner_entry.get() == '' or
+            sub_county_entry.get() == '' or date_moved.get() == '' or follow_up.get() == '' or
+            description_combo.get() == '' or floors_combo.get() == '' or assigned_combo.get() == '' or status_combo.get() == ''):
+        alert_label.configure(text='All fields are required', text_color='red')
+    else:
+        ENTRY = {}
+        values = {
+            'entry_date': entry_date,
+            'upload_date': upload_date,
+            'owner_entry': owner_entry,
+            'sub_county_entry': sub_county_entry,
+            'date_moved': date_moved,
+            'follow_up': follow_up,
+            'description': description_combo.get(),
+            'floors': floors_combo.get(),
+            'assigned': assigned_combo.get(),
+            'status': status_combo.get(),
+        }
+        for key, value in values.items():
+            ENTRY[key] = value.get()
+
+
+submit_button = ctk.CTkButton(
+    entry,
+    text = 'Submit',
+    height = 18,
+    width = 20,
+    command = submit,
+)
+
+submit_button.pack(pady = 10)
+
+alert_label = ctk.CTkLabel(
+    entry,
+    text = '',
+)
+alert_label.pack()
 
 
 entry.mainloop()
