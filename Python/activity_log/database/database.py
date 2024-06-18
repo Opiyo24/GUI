@@ -106,6 +106,13 @@ def pull_user(connection, username):
     except:
         return f'User {username} not found'
     
+def pull_entries():
+    connection = sqlite3.connect('activity_log.db')
+    with connection:
+        return connection.execute(ENTRIES).fetchall()
+
+print(pull_entries())
+    
 def create_dev_type_table(connection):
     with connection:
         return connection.execute(CREATE_DEV_TYPE_TABLE)

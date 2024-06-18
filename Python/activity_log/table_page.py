@@ -4,6 +4,7 @@ import customtkinter as ctk
 
 from entry import ENTRY
 from utils.date_picker import *
+from database.database import *
 
 ctk.set_appearance_mode('light')
 ctk.set_default_color_theme('green')
@@ -267,5 +268,19 @@ table.pack(
 #Insert values - Data from ENTRIES - loop trough the list and insert values
 # ENTRIES = ("1/1/2020", "5/1/2020", "John Doe", "Nairobi", "Lorem Ipsum", "5", "Jane Doe", "3/1/2020", "5", "4/1/2020", "Pending")
 # table.insert("", "end", values = ENTRY)
+row_value = ()
+
+entries = pull_entries()
+
+for entry in entries:
+    row_value = (
+            entry[1], entry[2], entry[3], entry[4], entry[5],
+            entry[6], entry[8], entry[9], entry[10], entry[11], entry[12]
+        )
+    table.insert("", "end", values = row_value)
+
+
+
+
 
 window.mainloop()
