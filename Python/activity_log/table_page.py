@@ -266,6 +266,6 @@ table.pack(
 
 #Insert values - Data from ENTRIES - loop trough the list and insert values
 # ENTRIES = ("1/1/2020", "5/1/2020", "John Doe", "Nairobi", "Lorem Ipsum", "5", "Jane Doe", "3/1/2020", "5", "4/1/2020", "Pending")
-table.insert("", "end", values = ENTRY)
+# table.insert("", "end", values = ENTRY)
 
 window.mainloop()

@@ -76,6 +76,25 @@ def create_entry_table(connection):
     with connection:
         return connection.execute(CREATE_ENTRY_TABLE)
     
+def make_entry(data):
+
+    try:
+        conn = sqlite3.connect('activity_log.db')
+        cursor = conn.cursor()
+
+        sql = '''INSERT INTO log (id,entry_date,upload_date,owner,sub_county,description,floors,issues,assigned,date_moved,days_left,last_follow_up,status,remarks) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
+
+        with conn:
+            cursor.execute(sql, data)
+            conn.commit()
+        
+        conn.close()
+        print('Entry made successfully')
+        return True
+    except sqlite3.Error as e:
+        print(f"SQLite error: {e}")
+        return False
+    
 def pull_user(connection, username):
     try:
         with connection:

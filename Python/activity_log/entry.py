@@ -1,9 +1,11 @@
 import tkinter as tk
 from tkcalendar import DateEntry
 import customtkinter as ctk
+from uuid import uuid4
 
 from utils.functions import days_count
 from utils.date_picker import *
+from database.database import *
 
 ctk.set_appearance_mode('system')
 ctk.set_default_color_theme('green')
@@ -27,6 +29,8 @@ description = ctk.StringVar()
 floors = ctk.StringVar()
 assigned = ctk.StringVar()
 status = ctk.StringVar()
+Issues_entry = ctk.StringVar()
+Remarks_entry = ctk.StringVar()
 
 
 #Entry DAte
@@ -214,6 +218,36 @@ status_combo = ctk.CTkComboBox(
 
 status_combo.pack(pady=5)
 
+#Issues
+Issues_label = ctk.CTkLabel(
+    entry,
+    text = 'Issues',
+)
+Issues_label.pack()
+
+Issues_entry = ctk.CTkEntry(
+    entry,
+    width = 100,
+    height = 18,
+    textvariable = Issues_entry,
+)
+Issues_entry.pack(pady=5)
+
+#Remarks
+Remarks_label = ctk.CTkLabel(
+    entry,
+    text = 'Remarks',
+)
+Remarks_label.pack()
+
+Remarks_entry = ctk.CTkEntry(
+    entry,
+    width = 100,
+    height = 18,
+    textvariable = Remarks_entry,
+)
+Remarks_entry.pack(pady=5)
+
 
 def submit():
     global ENTRY
@@ -227,21 +261,27 @@ def submit():
         # print(days)
 
         new_list = list(ENTRY)
+        new_list.append(str(uuid4()))
         new_list.append(save_date(entry_date.get()))
         new_list.append(save_date(upload_date.get()))
         new_list.append(owner_entry.get())
         new_list.append(sub_county_entry.get())
         new_list.append(description_combo.get())
         new_list.append(floors_combo.get())
+        new_list.append(Issues_entry.get())
         new_list.append(assigned_combo.get())
         new_list.append(save_date(date_moved.get()))
         new_list.append(days)
         new_list.append(save_date(follow_up.get()))
         new_list.append(status_combo.get())
+        new_list.append(Remarks_entry.get())
         ENTRY = tuple(new_list)
         print(ENTRY)
 
         entry.destroy()
+
+        #insert data into sqlite database
+        make_entry(ENTRY)
 
 
 submit_button = ctk.CTkButton(
