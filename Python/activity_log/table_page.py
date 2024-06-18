@@ -3,6 +3,7 @@ from tkinter import ttk
 import customtkinter as ctk
 
 from entry import ENTRY
+from utils.date_picker import *
 
 ctk.set_appearance_mode('light')
 ctk.set_default_color_theme('green')
@@ -117,7 +118,7 @@ m_button3.pack(
 
 date = ctk.CTkLabel(
     window,
-    text = 'DD/MM/YYYY',
+    text = '',
     font = ('Helvetica', 20, 'bold'),
 )
 
@@ -125,6 +126,10 @@ date.grid(
     row = 0,
     column = 1,
 )
+def update_date():
+    date.configure(text = todays_date())
+
+update_date()
 
 back_button = ctk.CTkButton(
     window,
