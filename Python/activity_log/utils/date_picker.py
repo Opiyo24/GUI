@@ -8,10 +8,10 @@ def todays_date():
     return date.strftime('%a %d %b %Y')
 
 
-print(todays_date())
-
-def date_picker():
-    pass
+def save_date(value):
+    date_string = value
+    date_object = datetime.strptime(date_string, "%m/%d/%Y").date()
+    return date_object
 
 
 print(datetime.now() - datetime.now())
