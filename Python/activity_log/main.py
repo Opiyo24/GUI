@@ -5,6 +5,7 @@ import customtkinter as ctk
 # from views.login import login_page
 # from views.signin import signin
 from auth.authentication import User, is_authenticated, user_authenticated
+from views.table_page import table_page
 
 ctk.set_appearance_mode('system')
 ctk.set_default_color_theme('blue')
@@ -74,10 +75,7 @@ my_label = ctk.CTkLabel(
     font = ('Helvetica', 20),
 )
 my_label.pack(pady=40)
-# for frame in (frame1, frame1):
-#     frame.grid(row=0, column=0, sticky='nsew')
 
-# login_page(window1, frame1)
 print(user_authenticated)
 
 

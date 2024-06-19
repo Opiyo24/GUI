@@ -1,6 +1,8 @@
 import uuid
 import bcrypt
 
+# from views.table_page import table_page
+
 user_authenticated = False
 
 class User:
@@ -29,9 +31,12 @@ class User:
     
 def is_authenticated(username, widget1, password):
     global user_authenticated
-    
+
     if username.get() == '' or password.get() == '':
-        widget1.configure(text='Please fill in all fields')
+        widget1.configure(
+            text='Please fill in all fields',
+            fg_color='red',
+        )
         user_authenticated = False
         return False
     elif username.get() == 'Nashon' and password.get() == 'nashon':
@@ -39,6 +44,9 @@ def is_authenticated(username, widget1, password):
         user_authenticated = True
         return True
     else:
-        widget1.configure(text='Invalid credentials')
+        widget1.configure(
+            text='Invalid credentials',
+            fg_color = 'red',
+        )
         user_authenticated = False
         return False
