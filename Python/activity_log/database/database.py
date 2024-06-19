@@ -111,7 +111,7 @@ def pull_entries():
     with connection:
         return connection.execute(ENTRIES).fetchall()
 
-print(pull_entries())
+# print(pull_entries())
     
 def create_dev_type_table(connection):
     with connection:

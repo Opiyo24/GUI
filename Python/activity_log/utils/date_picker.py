@@ -1,6 +1,3 @@
-import tkinter as tk
-import customtkinter as ctk
-import calendar
 from datetime import datetime
 
 def todays_date():
@@ -14,4 +11,8 @@ def save_date(value):
     return date_object
 
 
-print(datetime.now() - datetime.now())
+
+
+
+if __name__ == "__main__":
+    print(datetime.now() - datetime.now())

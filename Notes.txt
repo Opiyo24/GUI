@@ -1,0 +1,22 @@
+VIEW FUNCTION
+-  Frame
+
+Window
+Title
+Center application
+    window.eval("tk::PlaceWindow . Center")
+
+
+
+FRONT PAGE
+    login
+    signup
+
+PAGE TWO
+    home
+    dashboard
+    members
+
+
+ENTRY PAGE
+    entry

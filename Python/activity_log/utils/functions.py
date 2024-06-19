@@ -1,6 +1,3 @@
-import tkinter as tk
-from tkinter import ttk
-import customtkinter as ctk
 from datetime import datetime
 
 
@@ -18,3 +15,10 @@ def days_count(start_date, end_date):
     start_date = datetime.strptime(start_date, "%m/%d/%Y").date()
     end_date = datetime.strptime(end_date, "%m/%d/%Y").date()
     return (end_date - start_date).days
+
+def clear_widgets(frame):
+    for widget in frame.winfo_children():
+        widget.destroy()
+
+if __name__ == "__main__":
+    print("Hello World!")

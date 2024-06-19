@@ -167,24 +167,6 @@ date_moved_entry = DateEntry(
 )
 date_moved_entry.pack()
 
-
-#Days left
-# days = ctk.CTkLabel(
-#     entry,
-#     text = 'Days Left',
-#     command = days_count(entry_date, date_moved),
-# )
-
-# days.pack()
-
-# days_left = ctk.CTkEntry(
-#     entry,
-#     width = 100,
-#     height = 18,
-# )
-
-# days_left.pack()
-
 #Last follow-up
 follow_up_date = ctk.CTkLabel(
     entry,
@@ -276,7 +258,7 @@ def submit():
         new_list.append(status_combo.get())
         new_list.append(Remarks_entry.get())
         ENTRY = tuple(new_list)
-        print(ENTRY)
+        # print(ENTRY)
 
         entry.destroy()
 
