@@ -33,6 +33,11 @@ username = StringVar()
 password = StringVar()
 # warning = StringVar()
 
+def validate():
+    if is_authenticated(username, my_label, password):
+        window1.destroy()
+        table_page()
+
 my_label = ctk.CTkLabel(
     frame,
     text = '',
@@ -65,7 +70,7 @@ login_button = ctk.CTkButton(
     text = 'Login',
     height = 30,
     width = 80,
-    command=lambda: is_authenticated(username, my_label, password),
+    command=lambda: validate(),
 )
 login_button.pack(pady = 20)
 

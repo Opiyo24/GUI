@@ -48,16 +48,6 @@ entry_date_entry = DateEntry(
 )
 entry_date_entry.pack()
 
-# e_d = ctk.CTkButton(
-#     entry,
-#     text = 'Select Date',
-#     height = 18,
-#     width = 20,
-#     command = date_picker,
-# )
-
-# e_d.pack(pady = 5)
-
 #Date of upload
 u_date = ctk.CTkLabel(
     entry,
