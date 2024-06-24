@@ -21,13 +21,13 @@ CREATE_ENTRY_TABLE = ("""
                       sub_county TEXT,
                       description TEXT,
                       floors INTEGER,
-                      issues TEXT,
+                      plot_no TEXT,
                       assigned TEXT,
                       date_moved DATE,
                       days_left INTEGER,
-                      last_follow_up DATE,
+                      ref_no TEXT,
                       status TEXT,
-                      remarks TEXT);
+                      issues TEXT);
                       """)
 
 ENTRIES = ("""
@@ -76,13 +76,15 @@ def create_entry_table(connection):
     with connection:
         return connection.execute(CREATE_ENTRY_TABLE)
     
+create_entry_table(conn)
+    
 def make_entry(data):
 
     try:
         conn = sqlite3.connect('activity_log.db')
         cursor = conn.cursor()
 
-        sql = '''INSERT INTO log (id,entry_date,upload_date,owner,sub_county,description,floors,issues,assigned,date_moved,days_left,last_follow_up,status,remarks) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
+        sql = '''INSERT INTO log (id,entry_date,upload_date,owner,sub_county,description,floors,plot_no,assigned,date_moved,days_left,ref_no,status,issues) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
 
         with conn:
             cursor.execute(sql, data)

@@ -21,20 +21,20 @@ def entry_function():
 
     entry_window = ctk.CTk()
 
-    global entry_date, upload_date, owner_entry, sub_county_entry, date_moved, follow_up, description, floors, assigned, status, Issues_entry, Remarks_entry
+    global entry_date, upload_date, owner_entry, sub_county_entry, date_moved, plot_no, description, floors, assigned, status, Issues_entry, ref_no
 
     entry_date = ctk.StringVar()
     upload_date = ctk.StringVar()
     owner_entry = ctk.StringVar()
     sub_county_entry = ctk.StringVar()
     date_moved = ctk.StringVar()
-    follow_up = ctk.StringVar()
+    plot_no = ctk.StringVar()
     description = ctk.StringVar()
     floors = ctk.StringVar()
     assigned = ctk.StringVar()
     status = ctk.StringVar()
     Issues_entry = ctk.StringVar()
-    Remarks_entry = ctk.StringVar()
+    ref_no = ctk.StringVar()
 
     entry_window.title('Activity Log | Entry')
     entry_window.iconbitmap('')
@@ -58,176 +58,176 @@ def entry_function():
     entry_date_entry.pack()
 
     #Date of upload
-    u_date = ctk.CTkLabel(
-        entry_window,
-        text = 'Date of Upload',
-    )
-    u_date.pack()
+    # u_date = ctk.CTkLabel(
+    #     entry_window,
+    #     text = 'Date of Upload',
+    # )
+    # u_date.pack()
 
-    upload_date_entry = DateEntry(
-        entry_window,
-        selectmode='day',
-        date_pattern='m/d/yyyy',
-        textvariable=upload_date,
-    )
-    upload_date_entry.pack()
+    # upload_date_entry = DateEntry(
+    #     entry_window,
+    #     selectmode='day',
+    #     date_pattern='m/d/yyyy',
+    #     textvariable=upload_date,
+    # )
+    # upload_date_entry.pack()
 
-    #Owner
-    owner_label = ctk.CTkLabel(
-        entry_window,
-        text = 'Owner',
-    )
-    owner_label.pack()
+    # #Owner
+    # owner_label = ctk.CTkLabel(
+    #     entry_window,
+    #     text = 'Owner',
+    # )
+    # owner_label.pack()
 
-    owner_entry_entry = ctk.CTkEntry(
-        entry_window,
-        width = 100,
-        height = 18,
-        textvariable=owner_entry,
-    )
-    owner_entry_entry.pack(pady=5)
+    # owner_entry_entry = ctk.CTkEntry(
+    #     entry_window,
+    #     width = 100,
+    #     height = 18,
+    #     textvariable=owner_entry,
+    # )
+    # owner_entry_entry.pack(pady=5)
 
-    #Sub County
-    sub_county_label = ctk.CTkLabel(
-        entry_window,
-        text = 'sub_county',
-    )
-    sub_county_label.pack()
+    # #Sub County
+    # sub_county_label = ctk.CTkLabel(
+    #     entry_window,
+    #     text = 'sub_county',
+    # )
+    # sub_county_label.pack()
 
-    sub_county_entry_entry = ctk.CTkEntry(
-        entry_window,
-        width = 100,
-        height = 18,
-        textvariable=sub_county_entry,
-    )
-    sub_county_entry_entry.pack(pady=5)
+    # sub_county_entry_entry = ctk.CTkEntry(
+    #     entry_window,
+    #     width = 100,
+    #     height = 18,
+    #     textvariable=sub_county_entry,
+    # )
+    # sub_county_entry_entry.pack(pady=5)
 
-    #Description
-    description_label = ctk.CTkLabel(
-        entry_window,
-        text = 'Description',
-    )
-    description_label.pack()
+    # #Description
+    # description_label = ctk.CTkLabel(
+    #     entry_window,
+    #     text = 'Description',
+    # )
+    # description_label.pack()
 
-    description_combo = ctk.CTkComboBox(
-        entry_window,
-        width = 150,
-        height = 18,
-        values = ['COMMERCIAL', 'RESIDENTIAL', 'MIXED USE', 'INDUSTRIAL', 'INSTITUTIONAL'],
+    # description_combo = ctk.CTkComboBox(
+    #     entry_window,
+    #     width = 150,
+    #     height = 18,
+    #     values = ['COMMERCIAL', 'RESIDENTIAL', 'MIXED USE', 'INDUSTRIAL', 'INSTITUTIONAL'],
 
-    )
-    description_combo.pack(pady=5)
+    # )
+    # description_combo.pack(pady=5)
 
-    #Floors
-    floors_label = ctk.CTkLabel(
-        entry_window,
-        text = 'Floors',
-    )
-    floors_label.pack()
+    # #Floors
+    # floors_label = ctk.CTkLabel(
+    #     entry_window,
+    #     text = 'Floors',
+    # )
+    # floors_label.pack()
 
-    floors_combo = ctk.CTkComboBox(
-        entry_window,
-        width = 150,
-        height = 18,
-        values = ['G', 'G+1', 'G+2', 'G+3', 'MEZZANINE'],
+    # floors_combo = ctk.CTkComboBox(
+    #     entry_window,
+    #     width = 150,
+    #     height = 18,
+    #     values = ['G', 'G+1', 'G+2', 'G+3', 'MEZZANINE'],
 
-    )
-    floors_combo.pack(pady=5)
+    # )
+    # floors_combo.pack(pady=5)
 
-    #Assigned
+    # #Assigned
 
-    assigned_label = ctk.CTkLabel(
-        entry_window,
-        text = 'Assigned',
-    )
-    assigned_label.pack()
+    # assigned_label = ctk.CTkLabel(
+    #     entry_window,
+    #     text = 'Assigned',
+    # )
+    # assigned_label.pack()
 
-    assigned_combo = ctk.CTkComboBox(
-        entry_window,
-        width = 150,
-        height = 18,
-        values = ['Brian', 'Quincy', 'Sugoi', 'Gabriel', 'Opoyo'],
+    # assigned_combo = ctk.CTkComboBox(
+    #     entry_window,
+    #     width = 150,
+    #     height = 18,
+    #     values = ['Brian', 'Quincy', 'Sugoi', 'Gabriel', 'Opoyo'],
 
-    )
-    assigned_combo.pack(pady=5)
+    # )
+    # assigned_combo.pack(pady=5)
 
-    #Date moved
-    m_date = ctk.CTkLabel(
-        entry_window,
-        text = 'Date Moved',
-    )
-    m_date.pack()
+    # #Date moved
+    # m_date = ctk.CTkLabel(
+    #     entry_window,
+    #     text = 'Date Moved',
+    # )
+    # m_date.pack()
 
-    date_moved_entry = DateEntry(
-        entry_window,
-        selectmode='day',
-        date_pattern='m/d/yyyy',
-        textvariable=date_moved,
-    )
-    date_moved_entry.pack()
+    # date_moved_entry = DateEntry(
+    #     entry_window,
+    #     selectmode='day',
+    #     date_pattern='m/d/yyyy',
+    #     textvariable=date_moved,
+    # )
+    # date_moved_entry.pack()
 
-    #Last follow-up
-    follow_up_date = ctk.CTkLabel(
-        entry_window,
-        text = 'Last Follow-Up',
-    )
-    follow_up_date.pack()
+    # #Last follow-up
+    # plot_no = ctk.CTkLabel(
+    #     entry_window,
+    #     text = 'Plot No',
+    # )
+    # plot_no.pack()
 
-    follow_up_entry = DateEntry(
-        entry_window,
-        selectmode='day',
-        date_pattern='m/d/yyyy',
-        textvariable=follow_up,
-    )
-    follow_up_entry.pack()
+    # plot_no_entry = ctk.CTkEntry(
+    #     entry_window,
+    #     width = 100,
+    #     height = 18,
+    #     textvariable=plot_no,
+    # )
+    # plot_no_entry.pack()
 
 
-    #status
-    status_label = ctk.CTkLabel(
-        entry_window,
-        text = 'Status',
-    )
-    status_label.pack()
+    # #status
+    # status_label = ctk.CTkLabel(
+    #     entry_window,
+    #     text = 'Status',
+    # )
+    # status_label.pack()
 
-    status_combo = ctk.CTkComboBox(
-        entry_window,
-        width = 150,
-        height = 18,
-        values = ['PENDING', 'APPROVED', 'REJECTED', 'REVIEW'],
+    # status_combo = ctk.CTkComboBox(
+    #     entry_window,
+    #     width = 150,
+    #     height = 18,
+    #     values = ['PENDING', 'APPROVED', 'REJECTED', 'REVIEW'],
 
-    )
+    # )
 
-    status_combo.pack(pady=5)
+    # status_combo.pack(pady=5)
 
-    #Issues
-    Issues_label = ctk.CTkLabel(
-        entry_window,
-        text = 'Issues',
-    )
-    Issues_label.pack()
+    # #Issues
+    # Issues_label = ctk.CTkLabel(
+    #     entry_window,
+    #     text = 'Issues',
+    # )
+    # Issues_label.pack()
 
-    Issues_entry = ctk.CTkEntry(
-        entry_window,
-        width = 100,
-        height = 18,
-        textvariable = Issues_entry,
-    )
-    Issues_entry.pack(pady=5)
+    # Issues_entry = ctk.CTkEntry(
+    #     entry_window,
+    #     width = 100,
+    #     height = 18,
+    #     textvariable = Issues_entry,
+    # )
+    # Issues_entry.pack(pady=5)
 
-    #Remarks
-    Remarks_label = ctk.CTkLabel(
-        entry_window,
-        text = 'Remarks',
-    )
-    Remarks_label.pack()
+    # #Remarks
+    # ref_no_label = ctk.CTkLabel(
+    #     entry_window,
+    #     text = 'Ref No',
+    # )
+    # ref_no_label.pack()
 
-    Remarks_entry = ctk.CTkEntry(
-        entry_window,
-        width = 100,
-        height = 18,
-        textvariable = Remarks_entry,
-    )
-    Remarks_entry.pack(pady=5)
+    # ref_no_entry = ctk.CTkEntry(
+    #     entry_window,
+    #     width = 100,
+    #     height = 18,
+    #     textvariable = ref_no_entry,
+    # )
+    # ref_no_entry.pack(pady=5)
 
     submit_button = ctk.CTkButton(
         entry_window,
@@ -254,7 +254,7 @@ def submit(window):
     
 
     if (entry_date.get() == '' or upload_date.get() == '' or owner_entry.get() == '' or
-            sub_county_entry.get() == '' or date_moved.get() == '' or follow_up.get() == '' or
+            sub_county_entry.get() == '' or date_moved.get() == '' or plot_no.get() == '' or
             description_combo.get() == '' or floors_combo.get() == '' or assigned_combo.get() == '' or status_combo.get() == ''):
         alert_label.configure(text='All fields are required', text_color='red')
     else:
@@ -273,9 +273,9 @@ def submit(window):
         new_list.append(assigned_combo.get())
         new_list.append(save_date(date_moved.get()))
         new_list.append(days)
-        new_list.append(save_date(follow_up.get()))
+        new_list.append(save_date(plot_no.get()))
         new_list.append(status_combo.get())
-        new_list.append(Remarks_entry.get())
+        new_list.append(ref_no.get())
         ENTRY = tuple(new_list)
         # print(ENTRY)
 
@@ -304,10 +304,11 @@ def table_page():
         "Sub-County",
         "Description",
         "Floors",
+        "Plot No",
         "Assigned",
         "Date Moved",
         "Days Left",
-        "Last Follow-Up",
+        "Ref No",
         "Status",
     ]
 
@@ -529,11 +530,12 @@ def table_page():
     table.heading("Owner", text = "Owner")
     table.heading("Sub-County", text = "Sub-County")
     table.heading("Description", text = "Description")
-    table.heading("Floors", text = "Floors")    
+    table.heading("Floors", text = "Floors") 
+    table.heading("Plot No", text = "Plot No")   
     table.heading("Assigned", text = "Assigned")
     table.heading("Date Moved", text = "Date Moved")
     table.heading("Days Left", text = "Days Left")
-    table.heading("Last Follow-Up", text = "Last Follow-Up")
+    table.heading("Ref No", text = "Ref No")
     table.heading("Status", text = "Status")
     table.pack(
         fill = 'both',
@@ -548,7 +550,7 @@ def table_page():
     for entry in entries:
         row_value = (
                 entry[1], entry[2], entry[3], entry[4], entry[5],
-                entry[6], entry[8], entry[9], entry[10], entry[11], 
+                entry[6], entry[7], entry[8], entry[9], entry[10], entry[11], 
                 entry[12]
             )
         table.insert("", "end", values = row_value)

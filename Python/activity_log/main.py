@@ -1,4 +1,5 @@
 from tkinter import *
+import sqlite3
 import customtkinter as ctk
 
 # from utils.functions import *
@@ -6,6 +7,7 @@ import customtkinter as ctk
 # from views.signin import signin
 from auth.authentication import User, is_authenticated, user_authenticated
 from views.table_page import table_page
+from database.database import *
 
 ctk.set_appearance_mode('system')
 ctk.set_default_color_theme('blue')
@@ -34,8 +36,12 @@ password = StringVar()
 # warning = StringVar()
 
 def validate():
+    # conn = sqlite3.connect('activity_log.db')
+    # cursor = conn.cursor()
+
     if is_authenticated(username, my_label, password):
         window1.destroy()
+        # create_entry_table(conn)
         table_page()
 
 my_label = ctk.CTkLabel(
