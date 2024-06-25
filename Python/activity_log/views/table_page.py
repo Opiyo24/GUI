@@ -41,7 +41,7 @@ def entry_function():
     entry_window.geometry('500x900')
 
 
-
+#TODO: Style the entry window with place  
     #Entry DAte
     e_date = ctk.CTkLabel(
         entry_window,
@@ -229,6 +229,7 @@ def entry_function():
     # )
     # ref_no_entry.pack(pady=5)
 
+
     submit_button = ctk.CTkButton(
         entry_window,
         text = 'Submit',
@@ -250,6 +251,9 @@ def entry_function():
 
 
 def submit(window):
+    #TODO: Deal with time formats for data manipulation
+    #TODO: Destroy window,
+    #TODO: Have the entry function return data in string format
     global ENTRY
     
 
