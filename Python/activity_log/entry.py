@@ -13,8 +13,16 @@ ctk.set_default_color_theme('green')
 entry = ctk.CTk()
 
 entry.title('Activity Log | Entry')
+entry.title('entry_date')
 entry.iconbitmap('')
 entry.geometry('700x400')
+entry.minsize(700, 400)
+entry.maxsize(700, 400)
+entry.rowconfigure((0, 1, 2, 3, 4), weight = 1, uniform = 'a')
+entry.columnconfigure((0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19), weight = 1, uniform = 'a')
+entry.configure(bg='#f5f7f8')
+entry.configure(fg='#f5f7f8')
+
 
 ENTRY = ()
 
@@ -34,191 +42,542 @@ Remarks_entry = ctk.StringVar()
 
 
 #Entry DAte
-e_date = ctk.CTkLabel(
+entry_frame = ctk.CTkFrame(
     entry,
+    bg_color = '#f5f7f8',
+    fg_color = '#f5f7f8',
+    # border_width = 2,
+    # border_color = 'black',
+)
+entry_frame.grid(
+    row = 0,
+    column = 0,
+    columnspan = 4,
+    sticky = 'news',
+)
+e = ctk.CTkLabel(
+    entry_frame,
+    text = '',
+    height = 10,
+)
+e.pack()
+
+entry_date = ctk.CTkLabel(
+    entry_frame,
     text = 'Entry Date',
 )
-e_date.pack()
+entry_date.pack(
+    anchor = 'w',
+)
 
 entry_date_entry = DateEntry(
-    entry,
+    entry_frame,
+    width = 18,
+    height = 32,
     selectmode='day',
     date_pattern='m/d/yyyy',
-    textvariable=entry_date,
+    # padx = 10,
+    textvariable=upload_date,
 )
-entry_date_entry.pack()
+entry_date_entry.pack(
+    anchor = 'w',
+)
 
-#Date of upload
-# u_date = ctk.CTkLabel(
-#     entry,
-#     text = 'Date of Upload',
-# )
-# u_date.pack()
+# Date of upload
+upload_frame = ctk.CTkFrame(
+    entry,
+    bg_color = '#f5f7f8',
+    fg_color = '#f5f7f8',
+    # border_width = 2,
+    # border_color = 'black',
+)
+upload_frame.grid(
+    row = 0,
+    column = 4,
+    columnspan = 4,
+    sticky = 'news',
+)
+e = ctk.CTkLabel(
+    upload_frame,
+    text = '',
+    height = 10,
+)
+e.pack()
+u_date = ctk.CTkLabel(
+    upload_frame,
+    text = 'Date of Upload',
+)
+u_date.pack(
+    anchor = 'w',
+)
 
-# upload_date_entry = DateEntry(
-#     entry,
-#     selectmode='day',
-#     date_pattern='m/d/yyyy',
-#     textvariable=upload_date,
-# )
-# upload_date_entry.pack()
+upload_date_entry = DateEntry(
+    upload_frame,
+    width = 18,
+    height = 32,
+    selectmode='day',
+    date_pattern='m/d/yyyy',
+    # padx = 10,
+    textvariable=upload_date,
+)
+upload_date_entry.pack(
+    anchor = 'w',
+)
 
+owner_frame = ctk.CTkFrame(
+    entry,
+    bg_color = '#f5f7f8',
+    fg_color = '#f5f7f8',
+    # border_width = 2,
+    # border_color = 'black',
+)
+
+owner_frame.grid(
+    row = 0,
+    column = 8,
+    columnspan = 6,
+    sticky = 'news',
+)
+e = ctk.CTkLabel(
+    owner_frame,
+    text = '',
+    height = 10,
+)
+e.pack(anchor = 'w')
 # #Owner
-# owner_label = ctk.CTkLabel(
-#     entry,
-#     text = 'Owner',
-# )
-# owner_label.pack()
+owner_label = ctk.CTkLabel(
+    owner_frame,
+    text = 'Owner',
+)
+owner_label.pack(
+    anchor = 'w',
+    padx = 10,
+    # pady = 10,
+)
 
-# owner_entry_entry = ctk.CTkEntry(
-#     entry,
-#     width = 100,
-#     height = 18,
-#     textvariable=owner_entry,
-# )
-# owner_entry_entry.pack(pady=5)
+owner_entry_entry = ctk.CTkEntry(
+    owner_frame,
+    width = 250,
+    height = 32,
+    textvariable=owner_entry,
+)
+owner_entry_entry.pack(
+    anchor = 'w',
+    padx = 10,
+    # pady = 10,
+)
+
+
+plot_frame = ctk.CTkFrame(
+    entry,
+    bg_color = '#f5f7f8',
+    fg_color = '#f5f7f8',
+    # border_width = 2,
+    # border_color = 'black',
+)
+
+plot_frame.grid(
+    row = 0,
+    column = 14,
+    columnspan = 6,
+    sticky = 'news',
+)
+e = ctk.CTkLabel(
+    plot_frame,
+    text = '',
+    height = 10,
+)
+e.pack()
+
+plot_no = ctk.CTkLabel(
+    plot_frame,
+    text = 'Plot No',
+)
+plot_no.pack(anchor = 'w')
+
+plot_no_entry = ctk.CTkEntry(
+    plot_frame,
+    width = 200,
+    height = 32,
+)
+plot_no_entry.pack(anchor = 'w')
 
 # #Sub County
-# sub_county_label = ctk.CTkLabel(
-#     entry,
-#     text = 'sub_county',
-# )
-# sub_county_label.pack()
+sub_county_frame = ctk.CTkFrame(
+    entry,
+    bg_color = '#f5f7f8',
+    fg_color = '#f5f7f8',
+    # border_width = 2,
+    # border_color = 'black',
+)
 
-# sub_county_entry_entry = ctk.CTkEntry(
-#     entry,
-#     width = 100,
-#     height = 18,
-#     textvariable=sub_county_entry,
-# )
-# sub_county_entry_entry.pack(pady=5)
+sub_county_frame.grid(
+    row = 1,
+    column = 0,
+    columnspan = 6,
+    sticky = 'news',
+)
+e = ctk.CTkLabel(
+    sub_county_frame,
+    text = '',
+    height = 10,
+)
+e.pack()
+
+sub_county_label = ctk.CTkLabel(
+    sub_county_frame,
+    text = 'sub_county',
+)
+sub_county_label.pack(anchor = 'w')
+
+sub_county_entry = ctk.CTkEntry(
+    sub_county_frame,
+    width = 200,
+    height = 32,
+    textvariable=sub_county_entry,
+)
+sub_county_entry.pack(anchor = 'w')
 
 # #Description
-# description_label = ctk.CTkLabel(
-#     entry,
-#     text = 'Description',
-# )
-# description_label.pack()
+description_frame = ctk.CTkFrame(
+    entry,
+    bg_color = '#f5f7f8',
+    fg_color = '#f5f7f8',
+    # border_width = 2,
+    # border_color = 'black',
+)
 
-# description_combo = ctk.CTkComboBox(
-#     entry,
-#     width = 150,
-#     height = 18,
-#     values = ['COMMERCIAL', 'RESIDENTIAL', 'MIXED USE', 'INDUSTRIAL', 'INSTITUTIONAL'],
+description_frame.grid(
+    row = 1,
+    column = 6,
+    columnspan = 7,
+    sticky = 'news',
+)
+e = ctk.CTkLabel(
+    description_frame,
+    text = '',
+    height = 10,
+)
+e.pack()
 
-# )
-# description_combo.pack(pady=5)
+description_label = ctk.CTkLabel(
+    description_frame,
+    text = 'Description',
+)
+description_label.pack(anchor = 'w')
+
+description_combo = ctk.CTkComboBox(
+    description_frame,
+    width = 150,
+    height = 32,
+    values = ['COMMERCIAL', 'RESIDENTIAL', 'MIXED USE', 'INDUSTRIAL', 'INSTITUTIONAL'],
+
+)
+description_combo.pack(anchor = 'w')
 
 # #Floors
-# floors_label = ctk.CTkLabel(
-#     entry,
-#     text = 'Floors',
-# )
-# floors_label.pack()
+floors_frame = ctk.CTkFrame(
+    entry,
+    bg_color = '#f5f7f8',
+    fg_color = '#f5f7f8',
+    # border_width = 2,
+    # border_color = 'black',
+)
 
-# floors_combo = ctk.CTkComboBox(
-#     entry,
-#     width = 150,
-#     height = 18,
-#     values = ['G', 'G+1', 'G+2', 'G+3', 'MEZZANINE'],
+floors_frame.grid(
+    row = 1,
+    column = 13,
+    columnspan = 7,
+    sticky = 'news',
+)
+e = ctk.CTkLabel(
+    floors_frame,
+    text = '',
+    height = 10,
+)
+e.pack()
+floors_label = ctk.CTkLabel(
+    floors_frame,
+    text = 'Floors',
+)
+floors_label.pack(anchor ='w')
 
-# )
-# floors_combo.pack(pady=5)
+floors_combo = ctk.CTkComboBox(
+    floors_frame,
+    width = 150,
+    height = 32,
+    values = ['G', 'G+1', 'G+2', 'G+3', 'MEZZANINE'],
+
+)
+floors_combo.pack(anchor ='w')
 
 # #Assigned
+assigned_frame = ctk.CTkFrame(
+    entry,
+    bg_color = '#f5f7f8',
+    fg_color = '#f5f7f8',
+    # border_width = 2,
+    # border_color = 'black',
+)
 
-# assigned_label = ctk.CTkLabel(
-#     entry,
-#     text = 'Assigned',
-# )
-# assigned_label.pack()
+assigned_frame.grid(
+    row = 2,
+    column = 0,
+    columnspan = 5,
+    sticky = 'news',
+)
+e = ctk.CTkLabel(
+    assigned_frame,
+    text = '',
+    height = 10,
+)
+e.pack()
 
-# assigned_combo = ctk.CTkComboBox(
-#     entry,
-#     width = 150,
-#     height = 18,
-#     values = ['Brian', 'Quincy', 'Sugoi', 'Gabriel', 'Opoyo'],
+assigned_label = ctk.CTkLabel(
+    assigned_frame,
+    text = 'Assigned',
+)
+assigned_label.pack(anchor = 'w')
 
-# )
-# assigned_combo.pack(pady=5)
+assigned_combo = ctk.CTkComboBox(
+    assigned_frame,
+    width = 150,
+    height = 32,
+    values = ['Brian', 'Quincy', 'Sugoi', 'Gabriel', 'Opoyo'],
 
+)
+assigned_combo.pack(anchor = 'w')
+
+
+#Empty frame
+empty1_frame = ctk.CTkFrame(
+    entry,
+    bg_color = '#f5f7f8',
+    fg_color = '#f5f7f8',
+    # border_width = 2,
+    # border_color = 'black',
+)
+
+empty1_frame.grid(
+    row = 2,
+    column = 5,
+    columnspan = 1,
+    sticky = 'news',
+)
 # #Date moved
-# m_date = ctk.CTkLabel(
-#     entry,
-#     text = 'Date Moved',
-# )
-# m_date.pack()
+dm_frame = ctk.CTkFrame(
+    entry,
+    bg_color = '#f5f7f8',
+    fg_color = '#f5f7f8',
+    # border_width = 2,
+    # border_color = 'black',
+)
 
-# date_moved_entry = DateEntry(
-#     entry,
-#     selectmode='day',
-#     date_pattern='m/d/yyyy',
-#     textvariable=date_moved,
-# )
-# date_moved_entry.pack()
+dm_frame.grid(
+    row = 2,
+    column = 6,
+    columnspan = 4,
+    sticky = 'news',
+)
+e = ctk.CTkLabel(
+    dm_frame,
+    text = '',
+    height = 10,
+)
+e.pack()
 
+m_date = ctk.CTkLabel(
+    dm_frame,
+    text = 'Date Moved',
+)
+m_date.pack(anchor = 'w')
+
+date_moved_entry = DateEntry(
+    dm_frame,
+    selectmode='day',
+    date_pattern='m/d/yyyy',
+    textvariable=date_moved,
+)
+date_moved_entry.pack(anchor ='w')
+
+
+#empty frame
+empty3_frame = ctk.CTkFrame(
+    entry,
+    bg_color = '#f5f7f8',
+    fg_color = '#f5f7f8',
+    # border_width = 2,
+    # border_color = 'black',
+)
+
+empty3_frame.grid(
+    row = 2,
+    column = 10,
+    columnspan = 1,
+    sticky = 'news',
+)
 # #Last follow-up
-# follow_up_date = ctk.CTkLabel(
-#     entry,
-#     text = 'Last Follow-Up',
-# )
-# follow_up_date.pack()
+last_frame = ctk.CTkFrame(
+    entry,
+    bg_color = '#f5f7f8',
+    fg_color = '#f5f7f8',
+    # border_width = 2,
+    # border_color = 'black',
+)
 
-# follow_up_entry = DateEntry(
-#     entry,
-#     selectmode='day',
-#     date_pattern='m/d/yyyy',
-#     textvariable=follow_up,
-# )
-# follow_up_entry.pack()
+last_frame.grid(
+    row = 2,
+    column = 11,
+    columnspan = 5,
+    sticky = 'news',
+)
+e = ctk.CTkLabel(
+    last_frame,
+    text = '',
+    height = 10,
+)
+e.pack()
+
+ref_number_label = ctk.CTkLabel(
+    last_frame,
+    text = 'Ref No'
+)
+
+ref_number_label.pack(anchor = 'w')
+
+ref_number_entry = ctk.CTkEntry(
+    last_frame,
+    height = 32,
+)
+ref_number_entry.pack(anchor = 'w')
 
 
+#empty frame
+empty3_frame = ctk.CTkFrame(
+    entry,
+    bg_color = '#f5f7f8',
+    fg_color = '#f5f7f8',
+    # border_width = 2,
+    # border_color = 'black',
+)
+
+empty3_frame.grid(
+    row = 2,
+    column = 16,
+    columnspan = 1,
+    sticky = 'news',
+)
 # #status
-# status_label = ctk.CTkLabel(
-#     entry,
-#     text = 'Status',
-# )
-# status_label.pack()
+status_frame = ctk.CTkFrame(
+    entry,
+    bg_color = '#f5f7f8',
+    fg_color = '#f5f7f8',
+    # border_width = 2,
+    # border_color = 'black',
+)
 
-# status_combo = ctk.CTkComboBox(
-#     entry,
-#     width = 150,
-#     height = 18,
-#     values = ['PENDING', 'APPROVED', 'REJECTED', 'REVIEW'],
+status_frame.grid(
+    row = 2,
+    column = 17,
+    columnspan = 3,
+    sticky = 'news',
+)
+e = ctk.CTkLabel(
+    status_frame,
+    text = '',
+    height = 10,
+)
+e.pack()
 
-# )
+status_label = ctk.CTkLabel(
+    status_frame,
+    text = 'Status',
+)
+status_label.pack(anchor = 'w')
 
-# status_combo.pack(pady=5)
+status_combo = ctk.CTkComboBox(
+    status_frame,
+    width = 150,
+    height = 32,
+    values = ['PENDING', 'APPROVED', 'REJECTED', 'REVIEW'],
+)
+status_combo.pack(anchor = 'w')
 
 # #Issues
-# Issues_label = ctk.CTkLabel(
-#     entry,
-#     text = 'Issues',
-# )
-# Issues_label.pack()
+issues_frame = ctk.CTkFrame(
+    entry,
+    bg_color = '#f5f7f8',
+    fg_color = '#f5f7f8',
+    # border_width = 2,
+    # border_color = 'black',
+)
 
-# Issues_entry = ctk.CTkEntry(
-#     entry,
-#     width = 100,
-#     height = 18,
-#     textvariable = Issues_entry,
-# )
-# Issues_entry.pack(pady=5)
+issues_frame.grid(
+    row = 3,
+    column = 0,
+    columnspan = 10,
+    sticky = 'news',
+)
 
+Issues_label = ctk.CTkLabel(
+    issues_frame,
+    text = 'Issues',
+)
+Issues_label.pack(anchor = 'w')
+
+Issues_entry = ctk.CTkEntry(
+    issues_frame,
+    width = 350,
+    height =50,
+    textvariable = Issues_entry,
+)
+Issues_entry.pack(anchor = 'w')
+
+
+#empty frame
+empty4_frame = ctk.CTkFrame(
+    entry,
+    bg_color = '#f5f7f8',
+    fg_color = '#f5f7f8',
+    # border_width = 2,
+    # border_color = 'black',
+)
+
+empty4_frame.grid(
+    row = 3,
+    column = 10,
+    columnspan = 1,
+    sticky = 'news',
+)
 # #Remarks
-# Remarks_label = ctk.CTkLabel(
-#     entry,
-#     text = 'Remarks',
-# )
-# Remarks_label.pack()
+remarks_frame = ctk.CTkFrame(
+    entry,
+    bg_color = '#f5f7f8',
+    fg_color = '#f5f7f8',
+    # border_width = 2,
+    # border_color = 'black',
+)
 
-# Remarks_entry = ctk.CTkEntry(
-#     entry,
-#     width = 100,
-#     height = 18,
-#     textvariable = Remarks_entry,
-# )
-# Remarks_entry.pack(pady=5)
+remarks_frame.grid(
+    row = 3,
+    column = 11,
+    columnspan = 9,
+    sticky = 'news',
+)
+
+Remarks_label = ctk.CTkLabel(
+    remarks_frame,
+    text = 'Remarks',
+)
+Remarks_label.pack(anchor = 'w')
+
+Remarks_entry = ctk.CTkEntry(
+    remarks_frame,
+    width = 320,
+    height = 50,
+    textvariable = Remarks_entry,
+)
+Remarks_entry.pack(anchor = 'w')
 
 
 # def submit():
@@ -256,27 +615,124 @@ entry_date_entry.pack()
 #         make_entry(ENTRY)
 
 
-submit_button = ctk.CTkButton(
+submit_frame = ctk.CTkFrame(
     entry,
-    text = 'Submit',
-    height = 18,
-    width = 20,
-    # command = submit,
+    bg_color = '#f5f7f8',
+    fg_color = '#f5f7f8',
+    # border_width = 2,
+    # border_color = 'black',
 )
 
-submit_button.pack(pady = 10)
+submit_frame.grid(
+    row = 4,
+    column = 18,
+    columnspan = 2,
+    sticky = 'news',
+)
+
+submit_button = ctk.CTkButton(
+    submit_frame,
+    text = 'SUBMIT',
+    height = 30,
+    width = 24,
+    # command = submit,
+)
+submit_button.pack(padx = 2,
+                   pady = 30)
+
+cancel_frame = ctk.CTkFrame(
+    entry,
+    bg_color = '#f5f7f8',
+    fg_color = '#f5f7f8',
+    # border_width = 2,
+    # border_color = 'black',
+)
+
+cancel_frame.grid(
+    row = 4,
+    column = 16,
+    columnspan = 2,
+    sticky = 'news',
+)
+cancel_button = ctk.CTkButton(
+    cancel_frame,
+    text = 'CANCEL',
+    height = 30,
+    width = 24,
+    # command = submit,
+)
+cancel_button.pack(padx = 2,
+                   pady = 30)
+
+clear_frame = ctk.CTkFrame(
+    entry,
+    bg_color = '#f5f7f8',
+    fg_color = '#f5f7f8',
+    # border_width = 2,
+    # border_color = 'black',
+)
+
+clear_frame.grid(
+    row = 4,
+    column = 14,
+    columnspan = 2,
+    sticky = 'news',
+)
+clear_button = ctk.CTkButton(
+    clear_frame,
+    text = 'CLEAR',
+    height = 30,
+    width = 24,
+    bg_color = '#f5f7f8',
+    fg_color = '#f5f7f8',
+    # command = clear,
+)
+clear_button.pack(padx = 2,
+                   pady = 30)
+
+empty_frame = ctk.CTkFrame(
+    entry,
+    bg_color = '#f5f7f8',
+    fg_color = '#f5f7f8',
+    # border_width = 2,
+    # border_color = 'black',
+)
+
+empty_frame.grid(
+    row = 4,
+    column = 0,
+    columnspan = 1,
+    sticky = 'news',
+)
+
+#empty frame
+empty5_frame = ctk.CTkFrame(
+    entry,
+    bg_color = '#f5f7f8',
+    fg_color = '#f5f7f8',
+    # border_width = 2,
+    # border_color = 'black',
+)
+
+empty5_frame.grid(
+    row = 4,
+    column = 1,
+    columnspan = 13,
+    sticky = 'news',
+)
+
 
 alert_label = ctk.CTkLabel(
     entry,
     text = '',
 )
-alert_label.pack()
+# alert_label.pack()
 
 
 entry.mainloop()
 
-if __name__ == "__main__":
-    entry()
+# if __name__ == "__main__":
+#     entry()
 
 
 

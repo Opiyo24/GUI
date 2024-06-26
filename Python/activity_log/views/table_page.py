@@ -1,4 +1,5 @@
 import tkinter as tk
+from datetime import datetime
 from tkcalendar import DateEntry
 from tkinter import ttk
 import customtkinter as ctk
@@ -17,11 +18,18 @@ ENTRY = ()
 
 def entry_function():
 
+    global entry_date, upload_date, owner_entry, sub_county_entry, date_moved, plot_no, description, floors, assigned, status, Issues_entry, ref_no
     global description_combo, floors_combo, assigned_combo, status_combo, alert_label
 
+    #TODO: Update window title to render todays date
     entry_window = ctk.CTk()
-
-    global entry_date, upload_date, owner_entry, sub_county_entry, date_moved, plot_no, description, floors, assigned, status, Issues_entry, ref_no
+    entry_window.title('entry_date')
+    entry_window.iconbitmap('')
+    entry_window.geometry('700x400')
+    entry_window.minsize(700, 400)
+    entry_window.maxsize(700, 400)
+    entry_window.rowconfigure((0, 1, 2, 3, 4), weight = 1, uniform = 'a')
+    entry_window.columnconfigure((0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19), weight = 1, uniform = 'a')
 
     entry_date = ctk.StringVar()
     upload_date = ctk.StringVar()
