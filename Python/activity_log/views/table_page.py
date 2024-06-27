@@ -731,6 +731,7 @@ def entry_function():
 
 
 def submit(window):
+
     from CustomTkinterMessagebox import CTkMessagebox
 
     #TODO: Deal with time formats for data manipulation
@@ -738,6 +739,7 @@ def submit(window):
     #TODO: Have the entry function return data in string format
     global ENTRY
     global entry_date_entry, upload_date_entry, owner_entry_entry, sub_county_combo, plot_no_entry, description_combo, floors_combo, assigned_combo, date_moved_entry, ref_number_entry, status_combo, Issues_entry, Remarks_entry 
+    global table
 
     entry_date = entry_date_entry.get()
     upload_date = upload_date_entry.get()
@@ -804,10 +806,28 @@ def submit(window):
         #insert data into sqlite database
         make_entry(ENTRY)
         #TODO: Update table data by refreshing
+        
+        for row in table.get_children():
+            table.delete(row)
 
+        row_value = ()
+
+        entries = pull_entries()
+        print(entries)
+
+        for entry in entries:
+            row_value = (
+                    entry[1], entry[2], entry[3], entry[4], entry[5],
+                    entry[6], entry[11], entry[8], entry[9], entry[10], entry[13], 
+                    entry[12]
+                )
+            table.insert("", "end", values = row_value)
+
+        
 
 
 def table_page():
+    global table
     window = ctk.CTk()
 
     window.title('Activity Log')
