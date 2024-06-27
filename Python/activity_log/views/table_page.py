@@ -18,7 +18,8 @@ ENTRY = ()
 
 def entry_function():
 
-    global entry_date, upload_date, owner_entry,  date_moved, plot_no, description, floors, assigned, status, Issues_entry, ref_no, Remarks_entry
+    global ENTRY
+    global entry_date, upload_date, owner, sub_county, date_moved, plot_no, description, floors, assigned, status, issues, ref_no, remarks
     global sub_county_combo, description_combo, floors_combo, assigned_combo, status_combo, alert_label
 
     #TODO: Update window title to render todays date
@@ -35,7 +36,7 @@ def entry_function():
 
     entry_date = ctk.StringVar()
     upload_date = ctk.StringVar()
-    owner_entry = ctk.StringVar()
+    owner = ctk.StringVar()
     sub_county_combo = ctk.StringVar()
     date_moved = ctk.StringVar()
     plot_no = ctk.StringVar()
@@ -43,9 +44,9 @@ def entry_function():
     floors = ctk.StringVar()
     assigned = ctk.StringVar()
     status = ctk.StringVar()
-    Issues_entry = ctk.StringVar()
+    issues = ctk.StringVar()
     ref_no = ctk.StringVar()
-    Remarks_entry = ctk.StringVar()
+    remarks = ctk.StringVar()
 
     entry_window.title('Activity Log | Entry')
     entry_window.iconbitmap('')
@@ -91,11 +92,12 @@ def entry_function():
         selectmode='day',
         date_pattern='m/d/yyyy',
         # padx = 10,
-        textvariable=upload_date,
+        textvariable=entry_date,
     )
     entry_date_entry.pack(
         anchor = 'w',
     )
+    entry_date = entry_date_entry.get()
 
     #Upload Date
     upload_frame = ctk.CTkFrame(
@@ -139,6 +141,7 @@ def entry_function():
     upload_date_entry.pack(
         anchor = 'w',
     )
+    upload_date = upload_date_entry.get()
 
     owner_frame = ctk.CTkFrame(
         entry_window,
@@ -177,13 +180,14 @@ def entry_function():
         owner_frame,
         width = 250,
         height = 32,
-        textvariable=owner_entry,
+        textvariable=owner,
     )
     owner_entry_entry.pack(
         anchor = 'w',
         padx = 10,
         # pady = 10,
     )
+    owner = owner_entry_entry.get()
 
 
     plot_frame = ctk.CTkFrame(
@@ -221,6 +225,7 @@ def entry_function():
         height = 32,
     )
     plot_no_entry.pack(anchor = 'w')
+    plot_no = plot_no_entry.get()
 
     # #Sub County
     sub_county_frame = ctk.CTkFrame(
@@ -260,6 +265,7 @@ def entry_function():
         # textvariable=sub_county_entry,
     )
     sub_county_combo.pack(anchor = 'w')
+    sub_county = sub_county_combo.get()
 
     # #Description
     description_frame = ctk.CTkFrame(
@@ -299,6 +305,7 @@ def entry_function():
 
     )
     description_combo.pack(anchor = 'w')
+    description = description_combo.get()
 
     # #Floors
     floors_frame = ctk.CTkFrame(
@@ -337,6 +344,7 @@ def entry_function():
 
     )
     floors_combo.pack(anchor ='w')
+    floors = floors_combo.get()
 
     # #Assigned
     assigned_frame = ctk.CTkFrame(
@@ -372,10 +380,11 @@ def entry_function():
         assigned_frame,
         width = 150,
         height = 32,
-        values = ['', 'Brian', 'Quincy', 'Sugoi', 'Gabriel', 'Opoyo'],
+        values = ['', 'Brian', 'Quincy', 'Sugut', 'Gabriel', 'Opoyo'],
 
     )
     assigned_combo.pack(anchor = 'w')
+    assigned = assigned_combo.get()
 
 
     #Empty frame
@@ -430,6 +439,7 @@ def entry_function():
         textvariable=date_moved,
     )
     date_moved_entry.pack(anchor ='w')
+    date_moved = date_moved_entry.get()
 
 
     #empty frame
@@ -483,6 +493,7 @@ def entry_function():
         height = 32,
     )
     ref_number_entry.pack(anchor = 'w')
+    ref_no = ref_number_entry.get()
 
 
     #empty frame
@@ -537,6 +548,7 @@ def entry_function():
         values = ['', 'PENDING', 'APPROVED', 'REJECTED', 'REVIEW'],
     )
     status_combo.pack(anchor = 'w')
+    status = status_combo.get()
 
     # #Issues
     issues_frame = ctk.CTkFrame(
@@ -566,9 +578,10 @@ def entry_function():
         issues_frame,
         width = 350,
         height =50,
-        textvariable = Issues_entry,
+        textvariable = issues,
     )
     Issues_entry.pack(anchor = 'w')
+    issues = Issues_entry.get()
 
 
     #empty frame
@@ -614,9 +627,10 @@ def entry_function():
         remarks_frame,
         width = 320,
         height = 50,
-        textvariable = Remarks_entry,
+        textvariable = remarks,
     )
     Remarks_entry.pack(anchor = 'w')
+    remarks = Remarks_entry.get()
 
 
     submit_frame = ctk.CTkFrame(
@@ -639,7 +653,7 @@ def entry_function():
         text = 'SUBMIT',
         height = 30,
         width = 24,
-        # command = submit,
+        command = submit(entry_window),
     )
     submit_button.pack(padx = 2,
                     pady = 30)
@@ -663,7 +677,7 @@ def entry_function():
         text = 'CANCEL',
         height = 30,
         width = 24,
-        command = submit,
+        command = lambda: submit(entry_window),
     )
     cancel_button.pack(padx = 2,
                     pady = 30)
@@ -741,38 +755,40 @@ def submit(window):
     #TODO: Destroy window,
     #TODO: Have the entry function return data in string format
     global ENTRY
+    global entry_date, upload_date, owner, sub_county, date_moved, plot_no, description, floors, assigned, status, issues, ref_no, remarks
     
 
-    if (entry_date.get() == '' or upload_date.get() == '' or owner_entry.get() == '' or
-            sub_county_combo.get() == '' or date_moved.get() == '' or plot_no.get() == '' or
-            description_combo.get() == '' or floors_combo.get() == '' or assigned_combo.get() == '' or status_combo.get() == ''):
+    if (entry_date == '' or upload_date == '' or owner == '' or
+            sub_county == '' or date_moved == '' or plot_no == '' or
+            description == '' or floors == '' or assigned == '' or status == '' or issues == '' or ref_no == '' or remarks == ''):
         alert_label.configure(text='All fields are required', text_color='red')
+        print("Blanks identified")
     else:
-        days = days_count(entry_date.get(), date_moved.get())
-        # print(days)
+        days = days_count(entry_date, date_moved)
+        print("Succesfully evaluated")
 
-        new_list = list(ENTRY)
-        new_list.append(str(uuid4()))
-        new_list.append(save_date(entry_date.get()))
-        new_list.append(save_date(upload_date.get()))
-        new_list.append(owner_entry.get())
-        new_list.append(sub_county_combo.get())
-        new_list.append(description_combo.get())
-        new_list.append(floors_combo.get())
-        new_list.append(Issues_entry.get())
-        new_list.append(assigned_combo.get())
-        new_list.append(save_date(date_moved.get()))
-        new_list.append(days)
-        new_list.append(save_date(plot_no.get()))
-        new_list.append(status_combo.get())
-        new_list.append(ref_no.get())
-        ENTRY = tuple(new_list)
-        # print(ENTRY)
+        # new_list = list(ENTRY)
+        # new_list.append(str(uuid4()))
+        # new_list.append(save_date(entry_date.get()))
+        # new_list.append(save_date(upload_date.get()))
+        # new_list.append(owner_entry.get())
+        # new_list.append(sub_county_combo.get())
+        # new_list.append(description_combo.get())
+        # new_list.append(floors_combo.get())
+        # new_list.append(Issues_entry.get())
+        # new_list.append(assigned_combo.get())
+        # new_list.append(save_date(date_moved.get()))
+        # new_list.append(days)
+        # new_list.append(save_date(plot_no.get()))
+        # new_list.append(status_combo.get())
+        # new_list.append(ref_no.get())
+        # ENTRY = tuple(new_list)
+    
 
-        window.destroy()
+        # window.destroy()
 
         #insert data into sqlite database
-        make_entry(ENTRY)
+        # make_entry(ENTRY)
 
 
 
