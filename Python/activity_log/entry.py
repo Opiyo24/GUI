@@ -13,7 +13,6 @@ ctk.set_default_color_theme('green')
 entry = ctk.CTk()
 
 entry.title('Activity Log | Entry')
-entry.title('entry_date')
 entry.iconbitmap('')
 entry.geometry('700x400')
 entry.minsize(700, 400)
@@ -65,6 +64,8 @@ e.pack()
 entry_date = ctk.CTkLabel(
     entry_frame,
     text = 'Entry Date',
+    font = ('Helvetica', 12),
+    text_color = 'black',
 )
 entry_date.pack(
     anchor = 'w',
@@ -106,6 +107,8 @@ e.pack()
 u_date = ctk.CTkLabel(
     upload_frame,
     text = 'Date of Upload',
+    font = ('Helvetica', 12),
+    text_color = 'black',
 )
 u_date.pack(
     anchor = 'w',
@@ -148,6 +151,8 @@ e.pack(anchor = 'w')
 owner_label = ctk.CTkLabel(
     owner_frame,
     text = 'Owner',
+    font = ('Helvetica', 12),
+    text_color = 'black',
 )
 owner_label.pack(
     anchor = 'w',
@@ -192,6 +197,8 @@ e.pack()
 plot_no = ctk.CTkLabel(
     plot_frame,
     text = 'Plot No',
+    font = ('Helvetica', 12),
+    text_color = 'black',
 )
 plot_no.pack(anchor = 'w')
 
@@ -226,17 +233,20 @@ e.pack()
 
 sub_county_label = ctk.CTkLabel(
     sub_county_frame,
-    text = 'sub_county',
+    text = 'Sub-County',
+    font = ('Helvetica', 12),
+    text_color = 'black',
 )
 sub_county_label.pack(anchor = 'w')
 
-sub_county_entry = ctk.CTkEntry(
+sub_county_combo = ctk.CTkComboBox(
     sub_county_frame,
     width = 200,
     height = 32,
-    textvariable=sub_county_entry,
+    values = ['', 'CHANGAMWE', 'JOMVU', 'KISAUNI', 'NYALI', 'LIKONI', 'MVITA'],
+    # textvariable=sub_county_entry,
 )
-sub_county_entry.pack(anchor = 'w')
+sub_county_combo.pack(anchor = 'w')
 
 # #Description
 description_frame = ctk.CTkFrame(
@@ -263,6 +273,8 @@ e.pack()
 description_label = ctk.CTkLabel(
     description_frame,
     text = 'Description',
+    font = ('Helvetica', 12),
+    text_color = 'black',
 )
 description_label.pack(anchor = 'w')
 
@@ -270,7 +282,7 @@ description_combo = ctk.CTkComboBox(
     description_frame,
     width = 150,
     height = 32,
-    values = ['COMMERCIAL', 'RESIDENTIAL', 'MIXED USE', 'INDUSTRIAL', 'INSTITUTIONAL'],
+    values = ['', 'COMMERCIAL', 'RESIDENTIAL', 'MIXED USE', 'INDUSTRIAL', 'INSTITUTIONAL'],
 
 )
 description_combo.pack(anchor = 'w')
@@ -299,6 +311,8 @@ e.pack()
 floors_label = ctk.CTkLabel(
     floors_frame,
     text = 'Floors',
+    font = ('Helvetica', 12),
+    text_color = 'black',
 )
 floors_label.pack(anchor ='w')
 
@@ -306,7 +320,7 @@ floors_combo = ctk.CTkComboBox(
     floors_frame,
     width = 150,
     height = 32,
-    values = ['G', 'G+1', 'G+2', 'G+3', 'MEZZANINE'],
+    values = ['', 'G', 'G+1', 'G+2', 'G+3', 'MEZZANINE'],
 
 )
 floors_combo.pack(anchor ='w')
@@ -336,6 +350,8 @@ e.pack()
 assigned_label = ctk.CTkLabel(
     assigned_frame,
     text = 'Assigned',
+    font = ('Helvetica', 12),
+    text_color = 'black',
 )
 assigned_label.pack(anchor = 'w')
 
@@ -343,7 +359,7 @@ assigned_combo = ctk.CTkComboBox(
     assigned_frame,
     width = 150,
     height = 32,
-    values = ['Brian', 'Quincy', 'Sugoi', 'Gabriel', 'Opoyo'],
+    values = ['', 'Brian', 'Quincy', 'Sugoi', 'Gabriel', 'Opoyo'],
 
 )
 assigned_combo.pack(anchor = 'w')
@@ -389,6 +405,8 @@ e.pack()
 m_date = ctk.CTkLabel(
     dm_frame,
     text = 'Date Moved',
+    font = ('Helvetica', 12),
+    text_color = 'black',
 )
 m_date.pack(anchor = 'w')
 
@@ -440,7 +458,9 @@ e.pack()
 
 ref_number_label = ctk.CTkLabel(
     last_frame,
-    text = 'Ref No'
+    text = 'Ref No',
+    font = ('Helvetica', 12),
+    text_color = 'black',
 )
 
 ref_number_label.pack(anchor = 'w')
@@ -492,6 +512,8 @@ e.pack()
 status_label = ctk.CTkLabel(
     status_frame,
     text = 'Status',
+    font = ('Helvetica', 12),
+    text_color = 'black',
 )
 status_label.pack(anchor = 'w')
 
@@ -499,7 +521,7 @@ status_combo = ctk.CTkComboBox(
     status_frame,
     width = 150,
     height = 32,
-    values = ['PENDING', 'APPROVED', 'REJECTED', 'REVIEW'],
+    values = ['', 'PENDING', 'APPROVED', 'REJECTED', 'REVIEW'],
 )
 status_combo.pack(anchor = 'w')
 
@@ -522,6 +544,8 @@ issues_frame.grid(
 Issues_label = ctk.CTkLabel(
     issues_frame,
     text = 'Issues',
+    font = ('Helvetica', 12),
+    text_color = 'black',
 )
 Issues_label.pack(anchor = 'w')
 
@@ -568,6 +592,8 @@ remarks_frame.grid(
 Remarks_label = ctk.CTkLabel(
     remarks_frame,
     text = 'Remarks',
+    font = ('Helvetica', 12),
+    text_color = 'black',
 )
 Remarks_label.pack(anchor = 'w')
 
@@ -578,41 +604,6 @@ Remarks_entry = ctk.CTkEntry(
     textvariable = Remarks_entry,
 )
 Remarks_entry.pack(anchor = 'w')
-
-
-# def submit():
-#     global ENTRY
-
-#     if (entry_date.get() == '' or upload_date.get() == '' or owner_entry.get() == '' or
-#             sub_county_entry.get() == '' or date_moved.get() == '' or follow_up.get() == '' or
-#             description_combo.get() == '' or floors_combo.get() == '' or assigned_combo.get() == '' or status_combo.get() == ''):
-#         alert_label.configure(text='All fields are required', text_color='red')
-#     else:
-#         days = days_count(entry_date.get(), date_moved.get())
-#         # print(days)
-
-#         new_list = list(ENTRY)
-#         new_list.append(str(uuid4()))
-#         new_list.append(save_date(entry_date.get()))
-#         new_list.append(save_date(upload_date.get()))
-#         new_list.append(owner_entry.get())
-#         new_list.append(sub_county_entry.get())
-#         new_list.append(description_combo.get())
-#         new_list.append(floors_combo.get())
-#         new_list.append(Issues_entry.get())
-#         new_list.append(assigned_combo.get())
-#         new_list.append(save_date(date_moved.get()))
-#         new_list.append(days)
-#         new_list.append(save_date(follow_up.get()))
-#         new_list.append(status_combo.get())
-#         new_list.append(Remarks_entry.get())
-#         ENTRY = tuple(new_list)
-#         # print(ENTRY)
-
-#         entry.destroy()
-
-#         #insert data into sqlite database
-#         make_entry(ENTRY)
 
 
 submit_frame = ctk.CTkFrame(
@@ -683,8 +674,8 @@ clear_button = ctk.CTkButton(
     text = 'CLEAR',
     height = 30,
     width = 24,
-    bg_color = '#f5f7f8',
-    fg_color = '#f5f7f8',
+    # bg_color = '#f5f7f8',
+    # fg_color = '#f5f7f8',
     # command = clear,
 )
 clear_button.pack(padx = 2,
@@ -734,5 +725,37 @@ entry.mainloop()
 # if __name__ == "__main__":
 #     entry()
 
+# def submit():
+#     global ENTRY
 
+#     if (entry_date.get() == '' or upload_date.get() == '' or owner_entry.get() == '' or
+#             sub_county_entry.get() == '' or date_moved.get() == '' or follow_up.get() == '' or
+#             description_combo.get() == '' or floors_combo.get() == '' or assigned_combo.get() == '' or status_combo.get() == ''):
+#         alert_label.configure(text='All fields are required', text_color='red')
+#     else:
+#         days = days_count(entry_date.get(), date_moved.get())
+#         # print(days)
+
+#         new_list = list(ENTRY)
+#         new_list.append(str(uuid4()))
+#         new_list.append(save_date(entry_date.get()))
+#         new_list.append(save_date(upload_date.get()))
+#         new_list.append(owner_entry.get())
+#         new_list.append(sub_county_entry.get())
+#         new_list.append(description_combo.get())
+#         new_list.append(floors_combo.get())
+#         new_list.append(Issues_entry.get())
+#         new_list.append(assigned_combo.get())
+#         new_list.append(save_date(date_moved.get()))
+#         new_list.append(days)
+#         new_list.append(save_date(follow_up.get()))
+#         new_list.append(status_combo.get())
+#         new_list.append(Remarks_entry.get())
+#         ENTRY = tuple(new_list)
+#         # print(ENTRY)
+
+#         entry.destroy()
+
+#         #insert data into sqlite database
+#         make_entry(ENTRY)
 
