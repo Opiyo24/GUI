@@ -164,10 +164,21 @@ def criteria_values(value):
     
 def filter_entries(value1, value2):
     value1 = determine(value1)
-    value2 = determine(value2)
+    # value2 = determine(value2)
     connection = sqlite3.connect('activity_log.db')
     with connection:
-        return connection.execute(f'SELECT * FROM log WHERE "{value1}" = "{value2}"')
+        print("Column name:", value1)
+        print("Value:", value2)
+        cursor = connection.cursor()
+        query = f"SELECT * FROM log WHERE {value1} = ?"
+        cursor.execute(query, (value2,))
+        rows = cursor.fetchall()
+        cursor.close()
+        
+        print("Printing from database script")
+        print(rows)
+        
+    return rows
     
 def create_dev_type_table(connection):
     with connection:

@@ -1030,7 +1030,7 @@ def table_page():
     )
     sort_frame.grid(
         row = 1,
-        column = 6,
+        column = 5,
         sticky = 'news',
     )
 
@@ -1063,7 +1063,7 @@ def table_page():
     )
     filter_label_frame.grid(
         row = 1,
-        column = 7,
+        column = 6,
         columnspan = 2,
         sticky = 'news',
         pady = 10,
@@ -1093,6 +1093,15 @@ def table_page():
         column = 1,
     )
     #TODO: Add a 'clear rules' button
+    clear_button = ctk.CTkButton(
+        window,
+        text = 'Clear Rules',
+        command = clear_rules,
+    )
+    clear_button.grid(
+        row = 1,
+        column = 8,
+    )
 
     table = ttk.Treeview(
         data_frame,
@@ -1169,11 +1178,12 @@ def filter_values(event):
     filter_2.configure(values = dist_values)
 
 def filter_values2(event):
-    from database.database import criteria_values
+    from database.database import filter_entries
     global filter_1, filter_2, table
 
     criteria = filter_1.get()
     filter_value = filter_2.get()
+    print(criteria)
     print(filter_value)
     values = filter_entries(criteria, filter_value)
     print("Printing table values")
@@ -1190,7 +1200,31 @@ def filter_values2(event):
             )
         table.insert("", "end", values = row_value)
 
-    
+def clear_rules():
+    global table, sort, filter_1, filter_2
+
+    sort.set('')
+    filter_1.set('')
+    filter_2.set('')
+
+    for row in table.get_children():
+        table.delete(row)
+
+    entries = pull_entries()
+    print(entries)
+
+    for entry in entries:
+        row_value = (
+                entry[1], entry[2], entry[3], entry[4], entry[5],
+                entry[6], entry[11], entry[8], entry[9], entry[10], entry[13], 
+                entry[12]
+            )
+        table.insert("", "end", values = row_value)
+
+    filter_1.set('')
+    filter_2.set('')
+
+    print("Cleared all rules") 
 
 
 if __name__ == '__main__':
