@@ -1088,6 +1088,7 @@ def table_page():
         row = 0,
         column = 1,
     )
+    #TODO: Add a 'clear rules' button
 
     table = ttk.Treeview(
         data_frame,

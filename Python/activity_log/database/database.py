@@ -113,8 +113,7 @@ def pull_entries():
     with connection:
         return connection.execute(ENTRIES).fetchall()
 
-# print(pull_entries())
-def table_sort(value):
+def determine(value):
     if value == "Entry Date":
         value = "entry_date"
     elif value == "Upload Date":
@@ -143,9 +142,21 @@ def table_sort(value):
         value = "issues"
     else:
         value = "entry_date"
+    return value
+
+# print(pull_entries())
+def table_sort(value):
+    value = determine(value)
     connection = sqlite3.connect('activity_log.db')
     with connection:
         return connection.execute(f'SELECT * FROM log ORDER BY "{value}"')
+    
+
+def filter_entries(value):
+    value = determine(value)
+    connection = sqlite3.connect('activity_log.db')
+    with connection:
+        return connection.execute(f'SELECT * FROM log WHERE sub_county = "{value}"').fetchall()
     
 def create_dev_type_table(connection):
     with connection:
