@@ -664,7 +664,7 @@ def entry_function():
         text = 'CANCEL',
         height = 30,
         width = 24,
-        command = lambda: submit(entry_window),
+        command = lambda: cancel_entry(entry_window),
     )
     cancel_button.pack(padx = 2,
                     pady = 30)
@@ -690,7 +690,7 @@ def entry_function():
         width = 24,
         # bg_color = '#f5f7f8',
         # fg_color = '#f5f7f8',
-        # command = clear,
+        command = clear,
     )
     clear_button.pack(padx = 2,
                     pady = 30)
@@ -823,7 +823,29 @@ def submit(window):
                 )
             table.insert("", "end", values = row_value)
 
+
+def clear():
+    global entry_date_entry, upload_date_entry, owner_entry_entry, sub_county_combo, plot_no_entry, description_combo, floors_combo, assigned_combo, date_moved_entry, ref_number_entry, status_combo, Issues_entry, Remarks_entry
+
+    entry_date_entry.delete(0, 'end')
+    upload_date_entry.delete(0, 'end')
+    owner_entry_entry.delete(0, 'end')
+    sub_county_combo.set('')
+    plot_no_entry.delete(0, 'end')
+    description_combo.set('')
+    floors_combo.set('')
+    assigned_combo.set('')
+    date_moved_entry.delete(0, 'end')
+    ref_number_entry.delete(0, 'end')
+    status_combo.set('')
+    Issues_entry.delete(0, 'end')
+    Remarks_entry.delete(0, 'end')
+
+    print("Cleared all fields")
+
         
+def cancel_entry(window):
+    window.kill()
 
 
 def table_page():
