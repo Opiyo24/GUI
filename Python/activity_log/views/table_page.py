@@ -666,8 +666,8 @@ def entry_function():
         width = 24,
         command = lambda: cancel_entry(entry_window),
     )
-    cancel_button.pack(padx = 2,
-                    pady = 30)
+    # cancel_button.pack(padx = 2,
+                    # pady = 30)
 
     clear_frame = ctk.CTkFrame(
         entry_window,
@@ -852,7 +852,7 @@ def table_page():
     
     window = ctk.CTk()
 
-    global table, sort
+    global table, sort, filter_1, filter_2
 
     sort_by = ctk.StringVar()
 
@@ -1074,7 +1074,9 @@ def table_page():
     filter_1  = ctk.CTkComboBox(
         filter_label_frame,
         values = cols,
+        command = filter_values
     )
+    filter_1.set('')
     filter_1.grid(
         row = 0,
         column = 0,
@@ -1082,8 +1084,10 @@ def table_page():
 
     filter_2 = ctk.CTkComboBox(
         filter_label_frame,
-        values = cols,
+        values = [],
+        command = filter_values2
     )
+    filter_2.set('')
     filter_2.grid(
         row = 0,
         column = 1,
@@ -1152,6 +1156,42 @@ def sort_values(event):
         table.insert("", "end", values = row_value)
 
     print(f"Sorting by {sort_by}")
+
+def filter_values(event):
+    from database.database import criteria_values
+    global filter_1, filter_2, table, dist_values
+
+    filter_1_value = filter_1.get()
+    print(filter_1_value)
+    dist_values = criteria_values(filter_1_value)
+    print(dist_values)
+
+    filter_2.configure(values = dist_values)
+
+def filter_values2(event):
+    from database.database import criteria_values
+    global filter_1, filter_2, table
+
+    criteria = filter_1.get()
+    filter_value = filter_2.get()
+    print(filter_value)
+    values = filter_entries(criteria, filter_value)
+    print("Printing table values")
+    print(values)
+
+    for row in table.get_children():
+        table.delete(row)
+        
+    for entry in values:
+        row_value = (
+                entry[1], entry[2], entry[3], entry[4], entry[5],
+                entry[6], entry[11], entry[8], entry[9], entry[10], entry[13], 
+                entry[12]
+            )
+        table.insert("", "end", values = row_value)
+
+    
+
 
 if __name__ == '__main__':
     table_page()

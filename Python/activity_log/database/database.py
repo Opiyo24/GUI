@@ -152,11 +152,22 @@ def table_sort(value):
         return connection.execute(f'SELECT * FROM log ORDER BY "{value}"')
     
 
-def filter_entries(value):
+def criteria_values(value):
     value = determine(value)
     connection = sqlite3.connect('activity_log.db')
     with connection:
-        return connection.execute(f'SELECT * FROM log WHERE sub_county = "{value}"').fetchall()
+        abraba = connection.execute(f'SELECT DISTINCT {value} FROM log').fetchall()
+        col_list = []
+        for row in abraba:
+            col_list.append(row[0])
+        return col_list
+    
+def filter_entries(value1, value2):
+    value1 = determine(value1)
+    value2 = determine(value2)
+    connection = sqlite3.connect('activity_log.db')
+    with connection:
+        return connection.execute(f'SELECT * FROM log WHERE "{value1}" = "{value2}"')
     
 def create_dev_type_table(connection):
     with connection:
@@ -195,3 +206,9 @@ def create_users_table(connection):
 # create_users_table(conn)
 
 conn.close()
+if __name__ == '__main__':
+    criteria_values('Description')
+    # print(pull_user(conn, 'james'))
+    # print(pull_entries())
+    # print(table_sort('Entry Date'))
+    # print(filter_entries('Entry Date
