@@ -210,7 +210,7 @@ def create_users_table():
     with connection:
         return connection.execute(CREATE_USERS_TABLE)
     
-def make_entry(table, data):
+def make_entry2(table, data):
     connection = sqlite3.connect('activity_log.db')
     try:
         with connection:
@@ -222,7 +222,7 @@ def make_entry(table, data):
         print(f"SQLite error: {e}")
         return False
     
-def pull_entries(table):
+def pull_entries2(table):
     connection = sqlite3.connect('activity_log.db')
     try:
         with connection:

@@ -848,21 +848,12 @@ def cancel_entry(window):
     window.kill()
 
 
-def table_page():
-    
-    window = ctk.CTk()
-
-    global table, sort, filter_1, filter_2
-
-    sort_by = ctk.StringVar()
-
-    window.title('Activity Log')
-    window.iconbitmap('')
-    window.geometry('1600x800')
-    window.minsize(1600, 800)
-
-    window.columnconfigure((0,1,2,3,4,5,6,7,8), weight = 1, uniform = 'a')
-    window.rowconfigure((0,1,2,3,4,5,6), weight = 1, uniform = 'a')
+def table_page(frame):
+    for widget in frame.winfo_children():
+        widget.destroy()
+    global table
+    frame.rowconfigure((0, 1, 2, 3, 4, 5, 6), weight = 1, uniform = 'a')
+    frame.columnconfigure((0,1,2,3,4,5,6,7), weight = 1, uniform = 'a')
 
     cols = [
         "Entry Date",
@@ -879,94 +870,16 @@ def table_page():
         "Status",
     ]
 
-    menu_frame = ctk.CTkFrame(
-        window,
-        border_width = 0,
-        border_color = 'black',
-        fg_color = 'green',
-        corner_radius = 0,
-    )
-    menu_frame.grid(
-        row = 0,
-        column = 0,
-        rowspan = 7,
-        sticky = 'news',
-    )
-
-    main_frame = ctk.CTkFrame(
-        window,
-        border_width = 0,
-        border_color = 'black',
-        bg_color= 'blue',
-        fg_color = '#ecf496',
-    )
-    main_frame.grid(
-        row = 0,
-        column = 1,
-        rowspan = 7,
-        columnspan = 8,
-        sticky = 'news',
-    )
-
-    m_button1 = ctk.CTkButton(
-        menu_frame,
-        height = 50,
-        text = 'Home',
-        font = ('Helvetica', 20, 'bold'),
-        # anchor = 'w',
-        bg_color = 'transparent',
-        fg_color = 'transparent',
-        corner_radius = 0,
-        border_width = 0,
-    )
-    m_button1.pack(
-        fill = 'x',
-        padx = 1,
-        pady = 4,
-    )
-
-    m_button2 = ctk.CTkButton(
-        menu_frame,
-        height = 50,
-        text = 'Dashboard',
-        font = ('Helvetica', 20, 'bold'),
-        bg_color = 'transparent',
-        fg_color = 'transparent',
-        corner_radius = 0,
-        border_width = 0,
-    )
-    m_button2.pack(
-        fill = 'x',
-        padx = 1,
-        pady = 4,
-    )
-
-    m_button3 = ctk.CTkButton(
-        menu_frame,
-        height = 50,
-        font = ('Helvetica', 20, 'bold'),
-        text = 'Members',
-        bg_color = 'transparent',
-        fg_color = 'transparent',
-        corner_radius = 0,
-        border_width = 0,
-    )
-    m_button3.pack(
-        fill = 'x',
-        padx = 1,
-        pady = 4,
-    )
-
 
     date = ctk.CTkLabel(
-        window,
+        frame,
         text = '',
         font = ('Helvetica', 20, 'bold'),
     )
 
     date.grid(
         row = 0,
-        column = 1,
+        column = 0,
     )
     def update_date():
         date.configure(text = todays_date())
@@ -974,7 +887,7 @@ def table_page():
     update_date()
 
     back_button = ctk.CTkButton(
-        window,
+        frame,
         text = 'Back',
         font = ('Helvetica', 20, 'bold'),
         height = 40,
@@ -985,11 +898,11 @@ def table_page():
     )
     back_button.grid(
         row = 0,
-        column = 8,
+        column = 7,
     )
 
     entry_button = ctk.CTkButton(
-        window,
+        frame,
         text = 'New Entry',
         height = 35,
         width = 50,
@@ -1002,13 +915,13 @@ def table_page():
 
     entry_button.grid(
         row = 1,
-        column = 1,
+        column = 0,
         # columnspan = 2,
         # sticky = 'news',
     )
 
     data_frame = ctk.CTkScrollableFrame(
-        window,
+        frame,
         border_width = 1,
         border_color = 'black',
         corner_radius = 0,
@@ -1016,21 +929,21 @@ def table_page():
 
     data_frame.grid(
         row = 2,
-        column = 1,
+        column = 0,
         rowspan = 5,
         columnspan = 8,
         sticky = 'news',
     )
 
     sort_frame = ctk.CTkFrame(
-        window,
+        frame,
         border_width = 0,
         bg_color = 'transparent',
         fg_color = 'transparent',
     )
     sort_frame.grid(
         row = 1,
-        column = 5,
+        column = 4,
         sticky = 'news',
     )
 
@@ -1055,7 +968,7 @@ def table_page():
     # sort.bind("<<ComboboxSelected>>", lambda event: print("Hello, its time to sort"))
 
     filter_label_frame = tk.LabelFrame(
-        window,
+        frame,
         text = 'Filter',
         font = ('Helvetica', 10),
         height = 60,
@@ -1063,7 +976,7 @@ def table_page():
     )
     filter_label_frame.grid(
         row = 1,
-        column = 6,
+        column = 5,
         columnspan = 2,
         sticky = 'news',
         pady = 10,
@@ -1094,13 +1007,13 @@ def table_page():
     )
     #TODO: Add a 'clear rules' button
     clear_button = ctk.CTkButton(
-        window,
+        frame,
         text = 'Clear Rules',
         command = clear_rules,
     )
     clear_button.grid(
         row = 1,
-        column = 8,
+        column = 7,
     )
 
     table = ttk.Treeview(
@@ -1140,7 +1053,6 @@ def table_page():
             )
         table.insert("", "end", values = row_value)
 
-    window.mainloop()
 
 def sort_values(event):
     from database.database import table_sort
@@ -1226,18 +1138,16 @@ def clear_rules():
 
     print("Cleared all rules") 
 
-def members():
+def members(frame):
     #TODO: Clear other widgets in frame
-    members = ctk.ctk()
-    members.iconbitmap('')
-    members.title('Activity Log | Members')
-
-    members.roqconfigure((0, 1), weight = 1, uniform = 'a')
-    members.columnconfigure((0, 1, 2), weight = 1, uniform = 'a')
-
+    for widget in frame.winfo_children():
+        widget.destroy()
+    
+    frame.rowconfigure((0, 1), weight = 1, uniform = 'a')
+    frame.columnconfigure((0, 1, 2), weight = 1, uniform = 'a')
     #Sub county
     sub_county_frame = ctk.CTkFrame(
-        members,
+        frame,
 
     )
     sub_county_frame.grid(
@@ -1295,7 +1205,7 @@ def members():
 
     #Description
     description_frame = ctk.CTkFrame(
-        members,
+        frame,
     )
 
     description_frame.grid(
@@ -1352,13 +1262,14 @@ def members():
 
     #Floors
     floors_frame = ctk.CTkFrame(
-        members,
+        frame,
     )
 
     floors_frame.grid(
         row = 0,
         column = 1,
         rowspan = 2,
+        sticky = 'news',
     )
 
     floors_title = ctk.CTkLabel(
@@ -1409,12 +1320,13 @@ def members():
 
     #Assigned
     assigned_frame = ctk.CTkFrame(
-        members,
+        frame,
     )
 
     assigned_frame.grid(
         row = 0,
         column = 2,
+        sticky = 'news',
     )
 
     assigned_title = ctk.CTkLabel(
@@ -1465,13 +1377,14 @@ def members():
 
     #Status
     status_frame = ctk.CTkFrame(
-        members,
+        frame,
 
     )
 
     status_frame.grid(
         row = 1,
         column = 2,
+        sticky = 'news',
     )
 
     status_title = ctk.CTkLabel(
@@ -1520,8 +1433,6 @@ def members():
         column = 1,
     )
 
-
-    members.mainloop()
 
 
 if __name__ == '__main__':
