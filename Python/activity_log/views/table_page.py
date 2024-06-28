@@ -849,8 +849,12 @@ def cancel_entry(window):
 
 
 def table_page():
-    global table
+    
     window = ctk.CTk()
+
+    global table, sort
+
+    sort_by = ctk.StringVar()
 
     window.title('Activity Log')
     window.iconbitmap('')
@@ -1044,8 +1048,11 @@ def table_page():
     sort = ctk.CTkComboBox(
         sort_frame,
         values = cols,
+        command = sort_values,
+        # textVariable = 'Sort_by',
     )
     sort.pack()
+    # sort.bind("<<ComboboxSelected>>", lambda event: print("Hello, its time to sort"))
 
     filter_label_frame = tk.LabelFrame(
         window,
@@ -1120,6 +1127,30 @@ def table_page():
         table.insert("", "end", values = row_value)
 
     window.mainloop()
+
+def sort_values(event):
+    from database.database import table_sort
+    global sort, table
+
+    print("Hello fro inside the sort")
+
+    sort_by = sort.get()
+    values = table_sort(sort_by)
+
+    print(sort_by)
+
+    for row in table.get_children():
+            table.delete(row)
+        
+    for entry in values:
+        row_value = (
+                entry[1], entry[2], entry[3], entry[4], entry[5],
+                entry[6], entry[11], entry[8], entry[9], entry[10], entry[13], 
+                entry[12]
+            )
+        table.insert("", "end", values = row_value)
+
+    print(f"Sorting by {sort_by}")
 
 if __name__ == '__main__':
     table_page()
