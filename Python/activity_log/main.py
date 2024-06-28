@@ -6,7 +6,7 @@ import customtkinter as ctk
 # from views.login import login_page
 # from views.signin import signin
 from auth.authentication import User, is_authenticated, user_authenticated
-from views.table_page import table_page
+from views.table_page import *
 from database.database import *
 
 ctk.set_appearance_mode('system')
@@ -92,6 +92,7 @@ def validate():
             fg_color = 'transparent',
             corner_radius = 0,
             border_width = 0,
+            command = lambda: table_page(main_frame)
         )
         m_button1.pack(
             fill = 'x',
@@ -124,12 +125,14 @@ def validate():
             fg_color = 'transparent',
             corner_radius = 0,
             border_width = 0,
+            command = lambda: members(main_frame)
         )
         m_button3.pack(
             fill = 'x',
             padx = 1,
             pady = 4,
         )
+        window.mainloop()
 
 my_label = ctk.CTkLabel(
     frame,
