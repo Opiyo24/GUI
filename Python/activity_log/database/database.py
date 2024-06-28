@@ -34,36 +34,36 @@ ENTRIES = ("""
     SELECT * FROM log;
 """)
 
-CREATE_DEV_TYPE_TABLE = ("""
-CREATE TABLE IF NOT EXISTS others_dev_type (
+CREATE_DESCRIPTION_TABLE = ("""
+CREATE TABLE IF NOT EXISTS description (
                         id INTEGER PRIMARY KEY,
                         name TEXT NOT NULL
 );
 """)
 
 CREATE_STATUS_TABLE = ("""
-CREATE TABLE IF NOT EXISTS others_status (
+CREATE TABLE IF NOT EXISTS status (
                         id INTEGER PRIMARY KEY,
                         name TEXT NOT NULL
 );
 """)
 
-CREATE_MEMBERS_TABLE = ("""
-CREATE TABLE IF NOT EXISTS others_members (
+CREATE_ASSIGNED_TABLE = ("""
+CREATE TABLE IF NOT EXISTS assigned (
                         id INTEGER PRIMARY KEY,
                         name TEXT NOT NULL
 );
 """)
 
 CREATE_SUB_COUNTY_TABLE = ("""
-CREATE TABLE IF NOT EXISTS others_sub_county (
+CREATE TABLE IF NOT EXISTS sub_county (
                         id INTEGER PRIMARY KEY,
                         name TEXT NOT NULL
 );
 """)
 
-CREATE_DEV_TABLE = ("""
-CREATE TABLE IF NOT EXISTS others_dev (
+CREATE_FLOORS_TABLE = ("""
+CREATE TABLE IF NOT EXISTS floors (
                         id INTEGER PRIMARY KEY,
                         name TEXT NOT NULL
 );
@@ -76,7 +76,7 @@ def create_entry_table(connection):
     with connection:
         return connection.execute(CREATE_ENTRY_TABLE)
     
-create_entry_table(conn)
+# create_entry_table(conn)
     
 def make_entry(data):
 
@@ -180,29 +180,67 @@ def filter_entries(value1, value2):
         
     return rows
     
-def create_dev_type_table(connection):
+def create_floors_table():
+    connection = sqlite3.connect('activity_log.db')
     with connection:
-        return connection.execute(CREATE_DEV_TYPE_TABLE)
+        return connection.execute(CREATE_FLOORS_TABLE)
     
-def create_status_table(connection):
+def create_status_table():
+    connection = sqlite3.connect('activity_log.db')
     with connection:
         return connection.execute(CREATE_STATUS_TABLE)
     
-def create_members_table(connection):
+def create_assigned_table():
+    connection = sqlite3.connect('activity_log.db')
     with connection:
-        return connection.execute(CREATE_MEMBERS_TABLE)
+        return connection.execute(CREATE_ASSIGNED_TABLE)
     
-def create_sub_county_table(connection):
+def create_sub_county_table():
+    connection = sqlite3.connect('activity_log.db')
     with connection:
         return connection.execute(CREATE_SUB_COUNTY_TABLE)
     
-def create_dev_table(connection):
+def create_description_table():
+    connection = sqlite3.connect('activity_log.db')
     with connection:
-        return connection.execute(CREATE_DEV_TABLE)
+        return connection.execute(CREATE_DESCRIPTION_TABLE)
     
-def create_users_table(connection):
+def create_users_table():
+    connection = sqlite3.connect('activity_log.db')
     with connection:
         return connection.execute(CREATE_USERS_TABLE)
+    
+def make_entry(table, data):
+    connection = sqlite3.connect('activity_log.db')
+    try:
+        with connection:
+            connection.execute(f'INSERT INTO {table} VALUES (?)', (data,))
+            connection.commit()
+            print(f"{table} entry made successfully")
+            return True
+    except sqlite3.Error as e:
+        print(f"SQLite error: {e}")
+        return False
+    
+def pull_entries(table):
+    connection = sqlite3.connect('activity_log.db')
+    try:
+        with connection:
+            entries = connection.execute(f'SELECT * FROM {table}').fetchall()
+            return entries
+    except sqlite3.Error as e:
+        print(f"SQLite error: {e}")
+        return False
+
+    
+def create_all_tables():
+    create_entry_table(conn)
+    create_floors_table(conn)
+    create_status_table(conn)
+    create_assigned_table(conn)
+    create_sub_county_table(conn)
+    create_description_table(conn)
+    create_users_table(conn)
 
 
     

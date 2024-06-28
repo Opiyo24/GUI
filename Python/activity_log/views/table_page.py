@@ -1226,6 +1226,303 @@ def clear_rules():
 
     print("Cleared all rules") 
 
+def members():
+    #TODO: Clear other widgets in frame
+    members = ctk.ctk()
+    members.iconbitmap('')
+    members.title('Activity Log | Members')
+
+    members.roqconfigure((0, 1), weight = 1, uniform = 'a')
+    members.columnconfigure((0, 1, 2), weight = 1, uniform = 'a')
+
+    #Sub county
+    sub_county_frame = ctk.CTkFrame(
+        members,
+
+    )
+    sub_county_frame.grid(
+        row = 0,
+        column = 0,
+        sticky = 'news',
+    )
+
+    sub_county_title = ctk.CTkLabel(
+        sub_county_frame,
+        text = 'Sub-County',
+        text_color = 'black',
+    )
+
+    sub_county_title.pack(
+
+    )
+
+    sub_county_table = ttk.Treeview(
+        sub_county_frame,
+        columns = ['Sub-County'],
+        show = 'headings',
+    )
+    sub_county_table.heading('Sub-County', text = 'Sub-County')
+    sub_county_table.pack(
+        fill = 'both',
+        expand = True,
+    )
+
+    add_sub_county_frame = ctk.CTkFrame(
+        sub_county_frame,
+
+    )
+    add_sub_county_frame.rowconfigure(0, weight = 1)
+    add_sub_county_frame.columnconfigure((0, 1), weight = 1)
+    add_sub_county_frame.pack()
+
+    sub_county_entry = ctk.CTkEntry(
+        add_sub_county_frame,
+    )
+    sub_county_entry.grid(
+        row = 0,
+        column = 0,
+    )
+
+    sub_county_add_button = ctk.CTkButton(
+        add_sub_county_frame,
+        text = 'Add',
+    )
+    sub_county_add_button.grid(
+        row = 0,
+        column = 1,
+    )
+
+
+    #Description
+    description_frame = ctk.CTkFrame(
+        members,
+    )
+
+    description_frame.grid(
+        row = 1,
+        column = 0,
+        sticky = 'news',
+    )
+
+    description_title = ctk.CTkLabel(
+        description_frame,
+        text = 'Description',
+        text_color = 'black',
+    )
+
+    description_title.pack(
+
+    )
+
+    description_table = ttk.Treeview(
+        description_frame,
+        columns = ['Description'],
+        show = 'headings',
+    )
+    description_table.heading('Description', text = 'Description')
+    description_table.pack(
+        fill = 'both',
+        expand = True,
+    )
+
+    add_description_frame = ctk.CTkFrame(
+        description_frame,
+
+    )
+    add_description_frame.rowconfigure(0, weight = 1)
+    add_description_frame.columnconfigure((0, 1), weight = 1)
+    add_description_frame.pack()
+
+    description_entry = ctk.CTkEntry(
+        add_description_frame,
+    )
+    description_entry.grid(
+        row = 0,
+        column = 0,
+    )
+
+    description_add_button = ctk.CTkButton(
+        add_description_frame,
+        text = 'Add',
+    )
+    description_add_button.grid(
+        row = 0,
+        column = 1,
+    )
+
+    #Floors
+    floors_frame = ctk.CTkFrame(
+        members,
+    )
+
+    floors_frame.grid(
+        row = 0,
+        column = 1,
+        rowspan = 2,
+    )
+
+    floors_title = ctk.CTkLabel(
+        floors_frame,
+        text = 'Floors',
+        text_color = 'black',
+    )
+
+    floors_title.pack(
+
+    )
+
+    floors_table = ttk.Treeview(
+        floors_frame,
+        columns = ['Floors'],
+        show = 'headings',
+    )
+    floors_table.heading('Floors', text = 'Floors')
+    floors_table.pack(
+        fill = 'both',
+        expand = True,
+    )
+
+    add_floors_frame = ctk.CTkFrame(
+        floors_frame,
+
+    )
+    add_floors_frame.rowconfigure(0, weight = 1)
+    add_floors_frame.columnconfigure((0, 1), weight = 1)
+    add_floors_frame.pack()
+
+    floors_entry = ctk.CTkEntry(
+        add_floors_frame,
+    )
+    floors_entry.grid(
+        row = 0,
+        column = 0,
+    )
+
+    floors_add_button = ctk.CTkButton(
+        add_floors_frame,
+        text = 'Add',
+    )
+    floors_add_button.grid(
+        row = 0,
+        column = 1,
+    )
+
+    #Assigned
+    assigned_frame = ctk.CTkFrame(
+        members,
+    )
+
+    assigned_frame.grid(
+        row = 0,
+        column = 2,
+    )
+
+    assigned_title = ctk.CTkLabel(
+        assigned_frame,
+        text = 'Assigned',
+        text_color = 'black',
+    )
+
+    assigned_title.pack(
+
+    )
+
+    assigned_table = ttk.Treeview(
+        assigned_frame,
+        columns = ['Assigned'],
+        show = 'headings',
+    )
+    assigned_table.heading('Assigned', text = 'Assigned')
+    assigned_table.pack(
+        fill = 'both',
+        expand = True,
+    )
+
+    add_assigned_frame = ctk.CTkFrame(
+        assigned_frame,
+
+    )
+    add_assigned_frame.rowconfigure(0, weight = 1)
+    add_assigned_frame.columnconfigure((0, 1), weight = 1)
+    add_assigned_frame.pack()
+
+    assigned_entry = ctk.CTkEntry(
+        add_assigned_frame,
+    )
+    assigned_entry.grid(
+        row = 0,
+        column = 0,
+    )
+
+    assigned_add_button = ctk.CTkButton(
+        add_assigned_frame,
+        text = 'Add',
+    )
+    assigned_add_button.grid(
+        row = 0,
+        column = 1,
+    )
+
+    #Status
+    status_frame = ctk.CTkFrame(
+        members,
+
+    )
+
+    status_frame.grid(
+        row = 1,
+        column = 2,
+    )
+
+    status_title = ctk.CTkLabel(
+        status_frame,
+        text = 'Status',
+        text_color = 'black',
+    )
+
+    status_title.pack(
+
+    )
+
+    status_table = ttk.Treeview(
+        status_frame,
+        columns = ['Status'],
+        show = 'headings',
+    )
+    status_table.heading('Status', text = 'Status')
+    status_table.pack(
+        fill = 'both',
+        expand = True,
+    )
+
+    add_status_frame = ctk.CTkFrame(
+        status_frame,
+
+    )
+    add_status_frame.rowconfigure(0, weight = 1)
+    add_status_frame.columnconfigure((0, 1), weight = 1)
+    add_status_frame.pack()
+
+    status_entry = ctk.CTkEntry(
+        add_status_frame,
+    )
+    status_entry.grid(
+        row = 0,
+        column = 0,
+    )
+
+    status_add_button = ctk.CTkButton(
+        add_status_frame,
+        text = 'Add',
+    )
+    status_add_button.grid(
+        row = 0,
+        column = 1,
+    )
+
+
+    members.mainloop()
+
 
 if __name__ == '__main__':
     table_page()
