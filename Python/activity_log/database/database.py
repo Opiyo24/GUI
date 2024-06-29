@@ -36,35 +36,30 @@ ENTRIES = ("""
 
 CREATE_DESCRIPTION_TABLE = ("""
 CREATE TABLE IF NOT EXISTS description (
-                        id INTEGER PRIMARY KEY,
                         name TEXT NOT NULL
 );
 """)
 
 CREATE_STATUS_TABLE = ("""
 CREATE TABLE IF NOT EXISTS status (
-                        id INTEGER PRIMARY KEY,
                         name TEXT NOT NULL
 );
 """)
 
 CREATE_ASSIGNED_TABLE = ("""
 CREATE TABLE IF NOT EXISTS assigned (
-                        id INTEGER PRIMARY KEY,
                         name TEXT NOT NULL
 );
 """)
 
 CREATE_SUB_COUNTY_TABLE = ("""
 CREATE TABLE IF NOT EXISTS sub_county (
-                        id INTEGER PRIMARY KEY,
                         name TEXT NOT NULL
 );
 """)
 
 CREATE_FLOORS_TABLE = ("""
 CREATE TABLE IF NOT EXISTS floors (
-                        id INTEGER PRIMARY KEY,
                         name TEXT NOT NULL
 );
 """)
@@ -72,7 +67,8 @@ CREATE TABLE IF NOT EXISTS floors (
 conn = sqlite3.connect('activity_log.db')
 cursor = conn.cursor()
 
-def create_entry_table(connection):
+def create_entry_table():
+    connection = sqlite3.connect('activity_log.db')
     with connection:
         return connection.execute(CREATE_ENTRY_TABLE)
     
@@ -210,13 +206,22 @@ def create_users_table():
     with connection:
         return connection.execute(CREATE_USERS_TABLE)
     
-def make_entry2(table, data):
+def make_entry2(table_widget, widget, data, table):
+    widget.delete(0, 'end')
     connection = sqlite3.connect('activity_log.db')
     try:
         with connection:
             connection.execute(f'INSERT INTO {table} VALUES (?)', (data,))
             connection.commit()
             print(f"{table} entry made successfully")
+            for row in table_widget.get_children():
+                table_widget.delete(row)
+
+            values = pull_entries2(table)
+            print(values)
+            
+            for value in values:
+                table_widget.insert("", "end", values = value)
             return True
     except sqlite3.Error as e:
         print(f"SQLite error: {e}")
@@ -232,15 +237,35 @@ def pull_entries2(table):
         print(f"SQLite error: {e}")
         return False
 
-    
+
+def delete_table(table_name):
+    connection = sqlite3.connect('activity_log.db')
+    try:
+        with connection:
+            connection.execute(f'DROP TABLE IF EXISTS {table_name}')
+            connection.commit()
+            print(f"Table {table_name} deleted successfully")
+            return True
+
+    except sqlite3.Error as e:
+        print(f"SQLite error: {e}")
+        return False
+
+def del_cols():
+    delete_table('description')
+    delete_table('status')
+    delete_table('assigned')
+    delete_table('sub_county')
+    delete_table('floors')
+
 def create_all_tables():
-    create_entry_table(conn)
-    create_floors_table(conn)
-    create_status_table(conn)
-    create_assigned_table(conn)
-    create_sub_county_table(conn)
-    create_description_table(conn)
-    create_users_table(conn)
+    create_entry_table()
+    create_floors_table()
+    create_status_table()
+    create_assigned_table()
+    create_sub_county_table()
+    create_description_table()
+    create_users_table()
 
 
     
@@ -256,8 +281,14 @@ def create_all_tables():
 
 conn.close()
 if __name__ == '__main__':
-    criteria_values('Description')
+    # criteria_values('Description')
     # print(pull_user(conn, 'james'))
     # print(pull_entries())
     # print(table_sort('Entry Date'))
     # print(filter_entries('Entry Date
+    pass
+    # delete_table('description')
+    # delete_table('status')
+    # delete_table('assigned')
+    # delete_table('sub_county')
+    # delete_table('floors')
