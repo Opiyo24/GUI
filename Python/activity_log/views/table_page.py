@@ -1136,12 +1136,25 @@ def clear_rules():
     filter_1.set('')
     filter_2.set('')
 
-    print("Cleared all rules") 
+    print("Cleared all rules")
+
+def populate_table(widget, table):
+    for row in widget.get_children():
+        widget.delete(row)
+
+    values = pull_entries2(table)
+    print(values)
+    
+    for value in values:
+        widget.insert("", "end", values = value)
 
 def members(frame):
+    import uuid
     #TODO: Clear other widgets in frame
     for widget in frame.winfo_children():
         widget.destroy()
+    # del_cols()
+    create_all_tables()
     
     frame.rowconfigure((0, 1), weight = 1, uniform = 'a')
     frame.columnconfigure((0, 1, 2), weight = 1, uniform = 'a')
@@ -1196,13 +1209,14 @@ def members(frame):
     sub_county_add_button = ctk.CTkButton(
         add_sub_county_frame,
         text = 'Add',
+        command = lambda: make_entry2(sub_county_entry, sub_county_entry.get(), 'sub_county'),
     )
     sub_county_add_button.grid(
         row = 0,
         column = 1,
     )
-
-
+    populate_table(sub_county_table, 'sub_county')
+    
     #Description
     description_frame = ctk.CTkFrame(
         frame,
@@ -1254,11 +1268,13 @@ def members(frame):
     description_add_button = ctk.CTkButton(
         add_description_frame,
         text = 'Add',
+        command = lambda: make_entry2(description_entry, description_entry.get(), 'description'),
     )
     description_add_button.grid(
         row = 0,
         column = 1,
     )
+    populate_table(description_table, 'description')
 
     #Floors
     floors_frame = ctk.CTkFrame(
@@ -1312,11 +1328,13 @@ def members(frame):
     floors_add_button = ctk.CTkButton(
         add_floors_frame,
         text = 'Add',
+        command = lambda: make_entry2(floors_entry, floors_entry.get(), 'floors'),
     )
     floors_add_button.grid(
         row = 0,
         column = 1,
     )
+    populate_table(floors_table, 'floors')
 
     #Assigned
     assigned_frame = ctk.CTkFrame(
@@ -1369,11 +1387,13 @@ def members(frame):
     assigned_add_button = ctk.CTkButton(
         add_assigned_frame,
         text = 'Add',
+        command = lambda: make_entry2(assigned_entry, assigned_entry.get(), 'assigned'),
     )
     assigned_add_button.grid(
         row = 0,
         column = 1,
     )
+    populate_table(assigned_table, 'assigned')
 
     #Status
     status_frame = ctk.CTkFrame(
@@ -1427,11 +1447,13 @@ def members(frame):
     status_add_button = ctk.CTkButton(
         add_status_frame,
         text = 'Add',
+        command = lambda: make_entry2(status_entry, status_entry.get(), 'status')
     )
     status_add_button.grid(
         row = 0,
         column = 1,
     )
+    populate_table(status_table, 'status')
 
 
 
