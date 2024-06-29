@@ -1209,7 +1209,7 @@ def members(frame):
     sub_county_add_button = ctk.CTkButton(
         add_sub_county_frame,
         text = 'Add',
-        command = lambda: make_entry2(sub_county_entry, sub_county_entry.get(), 'sub_county'),
+        command = lambda: make_entry2(sub_county_table, sub_county_entry, sub_county_entry.get(), 'sub_county'),
     )
     sub_county_add_button.grid(
         row = 0,
@@ -1268,7 +1268,7 @@ def members(frame):
     description_add_button = ctk.CTkButton(
         add_description_frame,
         text = 'Add',
-        command = lambda: make_entry2(description_entry, description_entry.get(), 'description'),
+        command = lambda: make_entry2(description_table, description_entry, description_entry.get(), 'description'),
     )
     description_add_button.grid(
         row = 0,
@@ -1328,7 +1328,7 @@ def members(frame):
     floors_add_button = ctk.CTkButton(
         add_floors_frame,
         text = 'Add',
-        command = lambda: make_entry2(floors_entry, floors_entry.get(), 'floors'),
+        command = lambda: make_entry2(floors_table, floors_entry, floors_entry.get(), 'floors'),
     )
     floors_add_button.grid(
         row = 0,
@@ -1387,7 +1387,7 @@ def members(frame):
     assigned_add_button = ctk.CTkButton(
         add_assigned_frame,
         text = 'Add',
-        command = lambda: make_entry2(assigned_entry, assigned_entry.get(), 'assigned'),
+        command = lambda: make_entry2(assigned_table, assigned_entry, assigned_entry.get(), 'assigned'),
     )
     assigned_add_button.grid(
         row = 0,
@@ -1447,7 +1447,7 @@ def members(frame):
     status_add_button = ctk.CTkButton(
         add_status_frame,
         text = 'Add',
-        command = lambda: make_entry2(status_entry, status_entry.get(), 'status')
+        command = lambda: make_entry2(status_table, status_entry, status_entry.get(), 'status')
     )
     status_add_button.grid(
         row = 0,

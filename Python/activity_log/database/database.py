@@ -206,7 +206,7 @@ def create_users_table():
     with connection:
         return connection.execute(CREATE_USERS_TABLE)
     
-def make_entry2(widget, data, table):
+def make_entry2(table_widget, widget, data, table):
     widget.delete(0, 'end')
     connection = sqlite3.connect('activity_log.db')
     try:
@@ -214,6 +214,14 @@ def make_entry2(widget, data, table):
             connection.execute(f'INSERT INTO {table} VALUES (?)', (data,))
             connection.commit()
             print(f"{table} entry made successfully")
+            for row in table_widget.get_children():
+                table_widget.delete(row)
+
+            values = pull_entries2(table)
+            print(values)
+            
+            for value in values:
+                table_widget.insert("", "end", values = value)
             return True
     except sqlite3.Error as e:
         print(f"SQLite error: {e}")
