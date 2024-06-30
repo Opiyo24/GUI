@@ -52,6 +52,13 @@ def entry_function():
     entry_window.iconbitmap('')
     entry_window.geometry('500x900')
 
+    sub_county_vals = entries_list('sub_county')
+    description_vals = entries_list('description')
+    floors_vals = entries_list('floors')
+    assigned_vals = entries_list('assigned')
+    status_vals = entries_list('status')
+
+    
 
 #TODO: Style the entry window with place  
 #Entry DAte
@@ -257,7 +264,7 @@ def entry_function():
         sub_county_frame,
         width = 200,
         height = 32,
-        values = ['', 'CHANGAMWE', 'JOMVU', 'KISAUNI', 'NYALI', 'LIKONI', 'MVITA'],
+        values = sub_county_vals,
         # textvariable=sub_county_entry,
     )
     sub_county_combo.pack(anchor = 'w')
@@ -296,7 +303,7 @@ def entry_function():
         description_frame,
         width = 150,
         height = 32,
-        values = ['', 'COMMERCIAL', 'RESIDENTIAL', 'MIXED USE', 'INDUSTRIAL', 'INSTITUTIONAL'],
+        values = description_vals,
 
     )
     description_combo.pack(anchor = 'w')
@@ -334,7 +341,7 @@ def entry_function():
         floors_frame,
         width = 150,
         height = 32,
-        values = ['', 'G', 'G+1', 'G+2', 'G+3', 'MEZZANINE'],
+        values = floors_vals,
 
     )
     floors_combo.pack(anchor ='w')
@@ -373,7 +380,7 @@ def entry_function():
         assigned_frame,
         width = 150,
         height = 32,
-        values = ['', 'Brian', 'Quincy', 'Sugut', 'Gabriel', 'Opoyo'],
+        values = assigned_vals,
 
     )
     assigned_combo.pack(anchor = 'w')
@@ -535,7 +542,7 @@ def entry_function():
         status_frame,
         width = 150,
         height = 32,
-        values = ['', 'PENDING', 'APPROVED', 'REJECTED', 'REVIEW'],
+        values = status_vals,
     )
     status_combo.pack(anchor = 'w')
 
@@ -851,7 +858,8 @@ def cancel_entry(window):
 def table_page(frame):
     for widget in frame.winfo_children():
         widget.destroy()
-    global table
+    global table, sort, filter_1, filter_2
+
     frame.rowconfigure((0, 1, 2, 3, 4, 5, 6), weight = 1, uniform = 'a')
     frame.columnconfigure((0,1,2,3,4,5,6,7), weight = 1, uniform = 'a')
 
@@ -1459,8 +1467,3 @@ def members(frame):
 
 if __name__ == '__main__':
     table_page()
-
-
-
-
-
