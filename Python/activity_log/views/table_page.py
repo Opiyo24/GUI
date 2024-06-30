@@ -776,7 +776,8 @@ def submit(window):
     # print(f"Printing ref_no: {ref_no}")
     # print(f"Printing remarks: {remarks}")
 
-    
+    if len(ENTRY) != 0:
+        CTkMessagebox.messagebox(title='WAIT', text='Just a moment, the previous entry is still being logged!', sound='on', button_text='OK')
 
     if (entry_date == '' or upload_date == '' or owner == '' or
             sub_county == '' or date_moved == '' or plot_no == '' or
@@ -812,6 +813,15 @@ def submit(window):
 
         #insert data into sqlite database
         make_entry(ENTRY)
+
+        successful_entry = list(ENTRY)
+        
+        while len(successful_entry) > 0:
+            successful_entry.pop()
+
+        ENTRY = tuple(successful_entry)
+        print("Entry values saved and cleared successfully")
+        
         #TODO: Update table data by refreshing
         
         for row in table.get_children():

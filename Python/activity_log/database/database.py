@@ -87,7 +87,7 @@ def make_entry(data):
             conn.commit()
         
         conn.close()
-        print('Entry made successfully')
+        print('Entry logged successfully')
         return True
     except sqlite3.Error as e:
         print(f"SQLite error: {e}")
