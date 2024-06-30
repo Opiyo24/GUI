@@ -14,12 +14,14 @@ from utils.functions import days_count
 ctk.set_appearance_mode('light')
 ctk.set_default_color_theme('green')
 
+global action
+action = 'entry'
 
 ENTRY = ()
 
 def entry_function():
 
-    global ENTRY
+    global ENTRY, action, selected_entry
     global entry_date_entry, upload_date_entry, owner_entry_entry, sub_county_combo, plot_no_entry, description_combo, floors_combo, assigned_combo, date_moved_entry, ref_number_entry, status_combo, Issues_entry, Remarks_entry
 
     #TODO: Update window title to render todays date
@@ -62,24 +64,9 @@ def entry_function():
 
 #TODO: Style the entry window with place  
 #Entry DAte
-    entry_frame = ctk.CTkFrame(
-        entry_window,
-        bg_color = '#f5f7f8',
-        fg_color = '#f5f7f8',
-        # border_width = 2,
-        # border_color = 'black',
-    )
-    entry_frame.grid(
-        row = 0,
-        column = 0,
-        columnspan = 4,
-        sticky = 'news',
-    )
-    e = ctk.CTkLabel(
-        entry_frame,
-        text = '',
-        height = 10,
-    )
+    entry_frame = ctk.CTkFrame(entry_window, bg_color = '#f5f7f8', fg_color = '#f5f7f8',)
+    entry_frame.grid( row = 0, column = 0, columnspan = 4, sticky = 'news',)
+    e = ctk.CTkLabel(entry_frame, text = '', height = 10,)
     e.pack()
 
     entry_date = ctk.CTkLabel(
@@ -737,6 +724,765 @@ def entry_function():
     entry_window.mainloop()
 
 
+def detail_window():
+
+    global ENTRY, action, selected_entry
+    global entry_date_entry, upload_date_entry, owner_entry_entry, sub_county_combo, plot_no_entry, description_combo, floors_combo, assigned_combo, date_moved_entry, ref_number_entry, status_combo, Issues_entry, Remarks_entry
+
+    #TODO: Update window title to render todays date
+    entry_window = ctk.CTk()
+    entry_window.title('Activity Log | entry_window')
+    entry_window.iconbitmap('')
+    entry_window.geometry('700x400')
+    entry_window.minsize(700, 400)
+    entry_window.maxsize(700, 400)
+    entry_window.rowconfigure((0, 1, 2, 3, 4), weight = 1, uniform = 'a')
+    entry_window.columnconfigure((0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19), weight = 1, uniform = 'a')
+    entry_window.configure(bg='#f5f7f8')
+    entry_window.configure(fg='#f5f7f8')
+
+    entry_date = ctk.StringVar()
+    upload_date = ctk.StringVar()
+    owner = ctk.StringVar()
+    sub_county_combo = ctk.StringVar()
+    date_moved = ctk.StringVar()
+    plot_no = ctk.StringVar()
+    description = ctk.StringVar()
+    floors = ctk.StringVar()
+    assigned = ctk.StringVar()
+    status = ctk.StringVar()
+    issues = ctk.StringVar()
+    ref_no = ctk.StringVar()
+    remarks = ctk.StringVar()
+
+    entry_window.title('Activity Log | Entry')
+    entry_window.iconbitmap('')
+    entry_window.geometry('500x900')
+
+    sub_county_vals = entries_list('sub_county')
+    description_vals = entries_list('description')
+    floors_vals = entries_list('floors')
+    assigned_vals = entries_list('assigned')
+    status_vals = entries_list('status')
+
+    pk=selected_entry[0]
+    window = entry_window
+
+    
+
+#TODO: Style the entry window with place  
+#Entry DAte
+    entry_frame = ctk.CTkFrame(entry_window, bg_color = '#f5f7f8', fg_color = '#f5f7f8',)
+    entry_frame.grid( row = 0, column = 0, columnspan = 4, sticky = 'news',)
+    e = ctk.CTkLabel(entry_frame, text = '', height = 10,)
+    e.pack()
+
+    entry_date = ctk.CTkLabel(
+        entry_frame,
+        text = 'Entry Date',
+        font = ('Helvetica', 12),
+        text_color = 'black',
+    )
+    entry_date.pack(
+        anchor = 'w',
+    )
+
+    entry_date_entry = DateEntry(
+        entry_frame,
+        width = 18,
+        height = 32,
+        selectmode='day',
+        date_pattern='m/d/yyyy',
+        # padx = 10,
+        textvariable=entry_date,
+    )
+    entry_date_entry.pack(
+        anchor = 'w',
+    )
+
+    #Upload Date
+    upload_frame = ctk.CTkFrame(
+        entry_window,
+        bg_color = '#f5f7f8',
+        fg_color = '#f5f7f8',
+        # border_width = 2,
+        # border_color = 'black',
+    )
+    upload_frame.grid(
+        row = 0,
+        column = 4,
+        columnspan = 4,
+        sticky = 'news',
+    )
+    e = ctk.CTkLabel(
+        upload_frame,
+        text = '',
+        height = 10,
+    )
+    e.pack()
+    u_date = ctk.CTkLabel(
+        upload_frame,
+        text = 'Date of Upload',
+        font = ('Helvetica', 12),
+        text_color = 'black',
+    )
+    u_date.pack(
+        anchor = 'w',
+    )
+
+    upload_date_entry = DateEntry(
+        upload_frame,
+        width = 18,
+        height = 32,
+        selectmode='day',
+        date_pattern='m/d/yyyy',
+        # padx = 10,
+        textvariable=upload_date,
+    )
+    upload_date_entry.pack(
+        anchor = 'w',
+    )
+
+    owner_frame = ctk.CTkFrame(
+        entry_window,
+        bg_color = '#f5f7f8',
+        fg_color = '#f5f7f8',
+        # border_width = 2,
+        # border_color = 'black',
+    )
+
+    owner_frame.grid(
+        row = 0,
+        column = 8,
+        columnspan = 6,
+        sticky = 'news',
+    )
+    e = ctk.CTkLabel(
+        owner_frame,
+        text = '',
+        height = 10,
+    )
+    e.pack(anchor = 'w')
+    # #Owner
+    owner_label = ctk.CTkLabel(
+        owner_frame,
+        text = 'Owner',
+        font = ('Helvetica', 12),
+        text_color = 'black',
+    )
+    owner_label.pack(
+        anchor = 'w',
+        padx = 10,
+        # pady = 10,
+    )
+
+    owner_entry_entry = ctk.CTkEntry(
+        owner_frame,
+        width = 250,
+        height = 32,
+        textvariable=owner,
+    )
+    owner_entry_entry.pack(
+        anchor = 'w',
+        padx = 10,
+        # pady = 10,
+    )
+
+
+    plot_frame = ctk.CTkFrame(
+        entry_window,
+        bg_color = '#f5f7f8',
+        fg_color = '#f5f7f8',
+        # border_width = 2,
+        # border_color = 'black',
+    )
+
+    plot_frame.grid(
+        row = 0,
+        column = 14,
+        columnspan = 6,
+        sticky = 'news',
+    )
+    e = ctk.CTkLabel(
+        plot_frame,
+        text = '',
+        height = 10,
+    )
+    e.pack()
+
+    plot_no = ctk.CTkLabel(
+        plot_frame,
+        text = 'Plot No',
+        font = ('Helvetica', 12),
+        text_color = 'black',
+    )
+    plot_no.pack(anchor = 'w')
+
+    plot_no_entry = ctk.CTkEntry(
+        plot_frame,
+        width = 200,
+        height = 32,
+    )
+    plot_no_entry.pack(anchor = 'w')
+
+    # #Sub County
+    sub_county_frame = ctk.CTkFrame(
+        entry_window,
+        bg_color = '#f5f7f8',
+        fg_color = '#f5f7f8',
+        # border_width = 2,
+        # border_color = 'black',
+    )
+
+    sub_county_frame.grid(
+        row = 1,
+        column = 0,
+        columnspan = 6,
+        sticky = 'news',
+    )
+    e = ctk.CTkLabel(
+        sub_county_frame,
+        text = '',
+        height = 10,
+    )
+    e.pack()
+
+    sub_county_label = ctk.CTkLabel(
+        sub_county_frame,
+        text = 'Sub-County',
+        font = ('Helvetica', 12),
+        text_color = 'black',
+    )
+    sub_county_label.pack(anchor = 'w')
+
+    sub_county_combo = ctk.CTkComboBox(
+        sub_county_frame,
+        width = 200,
+        height = 32,
+        values = sub_county_vals,
+        # textvariable=sub_county_entry,
+    )
+    sub_county_combo.pack(anchor = 'w')
+
+    # #Description
+    description_frame = ctk.CTkFrame(
+        entry_window,
+        bg_color = '#f5f7f8',
+        fg_color = '#f5f7f8',
+        # border_width = 2,
+        # border_color = 'black',
+    )
+
+    description_frame.grid(
+        row = 1,
+        column = 6,
+        columnspan = 7,
+        sticky = 'news',
+    )
+    e = ctk.CTkLabel(
+        description_frame,
+        text = '',
+        height = 10,
+    )
+    e.pack()
+
+    description_label = ctk.CTkLabel(
+        description_frame,
+        text = 'Description',
+        font = ('Helvetica', 12),
+        text_color = 'black',
+    )
+    description_label.pack(anchor = 'w')
+
+    description_combo = ctk.CTkComboBox(
+        description_frame,
+        width = 150,
+        height = 32,
+        values = description_vals,
+
+    )
+    description_combo.pack(anchor = 'w')
+
+    # #Floors
+    floors_frame = ctk.CTkFrame(
+        entry_window,
+        bg_color = '#f5f7f8',
+        fg_color = '#f5f7f8',
+        # border_width = 2,
+        # border_color = 'black',
+    )
+
+    floors_frame.grid(
+        row = 1,
+        column = 13,
+        columnspan = 7,
+        sticky = 'news',
+    )
+    e = ctk.CTkLabel(
+        floors_frame,
+        text = '',
+        height = 10,
+    )
+    e.pack()
+    floors_label = ctk.CTkLabel(
+        floors_frame,
+        text = 'Floors',
+        font = ('Helvetica', 12),
+        text_color = 'black',
+    )
+    floors_label.pack(anchor ='w')
+
+    floors_combo = ctk.CTkComboBox(
+        floors_frame,
+        width = 150,
+        height = 32,
+        values = floors_vals,
+
+    )
+    floors_combo.pack(anchor ='w')
+
+    # #Assigned
+    assigned_frame = ctk.CTkFrame(
+        entry_window,
+        bg_color = '#f5f7f8',
+        fg_color = '#f5f7f8',
+        # border_width = 2,
+        # border_color = 'black',
+    )
+
+    assigned_frame.grid(
+        row = 2,
+        column = 0,
+        columnspan = 5,
+        sticky = 'news',
+    )
+    e = ctk.CTkLabel(
+        assigned_frame,
+        text = '',
+        height = 10,
+    )
+    e.pack()
+
+    assigned_label = ctk.CTkLabel(
+        assigned_frame,
+        text = 'Assigned',
+        font = ('Helvetica', 12),
+        text_color = 'black',
+    )
+    assigned_label.pack(anchor = 'w')
+
+    assigned_combo = ctk.CTkComboBox(
+        assigned_frame,
+        width = 150,
+        height = 32,
+        values = assigned_vals,
+
+    )
+    assigned_combo.pack(anchor = 'w')
+
+
+    #Empty frame
+    empty1_frame = ctk.CTkFrame(
+        entry_window,
+        bg_color = '#f5f7f8',
+        fg_color = '#f5f7f8',
+        # border_width = 2,
+        # border_color = 'black',
+    )
+
+    empty1_frame.grid(
+        row = 2,
+        column = 5,
+        columnspan = 1,
+        sticky = 'news',
+    )
+    # #Date moved
+    dm_frame = ctk.CTkFrame(
+        entry_window,
+        bg_color = '#f5f7f8',
+        fg_color = '#f5f7f8',
+        # border_width = 2,
+        # border_color = 'black',
+    )
+
+    dm_frame.grid(
+        row = 2,
+        column = 6,
+        columnspan = 4,
+        sticky = 'news',
+    )
+    e = ctk.CTkLabel(
+        dm_frame,
+        text = '',
+        height = 10,
+    )
+    e.pack()
+
+    m_date = ctk.CTkLabel(
+        dm_frame,
+        text = 'Date Moved',
+        font = ('Helvetica', 12),
+        text_color = 'black',
+    )
+    m_date.pack(anchor = 'w')
+
+    date_moved_entry = DateEntry(
+        dm_frame,
+        selectmode='day',
+        date_pattern='m/d/yyyy',
+        textvariable=date_moved,
+    )
+    date_moved_entry.pack(anchor ='w')
+
+
+    #empty frame
+    empty3_frame = ctk.CTkFrame(
+        entry_window,
+        bg_color = '#f5f7f8',
+        fg_color = '#f5f7f8',
+        # border_width = 2,
+        # border_color = 'black',
+    )
+
+    empty3_frame.grid(
+        row = 2,
+        column = 10,
+        columnspan = 1,
+        sticky = 'news',
+    )
+    # #Last follow-up
+    last_frame = ctk.CTkFrame(
+        entry_window,
+        bg_color = '#f5f7f8',
+        fg_color = '#f5f7f8',
+        # border_width = 2,
+        # border_color = 'black',
+    )
+
+    last_frame.grid(
+        row = 2,
+        column = 11,
+        columnspan = 5,
+        sticky = 'news',
+    )
+    e = ctk.CTkLabel(
+        last_frame,
+        text = '',
+        height = 10,
+    )
+    e.pack()
+
+    ref_number_label = ctk.CTkLabel(
+        last_frame,
+        text = 'Ref No',
+        font = ('Helvetica', 12),
+        text_color = 'black',
+    )
+
+    ref_number_label.pack(anchor = 'w')
+
+    ref_number_entry = ctk.CTkEntry(
+        last_frame,
+        height = 32,
+    )
+    ref_number_entry.pack(anchor = 'w')
+
+
+    #empty frame
+    empty3_frame = ctk.CTkFrame(
+        entry_window,
+        bg_color = '#f5f7f8',
+        fg_color = '#f5f7f8',
+        # border_width = 2,
+        # border_color = 'black',
+    )
+
+    empty3_frame.grid(
+        row = 2,
+        column = 16,
+        columnspan = 1,
+        sticky = 'news',
+    )
+    # #status
+    status_frame = ctk.CTkFrame(
+        entry_window,
+        bg_color = '#f5f7f8',
+        fg_color = '#f5f7f8',
+        # border_width = 2,
+        # border_color = 'black',
+    )
+
+    status_frame.grid(
+        row = 2,
+        column = 17,
+        columnspan = 3,
+        sticky = 'news',
+    )
+    e = ctk.CTkLabel(
+        status_frame,
+        text = '',
+        height = 10,
+    )
+    e.pack()
+
+    status_label = ctk.CTkLabel(
+        status_frame,
+        text = 'Status',
+        font = ('Helvetica', 12),
+        text_color = 'black',
+    )
+    status_label.pack(anchor = 'w')
+
+    status_combo = ctk.CTkComboBox(
+        status_frame,
+        width = 150,
+        height = 32,
+        values = status_vals,
+    )
+    status_combo.pack(anchor = 'w')
+
+    # #Issues
+    issues_frame = ctk.CTkFrame(
+        entry_window,
+        bg_color = '#f5f7f8',
+        fg_color = '#f5f7f8',
+        # border_width = 2,
+        # border_color = 'black',
+    )
+
+    issues_frame.grid(
+        row = 3,
+        column = 0,
+        columnspan = 10,
+        sticky = 'news',
+    )
+
+    Issues_label = ctk.CTkLabel(
+        issues_frame,
+        text = 'Issues',
+        font = ('Helvetica', 12),
+        text_color = 'black',
+    )
+    Issues_label.pack(anchor = 'w')
+
+    Issues_entry = ctk.CTkEntry(
+        issues_frame,
+        width = 350,
+        height =50,
+        textvariable = issues,
+    )
+    Issues_entry.pack(anchor = 'w')
+
+
+    #empty frame
+    empty4_frame = ctk.CTkFrame(
+        entry_window,
+        bg_color = '#f5f7f8',
+        fg_color = '#f5f7f8',
+        # border_width = 2,
+        # border_color = 'black',
+    )
+
+    empty4_frame.grid(
+        row = 3,
+        column = 10,
+        columnspan = 1,
+        sticky = 'news',
+    )
+    # #Remarks
+    remarks_frame = ctk.CTkFrame(
+        entry_window,
+        bg_color = '#f5f7f8',
+        fg_color = '#f5f7f8',
+        # border_width = 2,
+        # border_color = 'black',
+    )
+
+    remarks_frame.grid(
+        row = 3,
+        column = 11,
+        columnspan = 9,
+        sticky = 'news',
+    )
+
+    Remarks_label = ctk.CTkLabel(
+        remarks_frame,
+        text = 'Remarks',
+        font = ('Helvetica', 12),
+        text_color = 'black',
+    )
+    Remarks_label.pack(anchor = 'w')
+
+    Remarks_entry = ctk.CTkEntry(
+        remarks_frame,
+        width = 320,
+        height = 50,
+        textvariable = remarks,
+    )
+    Remarks_entry.pack(anchor = 'w')
+
+
+    submit_frame = ctk.CTkFrame(
+        entry_window,
+        bg_color = '#f5f7f8',
+        fg_color = '#f5f7f8',
+        # border_width = 2,
+        # border_color = 'black',
+    )
+
+    submit_frame.grid(
+        row = 4,
+        column = 18,
+        columnspan = 2,
+        sticky = 'news',
+    )
+
+    submit_button = ctk.CTkButton(
+        submit_frame,
+        text = 'SUBMIT',
+        height = 30,
+        width = 24,
+        command = lambda: edit(pk, window),
+    )
+    submit_button.pack(padx = 2,
+                    pady = 30)
+
+    cancel_frame = ctk.CTkFrame(
+        entry_window,
+        bg_color = '#f5f7f8',
+        fg_color = '#f5f7f8',
+        # border_width = 2,
+        # border_color = 'black',
+    )
+
+    cancel_frame.grid(
+        row = 4,
+        column = 16,
+        columnspan = 2,
+        sticky = 'news',
+    )
+    cancel_button = ctk.CTkButton(
+        cancel_frame,
+        text = 'CANCEL',
+        height = 30,
+        width = 24,
+        command = lambda: cancel_entry(entry_window),
+    )
+    # cancel_button.pack(padx = 2,
+                    # pady = 30)
+
+    delete_frame = ctk.CTkFrame(
+        entry_window,
+        bg_color = '#f5f7f8',
+        fg_color = '#f5f7f8',
+        # border_width = 2,
+        # border_color = 'black',
+    )
+
+    delete_frame.grid(
+        row = 4,
+        column = 14,
+        columnspan = 2,
+        sticky = 'news',
+    )
+    delete_button = ctk.CTkButton(
+        delete_frame,
+        text = 'DELETE',
+        height = 30,
+        width = 24,
+        # bg_color = '#f5f7f8',
+        # fg_color = '#f5f7f8',
+        command = lambda: delete(pk, window),
+    )
+    delete_button.pack(padx = 2,
+                    pady = 30)
+
+    empty_frame = ctk.CTkFrame(
+        entry_window,
+        bg_color = '#f5f7f8',
+        fg_color = '#f5f7f8',
+        # border_width = 2,
+        # border_color = 'black',
+    )
+
+    empty_frame.grid(
+        row = 4,
+        column = 0,
+        columnspan = 1,
+        sticky = 'news',
+    )
+
+    #empty frame
+    empty5_frame = ctk.CTkFrame(
+        entry_window,
+        bg_color = '#f5f7f8',
+        fg_color = '#f5f7f8',
+        # border_width = 2,
+        # border_color = 'black',
+    )
+
+    empty5_frame.grid(
+        row = 4,
+        column = 1,
+        columnspan = 13,
+        sticky = 'news',
+    )
+
+    # print("Printing values")
+    # print(selected_entry[0])
+    # print(selected_entry[1])
+    # print(selected_entry[2])
+    # print(selected_entry[3])
+    # print(selected_entry[4])
+    # print(selected_entry[5])
+    # print(selected_entry[6])
+    # print(selected_entry[7])
+    # print(selected_entry[8])
+    # print(selected_entry[9])
+    # print(selected_entry[10])
+    # print(selected_entry[11])
+    # print(selected_entry[12])
+    # print(selected_entry[13])
+
+    # ('1c880591-cdb6-4a45-b6b3-24a187be95b2', '2024-06-27', '2024-06-27', 'Kimani Allan', 'KISAUNI', 'INDUSTRIAL', 'G+1', 'None', 'Opoyo', '2024-07-05', 8, 'CCC/23', 'PENDING', 'P/654/2021')
+
+    #TODO: Save remarks to database
+    #TODO: Convert date values to string
+    #TODO: create independent edit function
+    #TODO: Update save function to update in stead of creating new entry
+
+    # if action != 'entry':
+    entry_d = convert_date_format(selected_entry[1])
+    upload = convert_date_format(selected_entry[2])
+    moved = convert_date_format(selected_entry[9])
+
+    entry_date_entry.delete(0, '')
+    upload_date_entry.delete(0, '')
+    date_moved_entry.delete(0, '')
+    entry_date_entry.insert(0, entry_d)
+    upload_date_entry.insert(0, upload)
+    owner_entry_entry.insert(0, selected_entry[3])
+    sub_county_combo.set(selected_entry[4])
+    plot_no_entry.insert(0, selected_entry[6])
+    description_combo.set(selected_entry[5])
+    floors_combo.set(selected_entry[11])
+    assigned_combo.set(selected_entry[8])
+    date_moved_entry.insert(0, moved)
+    ref_number_entry.insert(0, selected_entry[10])
+    status_combo.set(selected_entry[12])
+    Issues_entry.insert(0, selected_entry[13])
+    # Remarks_entry.insert(0, selected_entry[14])
+
+
+    entry_window.mainloop()
+
+def convert_date_format(date_str):
+
+    year, month, day = date_str.split('-')
+    formatted_date = f"{month}/{day}/{year}"
+    
+    return formatted_date
+
 def submit(window):
 
     from CustomTkinterMessagebox import CTkMessagebox
@@ -796,13 +1542,14 @@ def submit(window):
         new_list.append(sub_county)
         new_list.append(description)
         new_list.append(floors)
-        new_list.append(issues)
+        new_list.append(plot_no)
         new_list.append(assigned)
         new_list.append(save_date(date_moved))
         new_list.append(days)
-        new_list.append(plot_no)
-        new_list.append(status)
         new_list.append(ref_no)
+        new_list.append(status)
+        new_list.append(issues)
+        new_list.append(remarks)
         ENTRY = tuple(new_list)
 
         print("Printing all entries")
@@ -835,11 +1582,117 @@ def submit(window):
         for entry in entries:
             row_value = (
                     entry[1], entry[2], entry[3], entry[4], entry[5],
-                    entry[6], entry[11], entry[8], entry[9], entry[10], entry[13], 
+                    entry[6], entry[7], entry[8], entry[9], entry[10], entry[11], 
                     entry[12]
                 )
             table.insert("", "end", values = row_value)
 
+def edit(pk, window):
+    global entry_date_entry, upload_date_entry, owner_entry_entry, sub_county_combo, plot_no_entry, description_combo, floors_combo, assigned_combo, date_moved_entry, ref_number_entry, status_combo, Issues_entry, Remarks_entry
+
+    global ENTRY, table
+    connection = sqlite3.connect('activity_log.db')
+    with connection:
+        connection.execute(f'UPDATE log SET entry_date = "{entry_date_entry.get()}", upload_date = "{upload_date_entry.get()}", owner = "{owner_entry_entry.get()}", sub_county = "{sub_county_combo.get()}", description = "{description_combo.get()}", floors = "{floors_combo.get()}", ref_no = "{ref_number_entry.get()}", assigned = "{assigned_combo.get()}", date_moved = "{date_moved_entry.get()}", days_left = "{days_count(entry_date_entry.get(), date_moved_entry.get())}", issues = "{Issues_entry.get()}", status = "{status_combo.get()}" WHERE id = "{pk}"')
+        print("Entry updated successfully")
+    
+    window.destroy()
+
+        #insert data into sqlite database
+
+    successful_entry = list(ENTRY)
+    
+    while len(successful_entry) > 0:
+        successful_entry.pop()
+
+    ENTRY = tuple(successful_entry)
+    print("Entry values saved and cleared successfully")
+    
+    #TODO: Update table data by refreshing
+    
+    for row in table.get_children():
+        table.delete(row)
+
+    row_value = ()
+
+    entries = pull_entries()
+    print(entries)
+
+    for entry in entries:
+        row_value = (
+                    entry[1], entry[2], entry[3], entry[4], entry[5],
+                    entry[6], entry[7], entry[8], entry[9], entry[10], entry[11], 
+                    entry[12]
+                )
+        table.insert("", "end", values = row_value)
+
+def delete(pk, window):
+    global ENTRY
+    delete_entry(pk)
+    window.destroy()
+
+    successful_entry = list(ENTRY)
+        
+    while len(successful_entry) > 0:
+        successful_entry.pop()
+
+    ENTRY = tuple(successful_entry)
+    print("Entry values saved and cleared successfully")
+    
+    #TODO: Update table data by refreshing
+    
+    for row in table.get_children():
+        table.delete(row)
+
+    row_value = ()
+
+    entries = pull_entries()
+    print(entries)
+
+    for entry in entries:
+        row_value = (
+                    entry[1], entry[2], entry[3], entry[4], entry[5],
+                    entry[6], entry[7], entry[8], entry[9], entry[10], entry[11], 
+                    entry[12]
+                )
+        table.insert("", "end", values = row_value)
+
+def edit_entry(event):
+    global table, action, selected_entry
+    global entry_date_entry, upload_date_entry, owner_entry_entry, sub_county_combo, plot_no_entry, description_combo, floors_combo, assigned_combo, date_moved_entry, ref_number_entry, status_combo, Issues_entry, Remarks_entry
+
+    action == 'edit'
+
+    selected_row = table.selection()
+    if selected_row:
+        item_id = selected_row[0]  # Get the first selected item
+        item_values = table.item(item_id, "values")
+        print("Printing the selected item")
+        print(item_values)
+        # ('2024-06-28', '2024-06-29', 'Abraham Kivillu Mwaura', 'KISAUNI', 'MIXED USE', 'G+2', 'XXL/VII', 'Gabriel', '2024-07-07', '9', 'P/122/2021', 'APPROVED')
+
+        #SELECT * FROM log WHERE entry_date = "{item_values[0]}" AND upload_date = "{item_values[1]}" AND owner = "{item_values[2]}" AND sub_county = "{item_values[3]}" AND description = "{item_values[4]}" AND floors = "{item_values[5]}" AND plot_no = "{item_values[6]}" AND assigned = "{item_values[7]}" AND date_moved = "{item_values[8]}" AND days_left = "{item_values[9]}" AND ref_no = "{item_values[10]}" AND status = "{item_values[11]}"'
+        #TODO: Sort table entry column mix up (plot no and ref_no)
+        connection = sqlite3.connect('activity_log.db')
+        with connection:
+            selected_entry = connection.execute(f'SELECT * FROM log WHERE entry_date = "{item_values[0]}" AND upload_date = "{item_values[1]}" AND owner = "{item_values[2]}" AND sub_county = "{item_values[3]}" AND description = "{item_values[4]}" AND floors = "{item_values[5]}" AND ref_no = "{item_values[6]}" AND assigned = "{item_values[7]}" AND date_moved = "{item_values[8]}" AND days_left = "{item_values[9]}" AND issues = "{item_values[10]}" AND status = "{item_values[11]}"').fetchone()
+            print("Printing the entry")
+            print(selected_entry)
+
+        detail_window()
+
+            # global ENTRY
+            # ENTRY = entry
+
+            # entry_function()
+    #on selection, create a list variable of entry values
+    # find entry corresponding from the database (where).fetchone()
+    # populate the entry fields with the values
+        #get treeview id
+        #get first value in vlaues[treeview id]
+    # update the entry with the new values where id = ID
+    #save values to the database
+    # pass
 
 def clear():
     global entry_date_entry, upload_date_entry, owner_entry_entry, sub_county_combo, plot_no_entry, description_combo, floors_combo, assigned_combo, date_moved_entry, ref_number_entry, status_combo, Issues_entry, Remarks_entry
@@ -1056,6 +1909,7 @@ def table_page(frame):
         fill = 'both',
         expand = True,
     )
+    table.bind("<Double-1>", edit_entry)
 
 
     row_value = ()

@@ -27,7 +27,8 @@ CREATE_ENTRY_TABLE = ("""
                       days_left INTEGER,
                       ref_no TEXT,
                       status TEXT,
-                      issues TEXT);
+                      issues TEXT,
+                      remarks TEXT);
                       """)
 
 ENTRIES = ("""
@@ -80,7 +81,7 @@ def make_entry(data):
         conn = sqlite3.connect('activity_log.db')
         cursor = conn.cursor()
 
-        sql = '''INSERT INTO log (id,entry_date,upload_date,owner,sub_county,description,floors,plot_no,assigned,date_moved,days_left,ref_no,status,issues) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
+        sql = '''INSERT INTO log (id,entry_date,upload_date,owner,sub_county,description,floors,plot_no,assigned,date_moved,days_left,ref_no,status,issues,remarks) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
 
         with conn:
             cursor.execute(sql, data)
@@ -108,6 +109,12 @@ def pull_entries():
     connection = sqlite3.connect('activity_log.db')
     with connection:
         return connection.execute(ENTRIES).fetchall()
+    
+def delete_entry(pk):
+    connection = sqlite3.connect('activity_log.db')
+    with connection:
+        connection.execute(f'DELETE FROM log WHERE id = "{pk}"')
+        print("Entry deleted successfully")
 
 def determine(value):
     if value == "Entry Date":
