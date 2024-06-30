@@ -87,7 +87,7 @@ def make_entry(data):
             conn.commit()
         
         conn.close()
-        print('Entry made successfully')
+        print('Entry logged successfully')
         return True
     except sqlite3.Error as e:
         print(f"SQLite error: {e}")
@@ -232,11 +232,21 @@ def pull_entries2(table):
     try:
         with connection:
             entries = connection.execute(f'SELECT * FROM {table}').fetchall()
+            print("Printing entries.")
+            print(entries)
             return entries
     except sqlite3.Error as e:
         print(f"SQLite error: {e}")
         return False
 
+def entries_list(table):
+    entries = pull_entries2(table)
+    entries_list = ['']
+    for entry in entries:
+        entries_list.append(entry[0])
+    print("Printig entries list")
+    print(entries_list)
+    return entries_list
 
 def delete_table(table_name):
     connection = sqlite3.connect('activity_log.db')
