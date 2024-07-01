@@ -1661,12 +1661,13 @@ def delete(pk, window):
     print(entries)
 
     for entry in entries:
-        row_value = (
+        for entry in entries:
+            row_value = (
                     entry[1], entry[2], entry[3], entry[4], entry[5],
                     entry[6], entry[7], entry[8], entry[9], entry[10], entry[11], 
                     entry[12]
                 )
-        table.insert("", "end", values = row_value)
+            table.insert("", "end", values = row_value)
 
 def edit_entry(event):
     global table, action, selected_entry
@@ -1954,7 +1955,7 @@ def sort_values(event):
     for entry in values:
         row_value = (
                 entry[1], entry[2], entry[3], entry[4], entry[5],
-                entry[6], entry[11], entry[8], entry[9], entry[10], entry[13], 
+                entry[6], entry[7], entry[8], entry[9], entry[10], entry[11], 
                 entry[12]
             )
         table.insert("", "end", values = row_value)
@@ -1990,7 +1991,7 @@ def filter_values2(event):
     for entry in values:
         row_value = (
                 entry[1], entry[2], entry[3], entry[4], entry[5],
-                entry[6], entry[11], entry[8], entry[9], entry[10], entry[13], 
+                entry[6], entry[7], entry[8], entry[9], entry[10], entry[11], 
                 entry[12]
             )
         table.insert("", "end", values = row_value)
