@@ -1463,12 +1463,12 @@ def detail_window():
     upload_date_entry.insert(0, upload)
     owner_entry_entry.insert(0, selected_entry[3])
     sub_county_combo.set(selected_entry[4])
-    plot_no_entry.insert(0, selected_entry[6])
+    plot_no_entry.insert(0, selected_entry[7])
     description_combo.set(selected_entry[5])
-    floors_combo.set(selected_entry[11])
+    floors_combo.set(selected_entry[6])
     assigned_combo.set(selected_entry[8])
     date_moved_entry.insert(0, moved)
-    ref_number_entry.insert(0, selected_entry[10])
+    ref_number_entry.insert(0, selected_entry[11])
     status_combo.set(selected_entry[12])
     Issues_entry.insert(0, selected_entry[13])
     # Remarks_entry.insert(0, selected_entry[14])
@@ -1482,6 +1482,11 @@ def convert_date_format(date_str):
     formatted_date = f"{month}/{day}/{year}"
     
     return formatted_date
+
+def reconvert(date_str):
+        month, day, year = date_str.split('/')
+        formatted_date = f"{year}-{month}-{day}"
+        return formatted_date
 
 def submit(window):
 
@@ -1590,10 +1595,16 @@ def submit(window):
 def edit(pk, window):
     global entry_date_entry, upload_date_entry, owner_entry_entry, sub_county_combo, plot_no_entry, description_combo, floors_combo, assigned_combo, date_moved_entry, ref_number_entry, status_combo, Issues_entry, Remarks_entry
 
+    entry_d = entry_date_entry.get()
+    upload_d = upload_date_entry.get()
+    moved_d = date_moved_entry.get()
+
     global ENTRY, table
     connection = sqlite3.connect('activity_log.db')
     with connection:
-        connection.execute(f'UPDATE log SET entry_date = "{entry_date_entry.get()}", upload_date = "{upload_date_entry.get()}", owner = "{owner_entry_entry.get()}", sub_county = "{sub_county_combo.get()}", description = "{description_combo.get()}", floors = "{floors_combo.get()}", ref_no = "{ref_number_entry.get()}", assigned = "{assigned_combo.get()}", date_moved = "{date_moved_entry.get()}", days_left = "{days_count(entry_date_entry.get(), date_moved_entry.get())}", issues = "{Issues_entry.get()}", status = "{status_combo.get()}" WHERE id = "{pk}"')
+        connection.execute("""UPDATE log SET entry_date = ?, upload_date = ?, owner = ?, sub_county = ?, description = ?, floors = ?, plot_no = ?, ref_no = ?, assigned = ?, date_moved = ?,days_left = ?, issues = ?, status = ? WHERE id = ?
+    """, (reconvert(entry_d), reconvert(upload_d), owner_entry_entry.get(), sub_county_combo.get(), description_combo.get(), floors_combo.get(), plot_no_entry.get(), ref_number_entry.get(), assigned_combo.get(), reconvert(moved_d), days_count(entry_date_entry.get(), date_moved_entry.get()), Issues_entry.get(), status_combo.get(), pk
+    ))
         print("Entry updated successfully")
     
     window.destroy()
@@ -1669,13 +1680,13 @@ def edit_entry(event):
         item_values = table.item(item_id, "values")
         print("Printing the selected item")
         print(item_values)
-        # ('2024-06-28', '2024-06-29', 'Abraham Kivillu Mwaura', 'KISAUNI', 'MIXED USE', 'G+2', 'XXL/VII', 'Gabriel', '2024-07-07', '9', 'P/122/2021', 'APPROVED')
+        #(0'2024-07-01', 1'2024-07-01', 2'Imani Amani', 3'LIKONI', 4'COMMERCIAL', 5'MEZZANINE2', 6'XXL/CS', 7'ALAN', 8'2024-07-24', 9'23', 10'D/100/1999', 11'APPROVED')
 
         #SELECT * FROM log WHERE entry_date = "{item_values[0]}" AND upload_date = "{item_values[1]}" AND owner = "{item_values[2]}" AND sub_county = "{item_values[3]}" AND description = "{item_values[4]}" AND floors = "{item_values[5]}" AND plot_no = "{item_values[6]}" AND assigned = "{item_values[7]}" AND date_moved = "{item_values[8]}" AND days_left = "{item_values[9]}" AND ref_no = "{item_values[10]}" AND status = "{item_values[11]}"'
         #TODO: Sort table entry column mix up (plot no and ref_no)
         connection = sqlite3.connect('activity_log.db')
         with connection:
-            selected_entry = connection.execute(f'SELECT * FROM log WHERE entry_date = "{item_values[0]}" AND upload_date = "{item_values[1]}" AND owner = "{item_values[2]}" AND sub_county = "{item_values[3]}" AND description = "{item_values[4]}" AND floors = "{item_values[5]}" AND ref_no = "{item_values[6]}" AND assigned = "{item_values[7]}" AND date_moved = "{item_values[8]}" AND days_left = "{item_values[9]}" AND issues = "{item_values[10]}" AND status = "{item_values[11]}"').fetchone()
+            selected_entry = connection.execute(f'SELECT * FROM log WHERE entry_date = "{item_values[0]}" AND upload_date = "{item_values[1]}" AND owner = "{item_values[2]}" AND sub_county = "{item_values[3]}" AND description = "{item_values[4]}" AND floors = "{item_values[5]}" AND ref_no = "{item_values[10]}" AND assigned = "{item_values[7]}" AND date_moved = "{item_values[8]}" AND days_left = "{item_values[9]}" AND status = "{item_values[11]}"').fetchone()
             print("Printing the entry")
             print(selected_entry)
 
@@ -1920,7 +1931,7 @@ def table_page(frame):
     for entry in entries:
         row_value = (
                 entry[1], entry[2], entry[3], entry[4], entry[5],
-                entry[6], entry[11], entry[8], entry[9], entry[10], entry[13], 
+                entry[6], entry[7], entry[8], entry[9], entry[10], entry[11], 
                 entry[12]
             )
         table.insert("", "end", values = row_value)
