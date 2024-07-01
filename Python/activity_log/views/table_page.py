@@ -723,7 +723,6 @@ def entry_function():
 
     entry_window.mainloop()
 
-
 def detail_window():
 
     global ENTRY, action, selected_entry
@@ -1428,30 +1427,6 @@ def detail_window():
         sticky = 'news',
     )
 
-    # print("Printing values")
-    # print(selected_entry[0])
-    # print(selected_entry[1])
-    # print(selected_entry[2])
-    # print(selected_entry[3])
-    # print(selected_entry[4])
-    # print(selected_entry[5])
-    # print(selected_entry[6])
-    # print(selected_entry[7])
-    # print(selected_entry[8])
-    # print(selected_entry[9])
-    # print(selected_entry[10])
-    # print(selected_entry[11])
-    # print(selected_entry[12])
-    # print(selected_entry[13])
-
-    # ('1c880591-cdb6-4a45-b6b3-24a187be95b2', '2024-06-27', '2024-06-27', 'Kimani Allan', 'KISAUNI', 'INDUSTRIAL', 'G+1', 'None', 'Opoyo', '2024-07-05', 8, 'CCC/23', 'PENDING', 'P/654/2021')
-
-    #TODO: Save remarks to database
-    #TODO: Convert date values to string
-    #TODO: create independent edit function
-    #TODO: Update save function to update in stead of creating new entry
-
-    # if action != 'entry':
     entry_d = convert_date_format(selected_entry[1])
     upload = convert_date_format(selected_entry[2])
     moved = convert_date_format(selected_entry[9])
@@ -1463,12 +1438,12 @@ def detail_window():
     upload_date_entry.insert(0, upload)
     owner_entry_entry.insert(0, selected_entry[3])
     sub_county_combo.set(selected_entry[4])
-    plot_no_entry.insert(0, selected_entry[6])
+    plot_no_entry.insert(0, selected_entry[7])
     description_combo.set(selected_entry[5])
-    floors_combo.set(selected_entry[11])
+    floors_combo.set(selected_entry[6])
     assigned_combo.set(selected_entry[8])
     date_moved_entry.insert(0, moved)
-    ref_number_entry.insert(0, selected_entry[10])
+    ref_number_entry.insert(0, selected_entry[11])
     status_combo.set(selected_entry[12])
     Issues_entry.insert(0, selected_entry[13])
     # Remarks_entry.insert(0, selected_entry[14])
@@ -1482,6 +1457,11 @@ def convert_date_format(date_str):
     formatted_date = f"{month}/{day}/{year}"
     
     return formatted_date
+
+def reconvert(date_str):
+        month, day, year = date_str.split('/')
+        formatted_date = f"{year}-{month}-{day}"
+        return formatted_date
 
 def submit(window):
 
@@ -1590,10 +1570,16 @@ def submit(window):
 def edit(pk, window):
     global entry_date_entry, upload_date_entry, owner_entry_entry, sub_county_combo, plot_no_entry, description_combo, floors_combo, assigned_combo, date_moved_entry, ref_number_entry, status_combo, Issues_entry, Remarks_entry
 
+    entry_d = entry_date_entry.get()
+    upload_d = upload_date_entry.get()
+    moved_d = date_moved_entry.get()
+
     global ENTRY, table
     connection = sqlite3.connect('activity_log.db')
     with connection:
-        connection.execute(f'UPDATE log SET entry_date = "{entry_date_entry.get()}", upload_date = "{upload_date_entry.get()}", owner = "{owner_entry_entry.get()}", sub_county = "{sub_county_combo.get()}", description = "{description_combo.get()}", floors = "{floors_combo.get()}", ref_no = "{ref_number_entry.get()}", assigned = "{assigned_combo.get()}", date_moved = "{date_moved_entry.get()}", days_left = "{days_count(entry_date_entry.get(), date_moved_entry.get())}", issues = "{Issues_entry.get()}", status = "{status_combo.get()}" WHERE id = "{pk}"')
+        connection.execute("""UPDATE log SET entry_date = ?, upload_date = ?, owner = ?, sub_county = ?, description = ?, floors = ?, plot_no = ?, ref_no = ?, assigned = ?, date_moved = ?,days_left = ?, issues = ?, status = ? WHERE id = ?
+    """, (reconvert(entry_d), reconvert(upload_d), owner_entry_entry.get(), sub_county_combo.get(), description_combo.get(), floors_combo.get(), plot_no_entry.get(), ref_number_entry.get(), assigned_combo.get(), reconvert(moved_d), days_count(entry_date_entry.get(), date_moved_entry.get()), Issues_entry.get(), status_combo.get(), pk
+    ))
         print("Entry updated successfully")
     
     window.destroy()
@@ -1650,12 +1636,13 @@ def delete(pk, window):
     print(entries)
 
     for entry in entries:
-        row_value = (
+        for entry in entries:
+            row_value = (
                     entry[1], entry[2], entry[3], entry[4], entry[5],
                     entry[6], entry[7], entry[8], entry[9], entry[10], entry[11], 
                     entry[12]
                 )
-        table.insert("", "end", values = row_value)
+            table.insert("", "end", values = row_value)
 
 def edit_entry(event):
     global table, action, selected_entry
@@ -1669,13 +1656,13 @@ def edit_entry(event):
         item_values = table.item(item_id, "values")
         print("Printing the selected item")
         print(item_values)
-        # ('2024-06-28', '2024-06-29', 'Abraham Kivillu Mwaura', 'KISAUNI', 'MIXED USE', 'G+2', 'XXL/VII', 'Gabriel', '2024-07-07', '9', 'P/122/2021', 'APPROVED')
+        #(0'2024-07-01', 1'2024-07-01', 2'Imani Amani', 3'LIKONI', 4'COMMERCIAL', 5'MEZZANINE2', 6'XXL/CS', 7'ALAN', 8'2024-07-24', 9'23', 10'D/100/1999', 11'APPROVED')
 
         #SELECT * FROM log WHERE entry_date = "{item_values[0]}" AND upload_date = "{item_values[1]}" AND owner = "{item_values[2]}" AND sub_county = "{item_values[3]}" AND description = "{item_values[4]}" AND floors = "{item_values[5]}" AND plot_no = "{item_values[6]}" AND assigned = "{item_values[7]}" AND date_moved = "{item_values[8]}" AND days_left = "{item_values[9]}" AND ref_no = "{item_values[10]}" AND status = "{item_values[11]}"'
         #TODO: Sort table entry column mix up (plot no and ref_no)
         connection = sqlite3.connect('activity_log.db')
         with connection:
-            selected_entry = connection.execute(f'SELECT * FROM log WHERE entry_date = "{item_values[0]}" AND upload_date = "{item_values[1]}" AND owner = "{item_values[2]}" AND sub_county = "{item_values[3]}" AND description = "{item_values[4]}" AND floors = "{item_values[5]}" AND ref_no = "{item_values[6]}" AND assigned = "{item_values[7]}" AND date_moved = "{item_values[8]}" AND days_left = "{item_values[9]}" AND issues = "{item_values[10]}" AND status = "{item_values[11]}"').fetchone()
+            selected_entry = connection.execute(f'SELECT * FROM log WHERE entry_date = "{item_values[0]}" AND upload_date = "{item_values[1]}" AND owner = "{item_values[2]}" AND sub_county = "{item_values[3]}" AND description = "{item_values[4]}" AND floors = "{item_values[5]}" AND ref_no = "{item_values[10]}" AND assigned = "{item_values[7]}" AND date_moved = "{item_values[8]}" AND days_left = "{item_values[9]}" AND status = "{item_values[11]}"').fetchone()
             print("Printing the entry")
             print(selected_entry)
 
@@ -1712,11 +1699,9 @@ def clear():
     Remarks_entry.delete(0, 'end')
 
     print("Cleared all fields")
-
-        
+      
 def cancel_entry(window):
     window.kill()
-
 
 def table_page(frame):
     for widget in frame.winfo_children():
@@ -1920,11 +1905,10 @@ def table_page(frame):
     for entry in entries:
         row_value = (
                 entry[1], entry[2], entry[3], entry[4], entry[5],
-                entry[6], entry[11], entry[8], entry[9], entry[10], entry[13], 
+                entry[6], entry[7], entry[8], entry[9], entry[10], entry[11], 
                 entry[12]
             )
         table.insert("", "end", values = row_value)
-
 
 def sort_values(event):
     from database.database import table_sort
@@ -1943,7 +1927,7 @@ def sort_values(event):
     for entry in values:
         row_value = (
                 entry[1], entry[2], entry[3], entry[4], entry[5],
-                entry[6], entry[11], entry[8], entry[9], entry[10], entry[13], 
+                entry[6], entry[7], entry[8], entry[9], entry[10], entry[11], 
                 entry[12]
             )
         table.insert("", "end", values = row_value)
@@ -1979,7 +1963,7 @@ def filter_values2(event):
     for entry in values:
         row_value = (
                 entry[1], entry[2], entry[3], entry[4], entry[5],
-                entry[6], entry[11], entry[8], entry[9], entry[10], entry[13], 
+                entry[6], entry[7], entry[8], entry[9], entry[10], entry[11], 
                 entry[12]
             )
         table.insert("", "end", values = row_value)
@@ -2022,14 +2006,17 @@ def populate_table(widget, table):
 
 def members(frame):
     import uuid
+
+    global sub_county_table, description_table, floors_table, assigned_table, status_table
+    global sub_county_entry, description_entry, floors_entry, assigned_entry, status_entry
     #TODO: Clear other widgets in frame
     for widget in frame.winfo_children():
         widget.destroy()
     # del_cols()
     create_all_tables()
     
-    frame.rowconfigure((0, 1), weight = 1, uniform = 'a')
-    frame.columnconfigure((0, 1, 2), weight = 1, uniform = 'a')
+    # frame.rowconfigure((0, 1), weight = 4)
+    # frame.columnconfigure((0, 1, 2), weight = 2)
     #Sub county
     sub_county_frame = ctk.CTkFrame(
         frame,
@@ -2038,6 +2025,8 @@ def members(frame):
     sub_county_frame.grid(
         row = 0,
         column = 0,
+        columnspan = 3,
+        rowspan = 3,
         sticky = 'news',
     )
 
@@ -2061,6 +2050,7 @@ def members(frame):
         fill = 'both',
         expand = True,
     )
+    sub_county_table.bind("<Double-1>", edit_sub_county)
 
     add_sub_county_frame = ctk.CTkFrame(
         sub_county_frame,
@@ -2095,8 +2085,10 @@ def members(frame):
     )
 
     description_frame.grid(
-        row = 1,
+        row = 4,
         column = 0,
+        rowspan = 3,
+        columnspan = 3,
         sticky = 'news',
     )
 
@@ -2120,6 +2112,7 @@ def members(frame):
         fill = 'both',
         expand = True,
     )
+    description_table.bind("<Double-1>", edit_description)
 
     add_description_frame = ctk.CTkFrame(
         description_frame,
@@ -2155,8 +2148,9 @@ def members(frame):
 
     floors_frame.grid(
         row = 0,
-        column = 1,
-        rowspan = 2,
+        column = 3,
+        rowspan = 7,
+        columnspan = 3,
         sticky = 'news',
     )
 
@@ -2180,6 +2174,7 @@ def members(frame):
         fill = 'both',
         expand = True,
     )
+    floors_table.bind("<Double-1>", edit_floors)
 
     add_floors_frame = ctk.CTkFrame(
         floors_frame,
@@ -2215,7 +2210,9 @@ def members(frame):
 
     assigned_frame.grid(
         row = 0,
-        column = 2,
+        column = 6,
+        rowspan = 3,
+        columnspan = 3,
         sticky = 'news',
     )
 
@@ -2239,6 +2236,7 @@ def members(frame):
         fill = 'both',
         expand = True,
     )
+    assigned_table.bind("<Double-1>", edit_assigned)
 
     add_assigned_frame = ctk.CTkFrame(
         assigned_frame,
@@ -2274,8 +2272,10 @@ def members(frame):
     )
 
     status_frame.grid(
-        row = 1,
-        column = 2,
+        row = 4,
+        column = 6,
+        rowspan = 3,
+        columnspan = 3,
         sticky = 'news',
     )
 
@@ -2299,6 +2299,7 @@ def members(frame):
         fill = 'both',
         expand = True,
     )
+    status_table.bind("<Double-1>", edit_status)
 
     add_status_frame = ctk.CTkFrame(
         status_frame,
@@ -2327,7 +2328,185 @@ def members(frame):
     )
     populate_table(status_table, 'status')
 
+def edit_sub_county(event):
+    from CustomTkinterMessagebox import CTkMessagebox
+    global sub_county_table, sub_county_entry
 
+    selected_row = sub_county_table.selection()
+    if selected_row:
+        item_id = selected_row[0]  # Get the first selected item
+        item_values = sub_county_table.item(item_id, "values")
+        print("Printing the selected item")
+        print(item_values)
+
+    connection = sqlite3.connect('activity_log.db')
+
+    try:
+        with connection:
+            sub_county = connection.execute('SELECT * FROM sub_county WHERE name = ?', (item_values[0],)).fetchone()
+
+        if sub_county is None:
+            CTkMessagebox.messagebox.showerror("Error", "Sub-county not found in the database.")
+            return
+
+        # Clear the entry widget and insert the fetched sub-county details
+        sub_county_entry.delete(0, 'end')
+        sub_county_entry.insert(0, sub_county[0])
+
+        # Delete the sub-county from the database
+        with connection:
+            connection.execute('DELETE FROM sub_county WHERE name = ?', (item_values[0],))
+        
+        print("Sub-county deleted successfully, awaiting new entry")
+
+    except sqlite3.Error as e:
+        CTkMessagebox.messagebox.showerror("Database Error", str(e))
+    except Exception as e:
+        CTkMessagebox.messagebox.showerror("Error", str(e))
+        
+def edit_description(event):
+    from CustomTkinterMessagebox import CTkMessagebox
+    global description_table, description_entry
+
+    selected_row = description_table.selection()
+    if selected_row:
+        item_id = selected_row[0]  # Get the first selected item
+        item_values = description_table.item(item_id, "values")
+        print("Printing the selected item")
+        print(item_values)
+
+    connection = sqlite3.connect('activity_log.db')
+
+    try:
+        with connection:
+            description = connection.execute('SELECT * FROM description WHERE name = ?', (item_values[0],)).fetchone()
+
+        if description is None:
+            CTkMessagebox.messagebox.showerror("Error", "Sub-county not found in the database.")
+            return
+
+        # Clear the entry widget and insert the fetched sub-county details
+        description_entry.delete(0, 'end')
+        description_entry.insert(0, description[0])
+
+        # Delete the sub-county from the database
+        with connection:
+            connection.execute('DELETE FROM description WHERE name = ?', (item_values[0],))
+        
+        print("Description deleted successfully, awaiting new entry")
+
+    except sqlite3.Error as e:
+        CTkMessagebox.messagebox.showerror("Database Error", str(e))
+    except Exception as e:
+        CTkMessagebox.messagebox.showerror("Error", str(e))
+
+def edit_floors(event):
+    from CustomTkinterMessagebox import CTkMessagebox
+    global floors_table, floors_entry
+
+    selected_row = floors_table.selection()
+    if selected_row:
+        item_id = selected_row[0]  # Get the first selected item
+        item_values = floors_table.item(item_id, "values")
+        print("Printing the selected item")
+        print(item_values)
+
+    connection = sqlite3.connect('activity_log.db')
+
+    try:
+        with connection:
+            floors = connection.execute('SELECT * FROM floors WHERE name = ?', (item_values[0],)).fetchone()
+
+        if floors is None:
+            CTkMessagebox.messagebox.showerror("Error", "Sub-county not found in the database.")
+            return
+
+        # Clear the entry widget and insert the fetched sub-county details
+        floors_entry.delete(0, 'end')
+        floors_entry.insert(0, floors[0])
+
+        # Delete the sub-county from the database
+        with connection:
+            connection.execute('DELETE FROM floors WHERE name = ?', (item_values[0],))
+        
+        print("Floors deleted successfully, awaiting new entry")
+
+    except sqlite3.Error as e:
+        CTkMessagebox.messagebox.showerror("Database Error", str(e))
+    except Exception as e:
+        CTkMessagebox.messagebox.showerror("Error", str(e))
+
+def edit_assigned(event):
+    from CustomTkinterMessagebox import CTkMessagebox
+    global assigned_table, assigned_entry
+
+    selected_row = assigned_table.selection()
+    if selected_row:
+        item_id = selected_row[0]  # Get the first selected item
+        item_values = assigned_table.item(item_id, "values")
+        print("Printing the selected item")
+        print(item_values)
+
+    connection = sqlite3.connect('activity_log.db')
+
+    try:
+        with connection:
+            assigned = connection.execute('SELECT * FROM assigned WHERE name = ?', (item_values[0],)).fetchone()
+
+        if assigned is None:
+            CTkMessagebox.messagebox.showerror("Error", "Sub-county not found in the database.")
+            return
+
+        # Clear the entry widget and insert the fetched sub-county details
+        assigned_entry.delete(0, 'end')
+        assigned_entry.insert(0, assigned[0])
+
+        # Delete the sub-county from the database
+        with connection:
+            connection.execute('DELETE FROM assigned WHERE name = ?', (item_values[0],))
+        
+        print("Assigned deleted successfully, awaiting new entry")
+
+    except sqlite3.Error as e:
+        CTkMessagebox.messagebox.showerror("Database Error", str(e))
+    except Exception as e:
+        CTkMessagebox.messagebox.showerror("Error", str(e))
+
+def edit_status(event):
+    from CustomTkinterMessagebox import CTkMessagebox
+    global status_table, status_entry
+
+    selected_row = status_table.selection()
+    if selected_row:
+        item_id = selected_row[0]  # Get the first selected item
+        item_values = status_table.item(item_id, "values")
+        print("Printing the selected item")
+        print(item_values)
+
+    connection = sqlite3.connect('activity_log.db')
+
+    try:
+        with connection:
+            status = connection.execute('SELECT * FROM status WHERE name = ?', (item_values[0],)).fetchone()
+
+        if status is None:
+            CTkMessagebox.messagebox.showerror("Error", "Sub-county not found in the database.")
+            return
+
+        # Clear the entry widget and insert the fetched sub-county details
+        status_entry.delete(0, 'end')
+        status_entry.insert(0, status[0])
+
+        # Delete the sub-county from the database
+        with connection:
+            connection.execute('DELETE FROM status WHERE name = ?', (item_values[0],))
+        
+        print("Status deleted successfully, awaiting new entry")
+
+    except sqlite3.Error as e:
+        CTkMessagebox.messagebox.showerror("Database Error", str(e))
+    except Exception as e:
+        CTkMessagebox.messagebox.showerror("Error", str(e))
 
 if __name__ == '__main__':
     table_page()
