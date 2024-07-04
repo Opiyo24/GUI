@@ -1,6 +1,8 @@
 from tkinter import *
 import sqlite3
 import customtkinter as ctk
+from customtkinter import *
+from PIL import ImageTk, Image
 
 # from utils.functions import *
 # from views.login import login_page
@@ -8,28 +10,27 @@ import customtkinter as ctk
 from auth.authentication import User, is_authenticated, user_authenticated
 from views.table_page import *
 from database.database import *
+from utils.functions import *
 
 ctk.set_appearance_mode('system')
 ctk.set_default_color_theme('blue')
 
-color1 = ''
-color2 = ''
-color3 = ''
 
 
 
 window1 = ctk.CTk()
 window1.title('Activity Log')
-window1.eval("tk::PlaceWindow . center")
-window1.minsize(900, 450)
+# window1.eval("tk::PlaceWindow . center")
+window1.minsize(900, 600)
+window1.maxsize(900, 600)
 
-window1.columnconfigure((0), weight = 1, uniform = 'a')
+window1.columnconfigure((0, 1), weight = 1, uniform = 'a')
 window1.rowconfigure((0), weight = 1, uniform = 'a')
 
 
-frame2 = ctk.CTkFrame(window1, width = 1600, height = 800)
-frame = ctk.CTkFrame(window1, width = 1000, height = 450)
-frame.pack(expand=True, fill='both')
+# frame2 = ctk.CTkFrame(window1, width = 1600, height = 800)
+# frame = ctk.CTkFrame(window1, width = 1000, height = 450)
+# frame.pack(expand=True, fill='both')
 
 username = StringVar()
 password = StringVar()
@@ -57,7 +58,7 @@ def validate():
             window,
             border_width = 0,
             border_color = 'black',
-            fg_color = 'green',
+            fg_color = '#142d4d',
             corner_radius = 0,
         )
         menu_frame.grid(
@@ -72,7 +73,7 @@ def validate():
             border_width = 0,
             border_color = 'black',
             bg_color= 'blue',
-            fg_color = '#ecf496',
+            fg_color = '#979ca0',
         )
         main_frame.grid(
             row = 0,
@@ -134,44 +135,126 @@ def validate():
         )
         window.mainloop()
 
+background_frame = ctk.CTkFrame(
+    window1,
+    border_width = 0,
+    bg_color = '#023047',
+    fg_color = '#023047'
+)
+
+background_frame.grid(
+    row = 0,
+    column = 0,
+    pady = 0,
+    padx = 0,
+    sticky = 'news',
+)
+
+image_path = 'images/login_image.png'
+background_image = load_image(image_path, 455, 605)
+
+canvas = ctk.CTkCanvas(
+    background_frame,
+    width = 450,
+    height = 300,
+)
+canvas.pack(
+    fill = 'both',
+    expand = True,
+)
+
+canvas.create_image(
+    0,
+    0,
+    anchor = 'nw',
+    image = background_image,
+)
+
+input_frame = ctk.CTkFrame(
+    window1,
+    bg_color = '#023047',
+    fg_color = '#023047'
+)
+input_frame.grid(
+    row = 0,
+    column = 1,
+    sticky = 'news',
+)
+
 my_label = ctk.CTkLabel(
-    frame,
+    input_frame,
     text = '',
     font = ('Helvetica', 20),
 )
-my_label.pack(pady=40)
+my_label.pack(pady=90)
+
+username_label = ctk.CTkLabel(
+    input_frame,
+    text = 'Username',
+    font = ('Helvetica', 12),
+)
+
+username_label.pack(
+    pady = 0,
+    padx = 80,
+    anchor = 'w',)
 
 name_entry = ctk.CTkEntry(
-    frame,
+    input_frame,
     placeholder_text = 'Username',
     height = 30,
     width = 300,
     corner_radius = 5,
     textvariable=username,
 )
-name_entry.pack(pady = 10)
+name_entry.pack(pady = 2)
+
+space_label = ctk.CTkLabel(
+    input_frame,
+    text = '',
+)
+space_label.pack(pady=0)
+
+password_label = ctk.CTkLabel(
+    input_frame,
+    text = 'Password',
+    font = ('Helvetica', 12),
+)
+
+password_label.pack(
+    pady = 0,
+    padx = 80,
+    anchor = 'w',
+)
 
 password_entry = ctk.CTkEntry(
-    frame,
+    input_frame,
+    show = '*',
     placeholder_text = 'Password',
     width = 300,
     height = 30,
     corner_radius = 5,
     textvariable=password,
 )
-password_entry.pack(pady=10)
+password_entry.pack(pady=2)
 
 login_button = ctk.CTkButton(
-    frame,
+    input_frame,
     text = 'Login',
     height = 30,
-    width = 80,
+    width = 150,
+    bg_color = '#3f3769',
+    fg_color = '#4361ee',
     command=lambda: validate(),
 )
-login_button.pack(pady = 20)
+login_button.pack(
+    pady = 20,
+    padx = 80,
+    anchor = 'w',
+)
 
 my_label = ctk.CTkLabel(
-    frame,
+    input_frame,
     text = '',
     font = ('Helvetica', 20),
 )
