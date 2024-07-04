@@ -2,17 +2,12 @@ import sqlite3
 
 from utils.date_picker import *
 
-def date_parameters():
-    global month, year
-    # Convert the string to a datetime object using the specified format
-    date_str = todays_date()
-    date = datetime.strptime(date_str, '%a %d %b %Y')
-    
-    # Now you can use strftime on the datetime object
-    month = date.strftime('%m')
-    year = date.strftime('%Y')
+date_str = todays_date()
+date = datetime.strptime(date_str, '%a %d %b %Y')
 
-    print(f"Month: {month}, Year: {year}")
+# Now you can use strftime on the datetime object
+month = date.strftime('%m')
+year = date.strftime('%Y')
 
 CREATE_USERS_TABLE = ("""
 CREATE TABLE IF NOT EXISTS users (
@@ -144,12 +139,7 @@ def pull_user(connection, username):
         return f'User {username} not found'
     
 def pull_entries():
-    date_str = todays_date()
-    date = datetime.strptime(date_str, '%a %d %b %Y')
-    
-    # Now you can use strftime on the datetime object
-    month = date.strftime('%m')
-    year = date.strftime('%Y')
+    global month, year
 
     connection = sqlite3.connect('activity_log.db')
     with connection:
@@ -197,14 +187,14 @@ def table_sort(value):
     value = determine(value)
     connection = sqlite3.connect('activity_log.db')
     with connection:
-        return connection.execute(f'SELECT * FROM log ORDER BY "{value}"')
+        return connection.execute(f'SELECT * FROM log WHERE month = "{month}" and year = "{year}" ORDER BY "{value}"')
     
 
 def criteria_values(value):
     value = determine(value)
     connection = sqlite3.connect('activity_log.db')
     with connection:
-        abraba = connection.execute(f'SELECT DISTINCT {value} FROM log').fetchall()
+        abraba = connection.execute(f'SELECT DISTINCT {value} FROM log where month = "{month}" and year = "{year}"').fetchall()
         col_list = []
         for row in abraba:
             col_list.append(row[0])
@@ -218,8 +208,8 @@ def filter_entries(value1, value2):
         print("Column name:", value1)
         print("Value:", value2)
         cursor = connection.cursor()
-        query = f"SELECT * FROM log WHERE {value1} = ?"
-        cursor.execute(query, (value2,))
+        query = f"SELECT * FROM log WHERE {value1} = ? AND month = ? AND year = ? ORDER BY entry_date ASC"
+        cursor.execute(query, (value2, month, year))
         rows = cursor.fetchall()
         cursor.close()
         
@@ -328,7 +318,6 @@ def create_all_tables():
     create_sub_county_table()
     create_description_table()
     create_users_table()
-    date_parameters()
     
 
 
