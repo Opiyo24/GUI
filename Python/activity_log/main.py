@@ -57,7 +57,7 @@ def validate():
             window,
             border_width = 0,
             border_color = 'black',
-            fg_color = 'green',
+            fg_color = '#142d4d',
             corner_radius = 0,
         )
         menu_frame.grid(
@@ -72,7 +72,7 @@ def validate():
             border_width = 0,
             border_color = 'black',
             bg_color= 'blue',
-            fg_color = '#ecf496',
+            fg_color = '#979ca0',
         )
         main_frame.grid(
             row = 0,

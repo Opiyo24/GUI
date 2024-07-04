@@ -1,5 +1,19 @@
 import sqlite3
 
+from utils.date_picker import *
+
+def date_parameters():
+    global month, year
+    # Convert the string to a datetime object using the specified format
+    date_str = todays_date()
+    date = datetime.strptime(date_str, '%a %d %b %Y')
+    
+    # Now you can use strftime on the datetime object
+    month = date.strftime('%m')
+    year = date.strftime('%Y')
+
+    print(f"Month: {month}, Year: {year}")
+
 CREATE_USERS_TABLE = ("""
 CREATE TABLE IF NOT EXISTS users (
                       id INTEGER PRIMARY KEY,
@@ -28,11 +42,15 @@ CREATE_ENTRY_TABLE = ("""
                       ref_no TEXT,
                       status TEXT,
                       issues TEXT,
-                      remarks TEXT);
+                      remarks TEXT,
+                      month TEXT GENERATED ALWAYS AS (strftime('%m', entry_date)),
+                      year TEXT GENERATED ALWAYS AS (strftime('%Y', entry_date)));
                       """)
 
+NEW_COLUMN_MONTH = ("""ALTER TABLE log ADD COLUMN month TEXT GENERATED ALWAYS AS (strftime('%m', date));""")
+
 ENTRIES = ("""
-    SELECT * FROM log;
+    SELECT * FROM log WHERE month = ? AND year = ? ORDER BY entry_date ASC;
 """)
 
 CREATE_DESCRIPTION_TABLE = ("""
@@ -72,6 +90,26 @@ def create_entry_table():
     connection = sqlite3.connect('activity_log.db')
     with connection:
         return connection.execute(CREATE_ENTRY_TABLE)
+
+def add_month_year_columns():
+    connection = sqlite3.connect('activity_log.db')
+    cursor = connection.cursor()
+
+    # Check if the month column exists
+    cursor.execute("PRAGMA table_info(log)")
+    columns = [column_info[1] for column_info in cursor.fetchall()]
+    
+    if 'month' not in columns:
+        # Add the month column
+        cursor.execute("ALTER TABLE log ADD COLUMN month TEXT GENERATED ALWAYS AS (strftime('%m', entry_date))")
+
+    # Check if the year column exists
+    if 'year' not in columns:
+        # Add the year column
+        cursor.execute("ALTER TABLE log ADD COLUMN year TEXT GENERATED ALWAYS AS (strftime('%Y', entry_date))")
+
+    connection.commit()
+    connection.close()
     
 # create_entry_table(conn)
     
@@ -106,9 +144,16 @@ def pull_user(connection, username):
         return f'User {username} not found'
     
 def pull_entries():
+    date_str = todays_date()
+    date = datetime.strptime(date_str, '%a %d %b %Y')
+    
+    # Now you can use strftime on the datetime object
+    month = date.strftime('%m')
+    year = date.strftime('%Y')
+
     connection = sqlite3.connect('activity_log.db')
     with connection:
-        return connection.execute(ENTRIES).fetchall()
+        return connection.execute(ENTRIES, (month, year)).fetchall()
     
 def delete_entry(pk):
     connection = sqlite3.connect('activity_log.db')
@@ -283,6 +328,8 @@ def create_all_tables():
     create_sub_county_table()
     create_description_table()
     create_users_table()
+    date_parameters()
+    
 
 
     
@@ -303,9 +350,10 @@ if __name__ == '__main__':
     # print(pull_entries())
     # print(table_sort('Entry Date'))
     # print(filter_entries('Entry Date
-    pass
+    # date_parameters()
     # delete_table('description')
     # delete_table('status')
     # delete_table('assigned')
     # delete_table('sub_county')
     # delete_table('floors')
+    pass

@@ -1511,7 +1511,7 @@ def submit(window):
         CTkMessagebox.messagebox(title='Empty Fields', text='Fill all fields!', sound='on', button_text='OK')
         print("Blanks identified")
     else:
-        days = days_count(entry_date, date_moved)
+        days = days_count(upload_date, date_moved)
         print("Succesfully evaluated")
 
         new_list = list(ENTRY)
@@ -1578,7 +1578,7 @@ def edit(pk, window):
     connection = sqlite3.connect('activity_log.db')
     with connection:
         connection.execute("""UPDATE log SET entry_date = ?, upload_date = ?, owner = ?, sub_county = ?, description = ?, floors = ?, plot_no = ?, ref_no = ?, assigned = ?, date_moved = ?,days_left = ?, issues = ?, status = ? WHERE id = ?
-    """, (reconvert(entry_d), reconvert(upload_d), owner_entry_entry.get(), sub_county_combo.get(), description_combo.get(), floors_combo.get(), plot_no_entry.get(), ref_number_entry.get(), assigned_combo.get(), reconvert(moved_d), days_count(entry_date_entry.get(), date_moved_entry.get()), Issues_entry.get(), status_combo.get(), pk
+    """, (reconvert(entry_d), reconvert(upload_d), owner_entry_entry.get(), sub_county_combo.get(), description_combo.get(), floors_combo.get(), plot_no_entry.get(), ref_number_entry.get(), assigned_combo.get(), reconvert(moved_d), days_count(upload_date_entry.get(), date_moved_entry.get()), Issues_entry.get(), status_combo.get(), pk
     ))
         print("Entry updated successfully")
     
