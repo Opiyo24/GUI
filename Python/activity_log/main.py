@@ -11,6 +11,7 @@ from auth.authentication import User, is_authenticated, user_authenticated
 from views.table_page import *
 from database.database import *
 from utils.functions import *
+from analysis.visualization import *
 
 ctk.set_appearance_mode('system')
 ctk.set_default_color_theme('blue')
@@ -110,6 +111,7 @@ def validate():
             fg_color = 'transparent',
             corner_radius = 0,
             border_width = 0,
+            command = lambda: dashboard(main_frame)
         )
         m_button2.pack(
             fill = 'x',
