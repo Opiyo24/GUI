@@ -260,6 +260,7 @@ def dashboard(frame):
     entries.pack(
         anchor = 'nw',
         padx = 20,
+        pady = 4,
     )
 
     entries_description = ctk.CTkLabel(
@@ -272,6 +273,7 @@ def dashboard(frame):
     entries_description.pack(
         anchor = 'se',
         padx = 10,
+        pady = 6,
     )
 
     approved_entries = ctk.CTkLabel(
@@ -285,6 +287,7 @@ def dashboard(frame):
     approved_entries.pack(
         anchor = 'nw',
         padx = 20,
+        pady = 4,
     )
 
     approved_entries_description = ctk.CTkLabel(
@@ -297,6 +300,7 @@ def dashboard(frame):
     approved_entries_description.pack(
         anchor = 'se',
         padx = 10,
+        pady = 6,
     )
 
     pending_entries = ctk.CTkLabel(
@@ -310,6 +314,7 @@ def dashboard(frame):
     pending_entries.pack(
         anchor = 'nw',
         padx = 20,
+        pady = 4,
     )
 
     pending_entries_description = ctk.CTkLabel(
@@ -322,6 +327,7 @@ def dashboard(frame):
     pending_entries_description.pack(
         anchor = 'se',
         padx = 10,
+        pady = 6,
     )
 
     rejected_entries = ctk.CTkLabel(
@@ -335,6 +341,7 @@ def dashboard(frame):
     rejected_entries.pack(
         anchor = 'nw',
         padx = 20,
+        pady = 4,
     )
 
     rejected_entries_description = ctk.CTkLabel(
@@ -342,11 +349,14 @@ def dashboard(frame):
         text = 'Number of rejected entries.',
         font = ('Arial', 15),
         text_color = 'black',
+        fg_color = 'transparent',
+        bg_color = 'transparent',
     )
 
     rejected_entries_description.pack(
         anchor = 'se',
         padx = 10,
+        pady = 6,
     )
 
     first_year = ctk.CTkFrame(
