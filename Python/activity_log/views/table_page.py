@@ -1760,9 +1760,8 @@ def table_page(frame):
     entry_button = ctk.CTkButton(
         frame,
         text = 'New Entry',
-        height = 35,
-        width = 50,
-        bg_color = 'blue',
+        font = ('Helvetica', 20, 'bold'),
+        height = 40,
         fg_color = 'black',
         corner_radius = 10,
         border_width = 3,
@@ -1876,7 +1875,7 @@ def table_page(frame):
         data_frame,
         columns = cols,
         show = 'headings',
-        height=30,
+        height=110,
     )
     table.heading("Entry Date", text = "Entry Date")
     table.heading("Upload Date", text = "Upload Date")
