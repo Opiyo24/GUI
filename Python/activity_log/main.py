@@ -152,24 +152,19 @@ background_frame.grid(
     sticky = 'news',
 )
 
-image_path = 'images/login_image.png'
-background_image = load_image(image_path, 455, 605)
+image_path = 'images/login_image.jpg'
+image = Image.open(image_path)
+photo = ImageTk.PhotoImage(image)
 
-canvas = ctk.CTkCanvas(
+label = tk.Label(
     background_frame,
-    width = 450,
-    height = 300,
+    image = photo,
+    bg = '#023047',
 )
-canvas.pack(
+
+label.pack(
     fill = 'both',
     expand = True,
-)
-
-canvas.create_image(
-    0,
-    0,
-    anchor = 'nw',
-    image = background_image,
 )
 
 input_frame = ctk.CTkFrame(
