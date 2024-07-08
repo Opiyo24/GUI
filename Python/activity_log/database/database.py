@@ -94,14 +94,18 @@ def add_month_year_columns():
     cursor.execute("PRAGMA table_info(log)")
     columns = [column_info[1] for column_info in cursor.fetchall()]
     
-    if 'month' not in columns:
-        # Add the month column
-        cursor.execute("ALTER TABLE log ADD COLUMN month TEXT GENERATED ALWAYS AS (strftime('%m', entry_date))")
+    # if 'month' not in columns:
+    #     # Add the month column
+    #     cursor.execute("ALTER TABLE log ADD COLUMN month TEXT GENERATED ALWAYS AS (strftime('%m', entry_date))")
 
-    # Check if the year column exists
-    if 'year' not in columns:
+    # # Check if the year column exists
+    # if 'year' not in columns:
+    #     # Add the year column
+    #     cursor.execute("ALTER TABLE log ADD COLUMN year TEXT GENERATED ALWAYS AS (strftime('%Y', entry_date))")
+
+    if 'upload_year' not in columns:
         # Add the year column
-        cursor.execute("ALTER TABLE log ADD COLUMN year TEXT GENERATED ALWAYS AS (strftime('%Y', entry_date))")
+        cursor.execute("ALTER TABLE log ADD COLUMN upload_year TEXT GENERATED ALWAYS AS (strftime('%Y', upload_date))")
 
     connection.commit()
     connection.close()
@@ -318,6 +322,7 @@ def create_all_tables():
     create_sub_county_table()
     create_description_table()
     create_users_table()
+    # add_month_year_columns()
     
 
 
