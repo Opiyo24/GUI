@@ -103,16 +103,17 @@ def check_years(year) -> str:
     elif year in ['2025', 2025]:
         return '2025'
 # Total number of entries within selected month
-def number_of_entries(month:str) -> int:
+def number_of_entries(month:str, year:str) -> int:
     """
     Returns the number of entries in the corresponding month
     """
     month = check_months(month)
+    year = check_years(year)
     connection = sqlite3.connect('activity_log.db')
 
     with connection:
         cursor = connection.cursor()
-        months = cursor.execute("SELECT COUNT(*) FROM log WHERE month = ?", (month,)).fetchone()
+        months = cursor.execute("SELECT COUNT(*) FROM log WHERE month = ? AND year = ?", (month,year)).fetchone()
 
     # print("Printing months")
     # print(months)
@@ -123,46 +124,49 @@ def number_of_entries(month:str) -> int:
     return number
 
 # Total number of approved entries within selected month
-def number_of_approved_entries(month:str) -> int:
+def number_of_approved_entries(month:str, year:str) -> int:
     """
     Returns the number of approved entries in the corresponding month
     """
     month = check_months(month)
+    year = check_years(year)
     connection = sqlite3.connect('activity_log.db')
 
     with connection:
         cursor = connection.cursor()
-        months = cursor.execute("SELECT COUNT(*) FROM log WHERE month = ? AND status = 'APPROVED'", (month,)).fetchone()
+        months = cursor.execute("SELECT COUNT(*) FROM log WHERE month = ? AND year = ? AND status = 'APPROVED'", (month, year)).fetchone()
 
     number = int(months[0])
     return number
 
 # Total number of pending entries within selected month
-def number_of_pending_entries(month:str) -> int:
+def number_of_pending_entries(month:str, year:str) -> int:
     """
     Returns the number of pending entries in the corresponding month
     """
     month = check_months(month)
+    year = check_years(year)
     connection = sqlite3.connect('activity_log.db')
 
     with connection:
         cursor = connection.cursor()
-        months = cursor.execute("SELECT COUNT(*) FROM log WHERE month = ? AND status = 'PENDING'", (month,)).fetchone()
+        months = cursor.execute("SELECT COUNT(*) FROM log WHERE month = ? AND year = ?AND status = 'PENDING'", (month, year)).fetchone()
 
     number = int(months[0])
     return number
 
 # Total number of rejected entries within selected month
-def number_of_rejected_entries(month:str) -> int:
+def number_of_rejected_entries(month:str, year:str) -> int:
     """
     Returns the number of rejected entries in the corresponding month
     """
     month = check_months(month)
+    year = check_years(year)
     connection = sqlite3.connect('activity_log.db')
 
     with connection:
         cursor = connection.cursor()
-        months = cursor.execute("SELECT COUNT(*) FROM log WHERE month = ? AND status = 'REJECTED'", (month,)).fetchone()
+        months = cursor.execute("SELECT COUNT(*) FROM log WHERE month = ? AND year = ?AND status = 'REJECTED'", (month, year)).fetchone()
 
     number = int(months[0])
     return number
@@ -185,16 +189,18 @@ def upload_years():
     return YEARS
 
 # Total number of entries for each year of upload
-def yearly_entries(year) -> int:
+def yearly_entries(current_month, current_year, year) -> int:
     """
     Returns the number of entries in the corresponding year
     """
     year = check_years(year)
+    current_month = check_months(current_month)
+    current_year = check_years(current_year)
     connection = sqlite3.connect('activity_log.db')
 
     with connection:
         cursor = connection.cursor()
-        years = cursor.execute("SELECT COUNT(*) FROM log WHERE upload_year = ?", (year,)).fetchone()
+        years = cursor.execute("SELECT COUNT(*) FROM log WHERE month = ? AND year = ? AND upload_year = ?", (current_month, current_year, year)).fetchone()
 
     number = int(years[0])
     return number

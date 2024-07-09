@@ -3,10 +3,19 @@ from tkinter import ttk
 import customtkinter as ctk
 from customtkinter import *
 
+from .data import *
+
+#TODO: handle exceptions for when there is no data in database
+
 def dashboard(frame):
     for widget in frame.winfo_children():
         widget.destroy()
     global table, sort, filter_1, filter_2
+
+    global selected_month, selected_year, entries, approved_entries, pending_entries, rejected_entries, first_year_label, second_year_label, first_year_approved, first_year_pending, first_year_rejected, first_year_entries, first_year_percentage, second_year_approved, second_year_pending, second_year_rejected, second_year_entries, second_year_percentage, average, Changamwe_entries, Changamwe_percentage, Changamwe_approved, Changamwe_pending, Changamwe_rejected, Jomvu_entries, Jomvu_percentage, Jomvu_approved, Jomvu_pending, Jomvu_rejected, Kisauni_entries, Kisauni_percentage, Kisauni_approved, Kisauni_pending, Kisauni_rejected, Likoni_entries, Likoni_percentage, Likoni_approved, Likoni_pending, Likoni_rejected, Mvita_entries, Mvita_percentage, Mvita_approved, Mvita_pending, Mvita_rejected, Nyali_entries, Nyali_percentage, Nyali_approved, Nyali_pending, Nyali_rejected
+
+    month = ctk.StringVar()
+    year = ctk.StringVar()
 
     frame.columnconfigure((0,1,2,3,4,5,6,7), weight = 1, uniform = 'a')
     frame.rowconfigure((0,1,2,3,4,5,6), weight = 1, uniform = 'a')
@@ -37,7 +46,7 @@ def dashboard(frame):
         corner_radius = 20,
     )
 
-    m_y_frame.rowconfigure((0, 1), weight = 1, uniform = 'a')
+    # m_y_frame.rowconfigure((0, 1), weight = 1, uniform = 'a')
     
     m_y_frame.grid(
         row = 0,
@@ -222,37 +231,50 @@ def dashboard(frame):
     
     selected_month = ctk.CTkComboBox(
         m_y_frame,
-        values = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        values = entry_months(),
         height = 30,
         width = 50,
     )
 
-    selected_month.grid(
-        row = 0,
-        column = 0,
-        pady = 10,
+    selected_month.pack(
+        # row = 0,
+        # column = 0,
+        pady = 2,
         padx = 20,
-        sticky = 'nsew',
+        # sticky = 'nsew',
     )
+    # selected_month.bind("<<ComboboxSelected>>", render_analysis)
 
     selected_year = ctk.CTkComboBox(
         m_y_frame,
-        values = ['2021', '2022', '2023', '2024', '2025'],
+        values = entry_years(),
         height = 30,
     )
 
-    selected_year.grid(
-        row = 1,
-        column = 0,
-        pady = 10,
+    selected_year.pack(
+        # row = 1,
+        # column = 0,
+        pady = 2,
         padx = 20,
-        sticky = 'nsew',
+        # sticky = 'nsew',
+    )
+    # selected_year.bind("<<ComboboxSelected>>", render_analysis)
+    analysis_button = ctk.CTkButton(
+        m_y_frame,
+        text = 'Analyze',
+        text_color = 'white',
+        command = render_analysis,
+        fg_color = 'black',
+        # bg_color = '#191a19',
+        corner_radius = 10,
+    )
+    analysis_button.pack(
     )
 
     entries = ctk.CTkLabel(
         entries_frame,
         height = 70,
-        text = '101',
+        text = '--',
         font = ('Arial', 60, 'bold'),
         text_color = '#191a19',
     )
@@ -279,7 +301,7 @@ def dashboard(frame):
     approved_entries = ctk.CTkLabel(
         approved_frame,
         height = 70,
-        text = '70',
+        text = '--',
         font = ('Arial', 60, 'bold'),
         text_color = '#05e61f',
     )
@@ -306,7 +328,7 @@ def dashboard(frame):
     pending_entries = ctk.CTkLabel(
         pending_frame,
         height = 70,
-        text = '10',
+        text = '--',
         font = ('Arial', 60, 'bold'),
         text_color = '#686a68',
     )
@@ -333,7 +355,7 @@ def dashboard(frame):
     rejected_entries = ctk.CTkLabel(
         rejected_frame,
         height = 70,
-        text = '20',
+        text = '--',
         font = ('Arial', 60, 'bold'),
         text_color = '#f50505',
     )
@@ -428,7 +450,7 @@ def dashboard(frame):
     #label
     first_year_label = ctk.CTkLabel(
         first_year,
-        text = '2021',
+        text = '----',
         text_color = '#f7f9f2',
         font = ('Arial', 95),
         fg_color = '#191a19',
@@ -445,7 +467,7 @@ def dashboard(frame):
     #approved
     first_year_approved = ctk.CTkLabel(
         first_year,
-        text = '70',
+        text = '--',
         text_color = '#05e61f',
         font = ('Arial', 24, 'bold'),
         fg_color = '#f7f9f2',
@@ -459,7 +481,7 @@ def dashboard(frame):
     #pending
     first_year_pending = ctk.CTkLabel(
         first_year,
-        text = '10',
+        text = '--',
         text_color = '#686a68',
         font = ('Arial', 24, 'bold'),
         fg_color = '#f7f9f2',
@@ -474,7 +496,7 @@ def dashboard(frame):
     #rejected
     first_year_rejected = ctk.CTkLabel(
         first_year,
-        text = '10',
+        text = '--',
         text_color = '#f50505',
         font = ('Arial', 24, 'bold'),
         fg_color = '#f7f9f2',
@@ -489,7 +511,7 @@ def dashboard(frame):
     #entries
     first_year_entries = ctk.CTkLabel(
         first_year,
-        text = '90',
+        text = '--',
         text_color = '#191a19',
         font = ('Arial', 40, 'bold'),
         fg_color = '#f7f9f2',
@@ -504,7 +526,7 @@ def dashboard(frame):
     #percentage
     first_year_percentage = ctk.CTkLabel(
         first_year,
-        text = '40%',
+        text = '--%',
         text_color = '#191a19',
         font = ('Arial', 25, 'bold'),
         fg_color = '#f7f9f2',
@@ -535,7 +557,7 @@ def dashboard(frame):
     #label
     second_year_label = ctk.CTkLabel(
         second_year,
-        text = '2022',
+        text = '----',
         text_color = '#f7f9f2',
         font = ('Arial', 95),
         fg_color = '#191a19',
@@ -552,7 +574,7 @@ def dashboard(frame):
     #approved
     second_year_approved = ctk.CTkLabel(
         second_year,
-        text = '70',
+        text = '--',
         text_color = '#05e61f',
         font = ('Arial', 24, 'bold'),
         fg_color = '#f7f9f2',
@@ -566,7 +588,7 @@ def dashboard(frame):
     #pending
     second_year_pending = ctk.CTkLabel(
         second_year,
-        text = '10',
+        text = '--',
         text_color = '#686a68',
         font = ('Arial', 24, 'bold'),
         fg_color = '#f7f9f2',
@@ -581,7 +603,7 @@ def dashboard(frame):
     #rejected
     second_year_rejected = ctk.CTkLabel(
         second_year,
-        text = '10',
+        text = '--',
         text_color = '#f50505',
         font = ('Arial', 24, 'bold'),
         fg_color = '#f7f9f2',
@@ -596,7 +618,7 @@ def dashboard(frame):
     #entries
     second_year_entries = ctk.CTkLabel(
         second_year,
-        text = '90',
+        text = '--',
         text_color = '#191a19',
         font = ('Arial', 40, 'bold'),
         fg_color = '#f7f9f2',
@@ -611,7 +633,7 @@ def dashboard(frame):
     #percentage
     second_year_percentage = ctk.CTkLabel(
         second_year,
-        text = '40%',
+        text = '--%',
         text_color = '#191a19',
         font = ('Arial', 25, 'bold'),
         fg_color = '#f7f9f2',
@@ -640,7 +662,7 @@ def dashboard(frame):
     #AVERAGE FRAME
     average = ctk.CTkLabel(
         average_frame,
-        text = '23',
+        text = '--',
         text_color = '#191a19',
         font = ('Arial', 110),
     )
@@ -708,7 +730,7 @@ def dashboard(frame):
 
     Changamwe_entries = ctk.CTkLabel(
         Changamwe,
-        text = '10',
+        text = '--',
         text_color = 'black',
         font = ('Arial', 25, 'bold'),
     )
@@ -723,7 +745,7 @@ def dashboard(frame):
 
     Changamwe_percentage = ctk.CTkLabel(
         Changamwe,
-        text = '10%',
+        text = '--%',
         text_color = 'black',
         font = ('Arial', 15, 'bold'),
     )
@@ -738,7 +760,7 @@ def dashboard(frame):
 
     Changamwe_approved = ctk.CTkLabel(
         Changamwe,
-        text = '10',
+        text = '--',
         text_color = '#05e61f',
         font = ('Arial', 20),
     )
@@ -753,7 +775,7 @@ def dashboard(frame):
 
     Changamwe_pending = ctk.CTkLabel(
         Changamwe,
-        text = '10',
+        text = '--',
         text_color = '#686a68',
         font = ('Arial', 20),
     )
@@ -768,7 +790,7 @@ def dashboard(frame):
 
     Changamwe_rejected = ctk.CTkLabel(
         Changamwe,
-        text = '10',
+        text = '--',
         text_color = '#f50505',
         font = ('Arial', 20),
     )
@@ -821,7 +843,7 @@ def dashboard(frame):
 
     Jomvu_entries = ctk.CTkLabel(
         Jomvu,
-        text = '10',
+        text = '--',
         text_color = 'black',
         font = ('Arial', 25, 'bold'),
     )
@@ -836,7 +858,7 @@ def dashboard(frame):
 
     Jomvu_percentage = ctk.CTkLabel(
         Jomvu,
-        text = '10%',
+        text = '--%',
         text_color = 'black',
         font = ('Arial', 15, 'bold'),
     )
@@ -851,7 +873,7 @@ def dashboard(frame):
 
     Jomvu_approved = ctk.CTkLabel(
         Jomvu,
-        text = '10',
+        text = '--',
         text_color = '#05e61f',
         font = ('Arial', 20),
     )
@@ -866,7 +888,7 @@ def dashboard(frame):
 
     Jomvu_pending = ctk.CTkLabel(
         Jomvu,
-        text = '10',
+        text = '--',
         text_color = '#686a68',
         font = ('Arial', 20),
     )
@@ -881,7 +903,7 @@ def dashboard(frame):
 
     Jomvu_rejected = ctk.CTkLabel(
         Jomvu,
-        text = '10',
+        text = '--',
         text_color = '#f50505',
         font = ('Arial', 20),
     )
@@ -934,7 +956,7 @@ def dashboard(frame):
 
     Kisauni_entries = ctk.CTkLabel(
         Kisauni,
-        text = '10',
+        text = '--',
         text_color = 'black',
         font = ('Arial', 25, 'bold'),
     )
@@ -949,7 +971,7 @@ def dashboard(frame):
 
     Kisauni_percentage = ctk.CTkLabel(
         Kisauni,
-        text = '10%',
+        text = '--%',
         text_color = 'black',
         font = ('Arial', 15, 'bold'),
     )
@@ -964,7 +986,7 @@ def dashboard(frame):
 
     Kisauni_approved = ctk.CTkLabel(
         Kisauni,
-        text = '10',
+        text = '--',
         text_color = '#05e61f',
         font = ('Arial', 20),
     )
@@ -979,7 +1001,7 @@ def dashboard(frame):
 
     Kisauni_pending = ctk.CTkLabel(
         Kisauni,
-        text = '10',
+        text = '--',
         text_color = '#686a68',
         font = ('Arial', 20),
     )
@@ -994,7 +1016,7 @@ def dashboard(frame):
 
     Kisauni_rejected = ctk.CTkLabel(
         Kisauni,
-        text = '10',
+        text = '--',
         text_color = '#f50505',
         font = ('Arial', 20),
     )
@@ -1047,7 +1069,7 @@ def dashboard(frame):
 
     Likoni_entries = ctk.CTkLabel(
         Likoni,
-        text = '10',
+        text = '--',
         text_color = 'black',
         font = ('Arial', 25, 'bold'),
     )
@@ -1062,7 +1084,7 @@ def dashboard(frame):
 
     Likoni_percentage = ctk.CTkLabel(
         Likoni,
-        text = '10%',
+        text = '--%',
         text_color = 'black',
         font = ('Arial', 15, 'bold'),
     )
@@ -1077,7 +1099,7 @@ def dashboard(frame):
 
     Likoni_approved = ctk.CTkLabel(
         Likoni,
-        text = '10',
+        text = '--',
         text_color = '#05e61f',
         font = ('Arial', 20),
     )
@@ -1092,7 +1114,7 @@ def dashboard(frame):
 
     Likoni_pending = ctk.CTkLabel(
         Likoni,
-        text = '10',
+        text = '--',
         text_color = '#686a68',
         font = ('Arial', 20),
     )
@@ -1107,7 +1129,7 @@ def dashboard(frame):
 
     Likoni_rejected = ctk.CTkLabel(
         Likoni,
-        text = '10',
+        text = '--',
         text_color = '#f50505',
         font = ('Arial', 20),
     )
@@ -1160,7 +1182,7 @@ def dashboard(frame):
 
     Mvita_entries = ctk.CTkLabel(
         Mvita,
-        text = '10',
+        text = '--',
         text_color = 'black',
         font = ('Arial', 25, 'bold'),
     )
@@ -1175,7 +1197,7 @@ def dashboard(frame):
 
     Mvita_percentage = ctk.CTkLabel(
         Mvita,
-        text = '10%',
+        text = '--%',
         text_color = 'black',
         font = ('Arial', 15, 'bold'),
     )
@@ -1190,7 +1212,7 @@ def dashboard(frame):
 
     Mvita_approved = ctk.CTkLabel(
         Mvita,
-        text = '10',
+        text = '--',
         text_color = '#05e61f',
         font = ('Arial', 20),
     )
@@ -1205,7 +1227,7 @@ def dashboard(frame):
 
     Mvita_pending = ctk.CTkLabel(
         Mvita,
-        text = '10',
+        text = '--',
         text_color = '#686a68',
         font = ('Arial', 20),
     )
@@ -1220,7 +1242,7 @@ def dashboard(frame):
 
     Mvita_rejected = ctk.CTkLabel(
         Mvita,
-        text = '10',
+        text = '--',
         text_color = '#f50505',
         font = ('Arial', 20),
     )
@@ -1273,7 +1295,7 @@ def dashboard(frame):
 
     Nyali_entries = ctk.CTkLabel(
         Nyali,
-        text = '10',
+        text = '--',
         text_color = 'black',
         font = ('Arial', 25, 'bold'),
     )
@@ -1288,7 +1310,7 @@ def dashboard(frame):
 
     Nyali_percentage = ctk.CTkLabel(
         Nyali,
-        text = '10%',
+        text = '--%',
         text_color = 'black',
         font = ('Arial', 15, 'bold'),
     )
@@ -1303,7 +1325,7 @@ def dashboard(frame):
 
     Nyali_approved = ctk.CTkLabel(
         Nyali,
-        text = '10',
+        text = '--',
         text_color = '#05e61f',
         font = ('Arial', 20),
     )
@@ -1318,7 +1340,7 @@ def dashboard(frame):
 
     Nyali_pending = ctk.CTkLabel(
         Nyali,
-        text = '10',
+        text = '--',
         text_color = '#686a68',
         font = ('Arial', 20),
     )
@@ -1333,7 +1355,7 @@ def dashboard(frame):
 
     Nyali_rejected = ctk.CTkLabel(
         Nyali,
-        text = '10',
+        text = '--',
         text_color = '#f50505',
         font = ('Arial', 20),
     )
@@ -1345,3 +1367,153 @@ def dashboard(frame):
         pady = 5,
         padx = 10,
     )
+
+def render_analysis():
+    global selected_month, selected_year, entries, approved_entries, pending_entries, rejected_entries, first_year_label, second_year_label, first_year_approved, first_year_pending, first_year_rejected, first_year_entries, first_year_percentage, second_year_approved, second_year_pending, second_year_rejected, second_year_entries, second_year_percentage, average, Changamwe_entries, Changamwe_percentage, Changamwe_approved, Changamwe_pending, Changamwe_rejected, Jomvu_entries, Jomvu_percentage, Jomvu_approved, Jomvu_pending, Jomvu_rejected, Kisauni_entries, Kisauni_percentage, Kisauni_approved, Kisauni_pending, Kisauni_rejected, Likoni_entries, Likoni_percentage, Likoni_approved, Likoni_pending, Likoni_rejected, Mvita_entries, Mvita_percentage, Mvita_approved, Mvita_pending, Mvita_rejected, Nyali_entries, Nyali_percentage, Nyali_approved, Nyali_pending, Nyali_rejected
+
+    month = selected_month.get()
+    year = selected_year.get()
+
+    # entries - text
+    entries.configure(text = number_of_entries(month, year))
+
+    # approved_entries - text
+    approved_entries.configure(text = number_of_approved_entries(month, year))
+
+    # pending_entries - text
+    pending_entries.configure(text = number_of_pending_entries(month, year))
+
+    # rejected_entries - text
+    rejected_entries.configure(text = number_of_rejected_entries(month, year))
+
+    # first_year_label - text
+    years = upload_years()
+    if years:
+        first_year_label.configure(text = years[0])
+        if len(years) > 1:
+            second_year_label.configure(text = years[1])
+
+    # first_year_approved - text
+    first_year_approved.configure(text = yearly_approved_entries(month, year, years[0]))
+
+    # first_year_pending - text
+    first_year_pending.configure(text = yearly_pending_entries(month, year, years[0]))
+
+    # first_year_rejected - text
+    first_year_rejected.configure(text = yearly_rejected_entries(month, year, years[0]))
+
+    # first_year_entries - text
+    first_year_entries.configure(text = yearly_entries(month, year, years[0]))
+
+    # first_year_percentage - text
+    first_year_percentage.configure(text = percentage_of_year_entries(month, year, years[0]))
+
+    # second_year_label - text
+    # second_year_approved - text
+    second_year_approved.configure(text = yearly_approved_entries(month, year, years[1]))
+
+    # second_year_pending - text
+    second_year_pending.configure(text = yearly_pending_entries(month, year, years[1]))
+
+    # second_year_rejected - text
+    second_year_rejected.configure(text = yearly_rejected_entries(month, year, years[1]))
+
+    # second_year_entries - text
+    second_year_entries.configure(text = yearly_entries(month, year, years[1]))
+
+    # second_year_percentage - text
+    second_year_percentage.configure(text = percentage_of_year_entries(month, year, years[1]))
+
+    # average - text
+    average.configure(text = average_days_left(month, year))
+
+    # Changamwe_entries - text
+    Changamwe_entries.configure(text = entries_per_sub_county(month, year, 'Changamwe'))
+
+    # Changamwe_percentage - text
+    Changamwe_percentage.configure(text = sub_county_percentage(month, year, 'Changamwe'))
+
+    # Changamwe_approved - text
+    Changamwe_approved.configure(text = approved_entries_per_sub_county(month, year, 'Changamwe'))
+
+    # Changamwe_pending - text
+    Changamwe_pending.configure(text = pending_entries_per_sub_county(month, year, 'Changamwe'))
+
+    # Changamwe_rejected - text
+    Changamwe_rejected.configure(text = rejected_entries_per_sub_county(month, year, 'Changamwe'))
+
+    # Jomvu_entries - text
+    Jomvu_entries.configure(text = entries_per_sub_county(month, year, 'Jomvu'))
+
+    # Jomvu_percentage - text
+    Jomvu_percentage.configure(text = sub_county_percentage(month, year, 'Jomvu'))
+
+    # Jomvu_approved - text
+    Jomvu_approved.configure(text = approved_entries_per_sub_county(month, year, 'Jomvu'))
+
+    # Jomvu_pending - text
+    Jomvu_pending.configure(text = pending_entries_per_sub_county(month, year, 'Jomvu'))
+
+    # Jomvu_rejected - text
+    Jomvu_rejected.configure(text = rejected_entries_per_sub_county(month, year, 'Jomvu'))
+
+    # Kisauni_entries - text
+    Kisauni_entries.configure(text = entries_per_sub_county(month, year, 'Kisauni'))
+
+    # Kisauni_percentage - text
+    Kisauni_percentage.configure(text = sub_county_percentage(month, year, 'Kisauni'))
+
+    # Kisauni_approved - text
+    Kisauni_approved.configure(text = approved_entries_per_sub_county(month, year, 'Kisauni'))
+
+    # Kisauni_pending - text
+    Kisauni_pending.configure(text = pending_entries_per_sub_county(month, year, 'Kisauni'))
+
+    # Kisauni_rejected - text
+    Kisauni_rejected.configure(text = rejected_entries_per_sub_county(month, year, 'Kisauni'))
+
+    # Likoni_entries - text
+    Likoni_entries.configure(text = entries_per_sub_county(month, year, 'Likoni'))
+
+    # Likoni_percentage - text
+    Likoni_percentage.configure(text = sub_county_percentage(month, year, 'Likoni'))
+
+    # Likoni_approved - text
+    Likoni_approved.configure(text = approved_entries_per_sub_county(month, year, 'Likoni'))
+
+    # Likoni_pending - text
+    Likoni_pending.configure(text = pending_entries_per_sub_county(month, year, 'Likoni'))
+
+    # Likoni_rejected - text
+    Likoni_rejected.configure(text = rejected_entries_per_sub_county(month, year, 'Likoni'))
+
+    # Mvita_entries - text
+    Mvita_entries.configure(text = entries_per_sub_county(month, year, 'Mvita'))
+
+    # Mvita_percentage - text
+    Mvita_percentage.configure(text = sub_county_percentage(month, year, 'Mvita'))
+
+    # Mvita_approved - text
+    Mvita_approved.configure(text = approved_entries_per_sub_county(month, year, 'Mvita'))
+
+    # Mvita_pending - text
+    Mvita_pending.configure(text = pending_entries_per_sub_county(month, year, 'Mvita'))
+
+    # Mvita_rejected - text
+    Mvita_rejected.configure(text = rejected_entries_per_sub_county(month, year, 'Mvita'))
+
+    # Nyali_entries - text
+    Nyali_entries.configure(text = entries_per_sub_county(month, year, 'Nyali'))
+
+    # Nyali_percentage - text
+    Nyali_percentage.configure(text = sub_county_percentage(month, year, 'Nyali'))
+
+    # Nyali_approved - text
+    Nyali_approved.configure(text = approved_entries_per_sub_county(month, year, 'Nyali'))
+
+    # Nyali_pending - text
+    Nyali_pending.configure(text = pending_entries_per_sub_county(month, year, 'Nyali'))
+
+    # Nyali_rejected - text
+    Nyali_rejected.configure(text = rejected_entries_per_sub_county(month, year, 'Nyali'))
+    
