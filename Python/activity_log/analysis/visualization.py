@@ -1506,7 +1506,7 @@ def render_analysis():
     first_year_entries.configure(text = yearly_entries(month, year, years[0]))
 
     # first_year_percentage - text
-    first_year_percentage.configure(text = percentage_of_year_entries(month, year, years[0]))
+    first_year_percentage.configure(text = f"{percentage_of_year_entries(month, year, years[0])}%")
 
     # second_year_label - text
     # second_year_approved - text
@@ -1522,7 +1522,7 @@ def render_analysis():
     second_year_entries.configure(text = yearly_entries(month, year, years[1]))
 
     # second_year_percentage - text
-    second_year_percentage.configure(text = percentage_of_year_entries(month, year, years[1]))
+    second_year_percentage.configure(text = f"{percentage_of_year_entries(month, year, years[1])}%")
 
     # average - text
     average.configure(text = average_days_left(month, year))
