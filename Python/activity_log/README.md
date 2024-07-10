@@ -1,107 +1,91 @@
-Activity Log GUI Application
-Overview
+<div align="center" id="top"> 
+  <img src="#checkered_flag-starting" alt="GUI" />
+
+  &#xa0;
+
+  <!-- <a href="https://gui.netlify.app">Demo</a> -->
+</div>
+
+<h1 align="center">ACTIVITY LOG</h1>
+
+<p align="center">
+  <img alt="Github top language" src="https://img.shields.io/github/languages/top/Opiyo24/gui?color=56BEB8">
+
+  <img alt="Github language count" src="https://img.shields.io/github/languages/count/Opiyo24/gui?color=56BEB8">
+
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/Opiyo24/gui?color=56BEB8">
+
+  <img alt="License" src="https://img.shields.io/github/license/Opiyo24/gui?color=56BEB8">
+
+  <!-- <img alt="Github issues" src="https://img.shields.io/github/issues/Opiyo24/gui?color=56BEB8" /> -->
+
+  <!-- <img alt="Github forks" src="https://img.shields.io/github/forks/Opiyo24/gui?color=56BEB8" /> -->
+
+  <!-- <img alt="Github stars" src="https://img.shields.io/github/stars/Opiyo24/gui?color=56BEB8" /> -->
+</p>
+
+<!-- Status -->
+
+<!-- <h4 align="center"> 
+	🚧  GUI 🚀 Under construction...  🚧
+</h4> 
+
+<hr> -->
+
+<p align="center">
+  <a href="#dart-about">About</a> &#xa0; | &#xa0; 
+  <a href="#sparkles-features">Features</a> &#xa0; | &#xa0;
+  <a href="#rocket-technologies">Technologies</a> &#xa0; | &#xa0;
+  <a href="#white_check_mark-requirements">Requirements</a> &#xa0; | &#xa0;
+  <a href="#checkered_flag-starting">Starting</a> &#xa0; | &#xa0;
+  <a href="#memo-license">License</a> &#xa0; | &#xa0;
+  <a href="https://github.com/{{YOUR_GITHUB_USERNAME}}" target="_blank">Author</a>
+</p>
+
+<br>
+
+## :dart: About ##
+
+The Activity Log is an appluication built to track development plan activities bty a development plan administrator for their day to day plan operations.
+The application is built in Python mainly using the CustomTkinter lirsry flor the front end to render the various application widgets.
+The application 
+
+## :sparkles: Features ##
+
+:heavy_check_mark: Feature 1;\
+:heavy_check_mark: Feature 2;\
+:heavy_check_mark: Feature 3;
 
 
 
-The Activity Log GUI application is a graphical user interface (GUI) based software designed to track and manage user activities. The application allows users to log their daily activities, categorize them, and view their activity history. This project is built using Python and utilizes the Tkinter library for creating the GUI.
-Features
-Activity Logging
+## :white_check_mark: Requirements ##
 
-    Users can log their daily activities with a brief description
-    Activities can be categorized into different types (e.g., work, personal, study, etc.)
-    Users can add, edit, and delete activities
+Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) installed.
 
-Activity History
+## :checkered_flag: Starting ##
 
-    Users can view their activity history, including the date, time, and description of each activity
-    Activities can be filtered by category or date range
+```bash
+# Clone this project
+$ git clone https://github.com/Opiyo24/GUI
 
-User Management
+# Access
+$ cd gui
 
-    Users can create an account and log in to the application
-    Users can view their profile information and update their password
+# Install dependencies
+$ yarn
 
-Search Functionality
+# Run the project
+$ yarn start
 
-    Users can search for specific activities by keyword or category
+```
 
-Technical Requirements
-Python Version
+## :memo: License ##
 
-    Python 3.8 or higher
+This project is under license from MIT. For more details, see the [LICENSE](LICENSE.md) file.
 
-Dependencies
 
-    Tkinter (built-in Python library)
-    SQLite (for database storage)
+Made with :heart: by <a href="https://github.com/Opiyo24" target="_blank">{{YOUR_NAME}}</a>
 
-Database
+&#xa0;
 
-    The application uses a SQLite database to store user data and activity logs
-    The database is created automatically when the application is launched for the first time
-
-Getting Started
-Installation
-
-    Clone the repository using git clone https://github.com/Opiyo24/GUI/Python/activity_log.git
-    Navigate to the project directory using cd activity_log
-    Install the required dependencies using pip install -r requirements.txt
-
-Running the Application
-
-    Run the application using python main.py
-    The application will launch and display the login screen
-
-Creating an Account
-
-    Click on the "Create Account" button on the login screen
-    Enter your username, password, and email address
-    Click on the "Create Account" button to create your account
-
-Logging In
-
-    Enter your username and password on the login screen
-    Click on the "Login" button to log in to the application
-
-User Interface
-Login Screen
-
-    The login screen displays a username and password input field
-    Users can log in to the application or create a new account
-
-Main Screen
-
-    The main screen displays a menu bar with options for logging activities, viewing activity history, and managing user profiles
-    The main screen also displays a search bar for searching activities
-
-Activity Logging Screen
-
-    The activity logging screen displays input fields for activity description, category, and date
-    Users can add, edit, and delete activities
-
-Activity History Screen
-
-    The activity history screen displays a table of activities, including date, time, and description
-    Users can filter activities by category or date range
-
-User Profile Screen
-
-    The user profile screen displays user information, including username, email address, and password
-    Users can update their password
-
-Known Issues
-
-    None at the moment. If you encounter any issues, please report them in the issues section of this repository.
-
-Contributing
-
-Contributions are welcome! If you'd like to contribute to this project, please fork the repository and submit a pull request.
-License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
-Acknowledgments
-
-    Tkinter library for creating the GUI
-    SQLite for database storage
-
-I hope this README.md file provides a comprehensive overview of the Activity Log GUI application project!
+<a href="#top">Back to top</a>
