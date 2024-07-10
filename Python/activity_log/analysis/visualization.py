@@ -12,7 +12,7 @@ def dashboard(frame):
         widget.destroy()
     global table, sort, filter_1, filter_2
 
-    global selected_month, selected_year, entries, approved_entries, pending_entries, rejected_entries, first_year_label, second_year_label, first_year_approved, first_year_pending, first_year_rejected, first_year_entries, first_year_percentage, second_year_approved, second_year_pending, second_year_rejected, second_year_entries, second_year_percentage, average, Changamwe_entries, Changamwe_percentage, Changamwe_approved, Changamwe_pending, Changamwe_rejected, Jomvu_entries, Jomvu_percentage, Jomvu_approved, Jomvu_pending, Jomvu_rejected, Kisauni_entries, Kisauni_percentage, Kisauni_approved, Kisauni_pending, Kisauni_rejected, Likoni_entries, Likoni_percentage, Likoni_approved, Likoni_pending, Likoni_rejected, Mvita_entries, Mvita_percentage, Mvita_approved, Mvita_pending, Mvita_rejected, Nyali_entries, Nyali_percentage, Nyali_approved, Nyali_pending, Nyali_rejected
+    global selected_month, selected_year, entries, approved_entries, pending_entries, rejected_entries, first_year_label, second_year_label, first_year_approved, first_year_pending, first_year_rejected, first_year_entries, first_year_percentage, second_year_approved, second_year_pending, second_year_rejected, second_year_entries, second_year_percentage, average, Changamwe_entries, Changamwe_percentage, Changamwe_approved, Changamwe_pending, Changamwe_rejected, Jomvu_entries, Jomvu_percentage, Jomvu_approved, Jomvu_pending, Jomvu_rejected, Kisauni_entries, Kisauni_percentage, Kisauni_approved, Kisauni_pending, Kisauni_rejected, Likoni_entries, Likoni_percentage, Likoni_approved, Likoni_pending, Likoni_rejected, Mvita_entries, Mvita_percentage, Mvita_approved, Mvita_pending, Mvita_rejected, Nyali_entries, Nyali_percentage, Nyali_approved, Nyali_pending, Nyali_rejected, description_table, floor_table
 
     month = ctk.StringVar()
     year = ctk.StringVar()
@@ -183,7 +183,10 @@ def dashboard(frame):
         qualitative_frame,
         border_color = 'black',
         border_width = 5,
+        corner_radius = 20,
     )
+    description_frame.columnconfigure((0, 1), weight = 1, uniform = 'a')
+    description_frame.rowconfigure((0, 1, 2, 3, 4), weight = 1, uniform = 'a')
 
     description_frame.grid(
         row = 5,
@@ -217,14 +220,18 @@ def dashboard(frame):
         qualitative_frame,
         border_color = 'black',
         border_width = 5,
+        corner_radius = 20,
     )
+
+    floors_frame.columnconfigure((0, 1), weight = 1, uniform = 'a')
+    floors_frame.rowconfigure((0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17), weight = 1, uniform = 'a')
 
     floors_frame.grid(
         row = 0,
         column = 17,
         rowspan = 10,
         columnspan = 3,
-        pady = 10,
+        # pady = 10,
         padx = 10,
         sticky = 'nsew',
     )
@@ -233,7 +240,7 @@ def dashboard(frame):
         m_y_frame,
         values = entry_months(),
         height = 30,
-        width = 50,
+        # width = 50,
     )
 
     selected_month.pack(
@@ -755,7 +762,7 @@ def dashboard(frame):
         column = 1,
         sticky = 'news',
         pady = 5,
-        padx = 10,
+        # padx = 10,
     )
 
     Changamwe_approved = ctk.CTkLabel(
@@ -868,7 +875,7 @@ def dashboard(frame):
         column = 1,
         sticky = 'news',
         pady = 5,
-        padx = 10,
+        # padx = 10,
     )
 
     Jomvu_approved = ctk.CTkLabel(
@@ -981,7 +988,7 @@ def dashboard(frame):
         column = 1,
         sticky = 'news',
         pady = 5,
-        padx = 10,
+        # padx = 10,
     )
 
     Kisauni_approved = ctk.CTkLabel(
@@ -1094,7 +1101,7 @@ def dashboard(frame):
         column = 1,
         sticky = 'news',
         pady = 5,
-        padx = 10,
+        # padx = 10,
     )
 
     Likoni_approved = ctk.CTkLabel(
@@ -1207,7 +1214,7 @@ def dashboard(frame):
         column = 1,
         sticky = 'news',
         pady = 5,
-        padx = 10,
+        # padx = 10,
     )
 
     Mvita_approved = ctk.CTkLabel(
@@ -1320,7 +1327,7 @@ def dashboard(frame):
         column = 1,
         sticky = 'news',
         pady = 5,
-        padx = 10,
+        # padx = 10,
     )
 
     Nyali_approved = ctk.CTkLabel(
@@ -1368,8 +1375,101 @@ def dashboard(frame):
         padx = 10,
     )
 
+    description_label = ctk.CTkLabel(
+        description_frame,
+        text = 'DEV. DESCRIPTION',
+        font = ('Arial', 20, 'bold'),
+        # fg_color = 'blue',
+    )
+
+    description_label.grid(
+        row = 0,
+        column = 0,
+        rowspan = 1,
+        columnspan = 2,
+        sticky = 'news',
+        pady = 10,
+        padx = 10,
+    )
+
+    description_table_frame = ctk.CTkFrame(
+        description_frame,
+        border_color = 'black',
+        fg_color = '#f4f9f9',
+        border_width = 1,
+    )
+    description_table_frame.grid(
+        row = 1,
+        column = 0,
+        columnspan = 2,
+        rowspan = 4,
+        sticky = 'news',
+        pady = 10,
+        padx = 10,
+    )
+    description_table = ttk.Treeview(
+        description_table_frame,
+        columns = ('Description', 'Entries'),
+        show = 'headings',
+        height = 8,
+    )
+    description_table.heading('Description', text = 'Description')
+    description_table.heading('Entries', text = 'Entries')
+    # description_table.column('Description', width = 200)
+    # description_table.column('Entries', width = 100)
+    description_table.pack(
+        fill = 'both',
+        expand = True,
+    )
+
+    floors_label = ctk.CTkLabel(
+        floors_frame,
+        text = 'FLOORS',
+        font = ('Arial', 20, 'bold'),
+    )
+
+    floors_label.grid(
+        row = 0,
+        column = 0,
+        columnspan = 2,
+        rowspan = 1,
+        sticky = 'news',
+        pady = 2,
+        padx = 10,
+    )
+
+    floor_table_frame = ctk.CTkFrame(
+        floors_frame,
+        fg_color = '#f4f9f9',
+    )
+
+    floor_table_frame.grid(
+        row = 1,
+        column = 0,
+        columnspan = 2,
+        rowspan = 16,
+        sticky = 'news',
+        pady = 2,
+        padx = 10,
+    )
+
+    floor_table = ttk.Treeview(
+        floor_table_frame,
+        columns = ('Floor', 'Entries'),
+        show = 'headings',
+        height = 8,
+    )
+    floor_table.heading('Floor', text = 'Floor')
+    floor_table.heading('Entries', text = 'Entries')
+
+    floor_table.pack(
+        fill = 'both',
+        expand = True,
+    )
+
+
 def render_analysis():
-    global selected_month, selected_year, entries, approved_entries, pending_entries, rejected_entries, first_year_label, second_year_label, first_year_approved, first_year_pending, first_year_rejected, first_year_entries, first_year_percentage, second_year_approved, second_year_pending, second_year_rejected, second_year_entries, second_year_percentage, average, Changamwe_entries, Changamwe_percentage, Changamwe_approved, Changamwe_pending, Changamwe_rejected, Jomvu_entries, Jomvu_percentage, Jomvu_approved, Jomvu_pending, Jomvu_rejected, Kisauni_entries, Kisauni_percentage, Kisauni_approved, Kisauni_pending, Kisauni_rejected, Likoni_entries, Likoni_percentage, Likoni_approved, Likoni_pending, Likoni_rejected, Mvita_entries, Mvita_percentage, Mvita_approved, Mvita_pending, Mvita_rejected, Nyali_entries, Nyali_percentage, Nyali_approved, Nyali_pending, Nyali_rejected
+    global selected_month, selected_year, entries, approved_entries, pending_entries, rejected_entries, first_year_label, second_year_label, first_year_approved, first_year_pending, first_year_rejected, first_year_entries, first_year_percentage, second_year_approved, second_year_pending, second_year_rejected, second_year_entries, second_year_percentage, average, Changamwe_entries, Changamwe_percentage, Changamwe_approved, Changamwe_pending, Changamwe_rejected, Jomvu_entries, Jomvu_percentage, Jomvu_approved, Jomvu_pending, Jomvu_rejected, Kisauni_entries, Kisauni_percentage, Kisauni_approved, Kisauni_pending, Kisauni_rejected, Likoni_entries, Likoni_percentage, Likoni_approved, Likoni_pending, Likoni_rejected, Mvita_entries, Mvita_percentage, Mvita_approved, Mvita_pending, Mvita_rejected, Nyali_entries, Nyali_percentage, Nyali_approved, Nyali_pending, Nyali_rejected, description_table, floor_table
 
     month = selected_month.get()
     year = selected_year.get()
@@ -1406,7 +1506,7 @@ def render_analysis():
     first_year_entries.configure(text = yearly_entries(month, year, years[0]))
 
     # first_year_percentage - text
-    first_year_percentage.configure(text = percentage_of_year_entries(month, year, years[0]))
+    first_year_percentage.configure(text = f"{percentage_of_year_entries(month, year, years[0])}%")
 
     # second_year_label - text
     # second_year_approved - text
@@ -1422,7 +1522,7 @@ def render_analysis():
     second_year_entries.configure(text = yearly_entries(month, year, years[1]))
 
     # second_year_percentage - text
-    second_year_percentage.configure(text = percentage_of_year_entries(month, year, years[1]))
+    second_year_percentage.configure(text = f"{percentage_of_year_entries(month, year, years[1])}%")
 
     # average - text
     average.configure(text = average_days_left(month, year))
@@ -1431,7 +1531,7 @@ def render_analysis():
     Changamwe_entries.configure(text = entries_per_sub_county(month, year, 'Changamwe'))
 
     # Changamwe_percentage - text
-    Changamwe_percentage.configure(text = sub_county_percentage(month, year, 'Changamwe'))
+    Changamwe_percentage.configure(text = f"{sub_county_percentage(month, year, 'Changamwe')}%")
 
     # Changamwe_approved - text
     Changamwe_approved.configure(text = approved_entries_per_sub_county(month, year, 'Changamwe'))
@@ -1446,7 +1546,7 @@ def render_analysis():
     Jomvu_entries.configure(text = entries_per_sub_county(month, year, 'Jomvu'))
 
     # Jomvu_percentage - text
-    Jomvu_percentage.configure(text = sub_county_percentage(month, year, 'Jomvu'))
+    Jomvu_percentage.configure(text = f"{sub_county_percentage(month, year, 'Jomvu')}%")
 
     # Jomvu_approved - text
     Jomvu_approved.configure(text = approved_entries_per_sub_county(month, year, 'Jomvu'))
@@ -1461,7 +1561,7 @@ def render_analysis():
     Kisauni_entries.configure(text = entries_per_sub_county(month, year, 'Kisauni'))
 
     # Kisauni_percentage - text
-    Kisauni_percentage.configure(text = sub_county_percentage(month, year, 'Kisauni'))
+    Kisauni_percentage.configure(text = f"{sub_county_percentage(month, year, 'Kisauni')}%")
 
     # Kisauni_approved - text
     Kisauni_approved.configure(text = approved_entries_per_sub_county(month, year, 'Kisauni'))
@@ -1476,7 +1576,7 @@ def render_analysis():
     Likoni_entries.configure(text = entries_per_sub_county(month, year, 'Likoni'))
 
     # Likoni_percentage - text
-    Likoni_percentage.configure(text = sub_county_percentage(month, year, 'Likoni'))
+    Likoni_percentage.configure(text = f"{sub_county_percentage(month, year, 'Likoni')}%")
 
     # Likoni_approved - text
     Likoni_approved.configure(text = approved_entries_per_sub_county(month, year, 'Likoni'))
@@ -1491,7 +1591,7 @@ def render_analysis():
     Mvita_entries.configure(text = entries_per_sub_county(month, year, 'Mvita'))
 
     # Mvita_percentage - text
-    Mvita_percentage.configure(text = sub_county_percentage(month, year, 'Mvita'))
+    Mvita_percentage.configure(text = f"{sub_county_percentage(month, year, 'Mvita')}%")
 
     # Mvita_approved - text
     Mvita_approved.configure(text = approved_entries_per_sub_county(month, year, 'Mvita'))
@@ -1506,7 +1606,7 @@ def render_analysis():
     Nyali_entries.configure(text = entries_per_sub_county(month, year, 'Nyali'))
 
     # Nyali_percentage - text
-    Nyali_percentage.configure(text = sub_county_percentage(month, year, 'Nyali'))
+    Nyali_percentage.configure(text = f"{sub_county_percentage(month, year, 'Nyali')}%")
 
     # Nyali_approved - text
     Nyali_approved.configure(text = approved_entries_per_sub_county(month, year, 'Nyali'))
@@ -1516,4 +1616,16 @@ def render_analysis():
 
     # Nyali_rejected - text
     Nyali_rejected.configure(text = rejected_entries_per_sub_county(month, year, 'Nyali'))
+
+    #populating the description table
+    description_table_entries = description_entries(month, year)
+    #[('COMMERCIAL', 3), ('EDICATIONAL', 1), ('INDUSTRIAL', 1), ('MIXED USE', 1)]
+
+    for entry in description_table_entries:
+        description_table.insert('', 'end', values = entry)
+
+    floor_table_entries = floor_entries(month, year)
+
+    for entry in floor_table_entries:
+        floor_table.insert('', 'end', values = entry)
     
