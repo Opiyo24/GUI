@@ -400,7 +400,7 @@ def floor_entries(current_month, current_year):
     # # [('BASEMENT 1', 1), ('BASEMENT4', 1), ('FIRST FLOOR', 1), ('G+2', 1), ('G+3', 1), ('GROUND FLOOR', 1)]
     return entries
 
-# List pof development types and number of entries for each development type
+# List of development types and number of entries for each development type
 def description_entries(current_month, current_year):
     """
     Returns the number of entries in the corresponding development type
